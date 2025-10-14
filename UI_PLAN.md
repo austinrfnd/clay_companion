@@ -204,23 +204,29 @@ Main navigation leads to subsections:
 
 ## Public Portfolio Pages
 
-### 7. Homepage (Public Landing)
+### 7. Artist Profile (Landing Page)
+**URL**: `claycompanion.com/artist-name`
 **Purpose**: First impression, showcase featured work, introduce the artist
 
-**Layout** (DECIDED - Option C: Minimal/Editorial):
-- **Navigation Bar**: Logo/Artist Name, Links (Gallery, About, Process, Exhibitions, Press, Techniques, Contact)
-- **Hero Section**: Single large featured artwork image with title
+**Layout** (DECIDED - Minimal/Editorial with Enhanced Content):
+- **Navigation Bar**: Fixed/sticky, Logo/Artist Name, Links (Gallery, About, Process, Exhibitions, Press, Techniques, Contact)
+- **Hero Section**: Featured artwork with automatic rotation (5-10 sec when multiple featured pieces)
 - **Artist Statement Preview**: 2-3 sentences from artist statement
-- **Call to Action**: "View Gallery" button or "Explore My Work"
-- **Footer**: Contact info, social links, copyright
+- **Recent Work Section**: 4-6 thumbnails showing latest public artworks
+- **Call to Action**: "View Gallery" or "View All Work" button
+- **Footer**: Light grey background (#f8f9fa), Contact info, social links, copyright, "Powered by Clay Companion"
 
 **Vibe**: Clean, minimal, puts the artwork first, editorial/artistic feel
 
-**Wireframe**: To be created
+**Decisions**:
+1. Featured artwork: Automatic slideshow rotation
+2. Navigation: Fixed/sticky (stays on scroll)
+3. Content: Hero + statement + recent work grid
+4. Footer: Light grey with branding (removable via paid subscription post-MVP)
 
-**Status**: Planned ✓
+**Wireframe**: `wireframes/artist-profile.md` ✓
 
-**NEXT**: Continue planning remaining public pages (Gallery, About, Process, etc.)
+**Status**: Fully Planned & Finalized ✓
 
 ---
 

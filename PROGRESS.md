@@ -1,14 +1,16 @@
 # Clay Companion - Progress Tracker
 
-**Last Updated**: 2025-10-13
+**Last Updated**: 2025-10-14
 
 ---
 
 ## Current Status
 
-**Phase**: Planning - UI/UX Design
-**Current Focus**: Planning public portfolio pages (started with Homepage, need to continue with Gallery, About, etc.)
-**Last Updated**: 2025-10-13 end of day
+**Phase**: Planning - UI/UX Design & Architecture
+**Current Focus**: Planning Platform Homepage (multi-artist platform discovery & marketing page)
+**Last Updated**: 2025-10-14
+
+**🚨 Architecture Change**: MVP is now multi-artist platform (not single artist)
 
 ---
 
@@ -40,26 +42,33 @@
 - [x] Mobile app integration strategy planned
 
 ### ✅ Documentation
-- [x] Created PROJECT_PLAN.md
-- [x] Created DECISIONS.md
-- [x] Created UI_PLAN.md
+- [x] Created PROJECT_PLAN.md (may need updates for multi-artist)
+- [x] Created DECISIONS.md (updated with multi-artist decisions)
+- [x] Created UI_PLAN.md (updated with Artist Profile)
 - [x] Created PROGRESS.md (this file)
+- [x] Created SESSION_NOTES.md (resume instructions)
+- [x] Created PAGE_TREE.md (complete site structure)
 
 ---
 
 ## In Progress
 
 ### 🔄 UI/UX Planning
-- [x] Plan dashboard pages
+- [x] Plan dashboard pages (need to revisit for multi-artist context)
   - [x] Login page
   - [x] Dashboard home (activity feed)
   - [x] Catalog list (list view with cards)
   - [x] Add/edit artwork (wireframe created)
   - [x] Series management (list + detail pages)
   - [x] Portfolio settings (6 subsections)
-- [ ] Plan public portfolio pages
-  - [x] Homepage (minimal/editorial style)
-  - [ ] Gallery **← NEXT TO PLAN**
+- [ ] Plan platform pages (NEW - multi-artist platform)
+  - [ ] Platform Homepage (in progress) **← CURRENTLY PLANNING**
+  - [ ] Artist Directory/Browse (may be part of homepage)
+  - [ ] About Clay Companion page (TBD)
+  - [ ] Platform admin/management (post-MVP)
+- [ ] Plan public artist portfolio pages
+  - [x] Artist Profile landing page (fully planned + wireframe) ✓
+  - [ ] Gallery **← PAUSED - will resume after platform homepage**
   - [ ] About
   - [ ] Process/Studio
   - [ ] Exhibitions

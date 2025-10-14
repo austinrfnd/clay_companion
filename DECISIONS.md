@@ -31,6 +31,7 @@ This document tracks all major decisions made during planning and development.
 - Multi-artist platform
 - Advanced customization (themes, colors)
 - Analytics dashboard
+- Paid subscription tier (white-label branding removal + premium features)
 
 **Date**: 2025-10-13
 
@@ -244,20 +245,31 @@ Based on research of ceramic artist portfolios, included:
 
 ### Public Portfolio UI Decisions
 
-#### Homepage
-**Decision**: Minimal/Editorial style (Option C)
-- Single large featured artwork image
-- Artist statement preview (2-3 sentences)
-- "View Gallery" or "Explore My Work" CTA button
-- Clean navigation bar at top
-- Footer with contact/social links
+#### Artist Profile (Landing Page)
+**URL Structure**: `claycompanion.com/artist-name`
+**Decision**: Minimal/Editorial style with enhanced content
+- **Hero section**: Featured artwork with automatic rotation (5-10 seconds if multiple featured)
+- **Artist statement**: 2-3 sentence preview
+- **Recent work section**: 4-6 thumbnail grid showing latest public pieces
+- **Navigation**: Fixed/sticky nav bar (stays on scroll)
+- **Footer**: Light grey background (#f8f9fa) with "Powered by Clay Companion" branding
+- **Call to Action**: "View Gallery" or "View All Work" button
 **Vibe**: Artwork-first, clean, minimal, editorial/artistic
-**Date**: 2025-10-13
+**Wireframe**: Created at `wireframes/artist-profile.md`
+**Date**: 2025-10-14
+
+**Detailed Decisions**:
+1. Featured artwork rotation: Automatic slideshow (5-10 sec) when multiple featured
+2. Navigation: Fixed/sticky at top
+3. Content: Hero + statement + recent work grid (4-6 pieces)
+4. Artist statement: 2-3 sentence preview
+5. Footer: Light grey background for differentiation
+6. Branding: "Powered by Clay Companion" in footer (MVP)
 
 #### Remaining Public Pages
-**Status**: Not yet planned (continue in next session)
+**Status**: To be planned next
 - Gallery, About, Process, Exhibitions, Press, Techniques, Contact
-**Date**: 2025-10-13
+**Date**: 2025-10-14
 
 ---
 
@@ -287,6 +299,25 @@ Based on research of ceramic artist portfolios, included:
 ### Dashboard Home
 - [ ] What should artist see first when logging in?
 - [ ] Dashboard with widgets, or simple list view?
+
+---
+
+## Post-MVP Monetization
+
+### Paid Subscription Tier
+**Concept**: Offer premium subscription to remove Clay Companion branding and unlock advanced features
+
+**Potential Features**:
+- Remove "Powered by Clay Companion" footer branding (white-label)
+- Custom domain support
+- Advanced theme customization (colors, fonts, layouts)
+- Priority support
+- Analytics dashboard
+- Additional storage/bandwidth
+- Custom CSS/branding
+
+**Status**: To be explored post-MVP
+**Date**: 2025-10-14
 
 ---
 
