@@ -50,6 +50,10 @@ Clay Companion is a web application for ceramic artists to catalog their work in
 - `bio` (text)
 - `artist_statement` (text)
 - `profile_photo_url` (text)
+- `studio_photo_url` (text, nullable) - Studio/workspace image for About page
+- `location` (text, nullable) - City, State/Country (e.g., "Brooklyn, New York")
+- `education` (jsonb, nullable) - Array of education entries for About page
+- `awards` (jsonb, nullable) - Array of awards/recognition entries for About page
 - `contact_email` (text)
 - `contact_phone` (text)
 - `website_url` (text)

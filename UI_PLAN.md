@@ -319,9 +319,48 @@ Main navigation leads to subsections:
 ---
 
 ### 10. About
-**Purpose**: Artist bio and statement
+**URL**: `claycompanion.com/artist-name/about`
+**Purpose**: Tell the artist's story, share philosophy, and provide background/credentials
 
-**Status**: To be planned
+**Layout** (DECIDED - Two-Column):
+- **Desktop**: Two columns (30/70 split)
+  - Left: Portrait photo + Studio photo (optional)
+  - Right: All text content (statement, bio, education, awards)
+  - Gap: 3-4rem between columns
+- **Mobile**: Single column stacked (photo → text → photo → text)
+
+**Content Sections**:
+- **Artist Statement** (required):
+  - First-person voice ("I", "My")
+  - 2-4 paragraphs (200-400 words)
+  - Philosophy, inspiration, approach, goals
+- **Biography** (required):
+  - Third-person voice (use artist name)
+  - 2-3 paragraphs (150-300 words)
+  - Education, career highlights, current activities, influences
+- **Education** (optional):
+  - Bulleted list format
+  - Degree, field, institution, year
+  - Most recent first
+- **Awards & Recognition** (optional):
+  - Bulleted list format
+  - Award name, organization, year
+  - Most recent first
+
+**Photos**:
+- Portrait: 3:4 or 2:3 aspect ratio (vertical)
+- Studio photo: 4:3 or 16:9 (horizontal), optional
+- High quality, optimized for web
+
+**Typography**:
+- Body text: 18px+ for readability
+- Line height: 1.7-1.8
+- Max-width: ~650px for optimal reading
+- Clear section headers with dividers
+
+**Wireframe**: `wireframes/about.md` ✓
+
+**Status**: Fully Planned & Finalized ✓
 
 ---
 

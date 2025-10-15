@@ -329,9 +329,35 @@ Based on research of ceramic artist portfolios, included:
 - Added `is_featured` flag to artworks, series, and artwork_groups tables
 - Added `is_hidden_from_gallery` flag to artworks, series, and artwork_groups tables
 
+#### About Page
+**URL**: `claycompanion.com/artist-name/about`
+**Decision**: Two-column layout with photos left, text content right
+- **Layout**: Photos (30-35%) left column, text (65-70%) right column on desktop
+- **Content Sections**: Artist Statement (first-person), Biography (third-person), Education (optional), Awards (optional)
+- **Photos**: Portrait (required) + Studio photo (optional)
+- **Typography**: Large readable body text (18px+), clear hierarchy
+- **Length**: Concise - 2-3 paragraphs per section
+- **Mobile**: Stacked single-column layout
+**Wireframe**: Created at `wireframes/about.md`
+**Date**: 2025-10-14
+
+**Detailed Decisions**:
+1. Two-column desktop layout for photos + text side-by-side
+2. Artist Statement in first-person voice ("I", "My")
+3. Biography in third-person voice (use artist name)
+4. Optional sections for Education and Awards (bulleted lists)
+5. Portrait photo required, studio photo optional
+6. Mobile stacks vertically (photo → text → photo → text)
+
+**Database Changes**:
+- Added `studio_photo_url` field to artist_profile table
+- Added `location` field to artist_profile table
+- Added `education` JSONB field to artist_profile table
+- Added `awards` JSONB field to artist_profile table
+
 #### Remaining Public Pages
 **Status**: To be planned next
-- About, Process, Exhibitions, Press, Techniques, Contact
+- Process, Exhibitions, Press, Techniques, Contact
 **Date**: 2025-10-14
 
 ---
