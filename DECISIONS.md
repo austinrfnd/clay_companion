@@ -329,7 +329,7 @@ Based on research of ceramic artist portfolios, included:
 - Added `is_featured` flag to artworks, series, and artwork_groups tables
 - Added `is_hidden_from_gallery` flag to artworks, series, and artwork_groups tables
 
-#### About Page
+#### Artist's About Page
 **URL**: `claycompanion.com/artist-name/about`
 **Decision**: Two-column layout with photos left, text content right
 - **Layout**: Photos (30-35%) left column, text (65-70%) right column on desktop
@@ -355,10 +355,16 @@ Based on research of ceramic artist portfolios, included:
 - Added `education` JSONB field to artist_profile table
 - Added `awards` JSONB field to artist_profile table
 
-#### Remaining Public Pages
+#### Remaining Artist Portfolio Pages
 **Status**: To be planned next
 - Process, Exhibitions, Press, Techniques, Contact
 **Date**: 2025-10-14
+
+#### Platform About Page (TODO)
+**URL**: `claycompanion.com/about`
+**Status**: To be planned
+**Purpose**: Explain Clay Companion platform, mission, team, how it works
+**Date**: TBD
 
 ---
 

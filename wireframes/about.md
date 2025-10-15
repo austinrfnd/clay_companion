@@ -1,4 +1,4 @@
-# About Page - Wireframe
+# Artist's About Page - Wireframe
 
 **URL**: `claycompanion.com/artist-name/about`
 

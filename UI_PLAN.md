@@ -318,7 +318,7 @@ Main navigation leads to subsections:
 
 ---
 
-### 10. About
+### 10. Artist's About
 **URL**: `claycompanion.com/artist-name/about`
 **Purpose**: Tell the artist's story, share philosophy, and provide background/credentials
 
@@ -394,6 +394,16 @@ Main navigation leads to subsections:
 
 ### 15. Contact
 **Purpose**: Display contact information
+
+**Status**: To be planned
+
+---
+
+## Platform-Level Pages (TODO)
+
+### 16. Platform About Page
+**URL**: `claycompanion.com/about`
+**Purpose**: Explain Clay Companion platform - mission, story, how it works, team
 
 **Status**: To be planned
 
