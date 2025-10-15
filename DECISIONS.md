@@ -6,10 +6,19 @@ This document tracks all major decisions made during planning and development.
 
 ## Project Decisions
 
-### Target User
-**Decision**: Single ceramic artist or artist shop (not multi-artist platform for MVP)
+### 🚨 Architecture Change: Multi-Artist Platform
+
+**Decision**: Clay Companion is now a **multi-artist platform** for MVP
+**Date**: 2025-10-14
+**Rationale**:
+- Better market fit - serve multiple artists from day one
+- Platform growth potential
+- Revenue model: Subscription-based artist accounts
+- Each artist gets their own URL: `claycompanion.com/artist-name`
+- Platform needs its own homepage for discovery and marketing
+
+**Previous Decision** (now superseded): Single ceramic artist
 **Date**: 2025-10-13
-**Rationale**: Simpler scope for MVP, can expand to multi-artist later
 
 ---
 
@@ -266,9 +275,63 @@ Based on research of ceramic artist portfolios, included:
 5. Footer: Light grey background for differentiation
 6. Branding: "Powered by Clay Companion" in footer (MVP)
 
+#### Platform Homepage
+**URL**: `claycompanion.com`
+**Decision**: Hybrid approach combining discovery and marketing
+- **Overall feel**: Balanced - showcase artwork/artists while promoting platform
+- **Goal**: "Discover cool artists. Discover cool artwork. Inspiration."
+- **Hero section**: Carousel with featured artwork + artist attribution (7 sec rotation)
+- **Search & Filters**: Clay type, firing type, artist name, location
+- **Featured Artists**: 3 artists with substantial showcase (main image + 2-3 thumbnails)
+- **Value Proposition**: "By artists, for artists" mission statement
+- **Artist Directory**: Browseable/filterable grid of all artists (6-col desktop, responsive)
+- **Call to Actions**: "Explore Artists", "Start Your Portfolio"
+**Wireframe**: Created at `wireframes/platform-homepage.md`
+**Date**: 2025-10-14
+
+**Detailed Decisions**:
+1. Hero carousel: Featured artworks with clickable artist attribution
+2. Search: Real-time with debouncing (300ms)
+3. Filters: Multi-select dropdowns (clay type, firing type, location)
+4. Featured artists: 3 cards with main image + thumbnails
+5. Directory: 6-column grid with "Load More" pagination
+6. Value prop: Two-column split (For Art Lovers / For Artists)
+7. Positioning: "By artists, for artists"
+
+#### Gallery Page
+**URL**: `claycompanion.com/artist-name/gallery`
+**Decision**: Single scrollable page with featured filter and series organization
+- **Default View**: Featured filter (shows curated selection of featured artworks/series/groups)
+- **Layout Type**: Single scrollable page with sectioned content (not separate pages)
+- **Organization Depth**: Series → Groups (optional) → Artworks
+- **Filter Options**: Featured (default) | All | Individual Series Names
+- **Series Display**: Collapsible sections with series header, description, and organized content
+- **Groups**: Optional, public-facing, shown as sub-sections within series
+- **Ungrouped Work**: Shows in "Miscellaneous" section at bottom
+- **Grid Layout**: Responsive (4-col desktop, 3-col tablet, 1-2-col mobile)
+- **Image Interaction**: Click to open lightbox with full details
+**Wireframe**: Created at `wireframes/gallery.md`
+**Date**: 2025-10-14
+
+**Detailed Decisions**:
+1. Featured filter: Default view showing curated/featured items
+2. Visibility controls: Artists can feature OR hide artworks, groups, and series
+3. Series collapse/expand: User can collapse series sections (state saved in localStorage)
+4. Groups: External-facing but optional (work can be in series without groups)
+5. Image aspect ratio: Square (1:1) thumbnails in gallery, original proportions in lightbox
+6. Pagination: Infinite scroll (load 20-30 initially, auto-load more)
+7. Metadata: Title and year always visible below images
+8. Grid density: Spacious/generous spacing (MVP default)
+9. Sort order: Newest first (year_created DESC, created_at DESC)
+10. Performance: Lazy loading, square thumbnails for grid, original images for lightbox
+
+**Database Changes**:
+- Added `is_featured` flag to artworks, series, and artwork_groups tables
+- Added `is_hidden_from_gallery` flag to artworks, series, and artwork_groups tables
+
 #### Remaining Public Pages
 **Status**: To be planned next
-- Gallery, About, Process, Exhibitions, Press, Techniques, Contact
+- About, Process, Exhibitions, Press, Techniques, Contact
 **Date**: 2025-10-14
 
 ---

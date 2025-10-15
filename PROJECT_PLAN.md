@@ -68,6 +68,8 @@ Clay Companion is a web application for ceramic artists to catalog their work in
 - `year_end` (integer, nullable)
 - `display_order` (integer)
 - `is_public` (boolean, default false)
+- `is_featured` (boolean, default false) - Show in featured gallery section
+- `is_hidden_from_gallery` (boolean, default false) - Hide from public gallery view
 - `created_at` (timestamp)
 - `updated_at` (timestamp)
 
@@ -77,6 +79,8 @@ Clay Companion is a web application for ceramic artists to catalog their work in
 - `title` (text)
 - `description` (text)
 - `display_order` (integer)
+- `is_featured` (boolean, default false) - Show in featured gallery section
+- `is_hidden_from_gallery` (boolean, default false) - Hide from public gallery view
 - `created_at` (timestamp)
 - `updated_at` (timestamp)
 
@@ -95,7 +99,8 @@ Clay Companion is a web application for ceramic artists to catalog their work in
 - `weight` (text)
 - `year_created` (integer)
 - `is_public` (boolean, default false)
-- `is_featured` (boolean, default false)
+- `is_featured` (boolean, default false) - Show in featured gallery section
+- `is_hidden_from_gallery` (boolean, default false) - Hide from public gallery view
 - `availability_status` (text: available/sold/commissioned/not_for_sale)
 - `display_order` (integer)
 - `created_at` (timestamp)

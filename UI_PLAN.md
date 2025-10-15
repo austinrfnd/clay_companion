@@ -202,9 +202,43 @@ Main navigation leads to subsections:
 
 ---
 
-## Public Portfolio Pages
+## Platform Pages (Multi-Artist Discovery)
 
-### 7. Artist Profile (Landing Page)
+### 7. Platform Homepage
+**URL**: `claycompanion.com`
+**Purpose**: Artist discovery, platform promotion, inspiration hub
+**User Type**: Non-authenticated visitors, potential artists, art enthusiasts
+
+**Layout** (DECIDED - Hybrid: Discovery + Marketing):
+- **Fixed Navigation Bar**: Logo, Browse Artists, Login, Sign Up
+- **Hero Carousel**: Featured artworks (7 sec auto-rotation) with artist attribution overlay
+- **Platform Introduction**: Headline, subhead, "Explore Artists" CTA
+- **Search & Filter Bar**: Real-time search + filters (clay type, firing type, location)
+- **Featured Artists Section**: 3 artist cards (main image + 2-3 thumbnails + "View Profile" CTA)
+- **Value Proposition**: "By artists, for artists" mission statement
+  - Two columns: For Art Lovers / For Artists (4 bullets each)
+  - "Start Your Portfolio" CTA
+- **Artist Directory**: 6-column grid (responsive) with "Load More" pagination
+- **Footer**: Platform links, copyright, tagline
+
+**Key Features**:
+- Real-time search with debouncing (300ms)
+- Multi-select filter dropdowns
+- Clickable carousel → artist profiles
+- Featured artists showcase (3 artists)
+- Browseable directory (all artists)
+
+**Positioning**: "By artists, for artists" - discovery, inspiration, connection
+
+**Wireframe**: `wireframes/platform-homepage.md` ✓
+
+**Status**: Fully Planned & Finalized ✓
+
+---
+
+## Public Portfolio Pages (Individual Artist Sites)
+
+### 8. Artist Profile (Landing Page)
 **URL**: `claycompanion.com/artist-name`
 **Purpose**: First impression, showcase featured work, introduce the artist
 
@@ -230,55 +264,96 @@ Main navigation leads to subsections:
 
 ---
 
-### 8. Gallery
-**Purpose**: Showcase public artworks
+### 9. Gallery
+**URL**: `claycompanion.com/artist-name/gallery`
+**Purpose**: Browse and explore all of an artist's public work, organized by series and groups
 
-**Status**: TO BE PLANNED NEXT SESSION
+**Layout** (DECIDED - Single Scrollable Page):
+- **Top Section**: Filter pills (horizontal scroll if many)
+  - "Featured" (default) | "All" | Individual series names
+- **Default View (Featured)**:
+  - Curated mix of featured artworks, series, groups
+  - Responsive grid: 4-col desktop, 3-col tablet, 1-2-col mobile
+  - Image cards with title, year, series name below
+- **"All" View**:
+  - Organized by series sections (collapsible)
+  - Each section: Series header + description + artworks
+  - Groups shown as sub-sections within series
+  - "Miscellaneous" section for ungrouped artworks at bottom
+- **Single Series View**:
+  - Click series filter to see only that series
+  - Shows ungrouped artworks first, then groups
 
-**Questions to Resolve**:
-- [ ] Layout: Masonry grid, equal-height grid, or list?
-- [ ] Filtering: By series, year, or both?
-- [ ] Image modal/lightbox behavior
-- [ ] Show artwork details on hover or click?
+**Image Cards**:
+- **Aspect Ratio**: Square (1:1) thumbnails in gallery grid
+- **Crop**: Center crop or object-fit cover for squares
+- Hover: Slight zoom (1.05x) on desktop
+- Click: Opens lightbox with **original proportions** and full details
+- **Metadata**: Title and year always visible below image
+- Optional: Series name (if in Featured view)
+
+**Series Sections** (in "All" view):
+- Header: Series title + year range
+- Description: 2-3 lines
+- Expand/collapse toggle
+- Ungrouped artworks shown first
+- Groups as labeled sub-sections
+
+**Visibility Logic**:
+- Items with `is_hidden_from_gallery = true` never appear
+- Featured filter shows items where `is_featured = true`
+- Must also be `is_public = true`
+
+**Performance**:
+- **Infinite scroll**: Load 20-30 images initially, auto-load more at 80% scroll
+- Lazy loading with skeleton screens
+- Square thumbnails for grid, original proportions in lightbox
+- Sort: Newest first (year_created DESC)
+
+**Grid Spacing**: Spacious/generous (MVP default)
+
+**Wireframe**: `wireframes/gallery.md` ✓
+
+**Status**: Fully Planned & Finalized ✓
 
 ---
 
-### 9. About
+### 10. About
 **Purpose**: Artist bio and statement
 
 **Status**: To be planned
 
 ---
 
-### 10. Process/Studio
+### 11. Process/Studio
 **Purpose**: Behind-the-scenes content
 
 **Status**: To be planned
 
 ---
 
-### 11. Exhibitions
+### 12. Exhibitions
 **Purpose**: Past and upcoming shows
 
 **Status**: To be planned
 
 ---
 
-### 12. Press
+### 13. Press
 **Purpose**: Media mentions and articles
 
 **Status**: To be planned
 
 ---
 
-### 13. Techniques & Materials
+### 14. Techniques & Materials
 **Purpose**: Educational content about artist's methods
 
 **Status**: To be planned
 
 ---
 
-### 14. Contact
+### 15. Contact
 **Purpose**: Display contact information
 
 **Status**: To be planned
