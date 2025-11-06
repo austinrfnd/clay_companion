@@ -1,0 +1,64 @@
+# frozen_string_literal: true
+
+##
+# .dockerignore
+#
+# Files and directories to exclude from Docker build context.
+# This speeds up builds and reduces image size.
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+docs/
+requirements/
+*.md
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Environment files
+.env
+.env.*
+*.local
+
+# Rails temporary files
+tmp/
+log/
+storage/
+public/packs/
+public/packs-test/
+public/assets/
+
+# Node modules (will be installed in container)
+node_modules/
+
+# Bundler (will be installed in container)
+vendor/bundle
+
+# Test files
+spec/examples.txt
+coverage/
+.rspec
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.circleci/
+
+# Other
+*.log
+*.pid

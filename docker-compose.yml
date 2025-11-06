@@ -1,0 +1,147 @@
+# frozen_string_literal: true
+
+##
+# docker-compose.yml
+#
+# Docker Compose configuration for Clay Companion development environment.
+# Defines services: web (Rails), db (PostgreSQL), redis, and test.
+#
+# Usage:
+#   docker-compose up -d              # Start all services
+#   docker-compose down               # Stop all services
+#   docker-compose logs -f web        # View logs
+#   docker-compose exec web bash      # Shell into web container
+#   docker-compose run --rm test      # Run tests
+
+version: '3.9'
+
+services:
+  # PostgreSQL 15 database
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: clay_companion
+      POSTGRES_PASSWORD: development_password
+      POSTGRES_DB: clay_companion_development
+    volumes:
+      # Persist database data across container restarts
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      # Expose PostgreSQL on localhost:5432 (optional, for database GUI tools)
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clay_companion"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - clay_companion
+
+  # Redis 7 (for future Sidekiq background jobs)
+  redis:
+    image: redis:7-alpine
+    ports:
+      # Expose Redis on localhost:6379 (optional, for Redis GUI tools)
+      - "6379:6379"
+    volumes:
+      # Persist Redis data across container restarts
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - clay_companion
+
+  # Rails web application
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    # Remove PID file if exists, then start Rails server
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
+    volumes:
+      # Mount application code for live reloading
+      - .:/app
+      # Mount bundle cache to persist gems across rebuilds
+      - bundle_cache:/usr/local/bundle
+      # Mount node_modules to persist npm packages
+      - node_modules:/app/node_modules
+      # Don't mount tmp directory (let container manage it)
+      - /app/tmp
+    ports:
+      # Expose Rails server on localhost:3000
+      - "3000:3000"
+    environment:
+      # Database connection
+      DATABASE_URL: postgres://clay_companion:development_password@db:5432/clay_companion_development
+      # Redis connection (for future Sidekiq)
+      REDIS_URL: redis://redis:6379/0
+      # Rails environment
+      RAILS_ENV: development
+      # Enable Rails logs to stdout
+      RAILS_LOG_TO_STDOUT: "true"
+      # Disable Spring (causes issues in Docker)
+      DISABLE_SPRING: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    networks:
+      - clay_companion
+
+  # Test environment (isolated from development)
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bundle exec rspec
+    volumes:
+      # Mount application code
+      - .:/app
+      # Share bundle cache with web service
+      - bundle_cache:/usr/local/bundle
+      # Share node_modules with web service
+      - node_modules:/app/node_modules
+    environment:
+      # Separate test database
+      DATABASE_URL: postgres://clay_companion:development_password@db:5432/clay_companion_test
+      # Separate Redis database (index 1)
+      REDIS_URL: redis://redis:6379/1
+      # Test environment
+      RAILS_ENV: test
+      # Enable Rails logs to stdout
+      RAILS_LOG_TO_STDOUT: "true"
+      # Disable Spring
+      DISABLE_SPRING: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - clay_companion
+
+# Named volumes for data persistence
+volumes:
+  # PostgreSQL data
+  postgres_data:
+    driver: local
+  # Redis data
+  redis_data:
+    driver: local
+  # Bundler gem cache (shared between web and test)
+  bundle_cache:
+    driver: local
+  # Node modules (shared between web and test)
+  node_modules:
+    driver: local
+
+# Network for service communication
+networks:
+  clay_companion:
+    driver: bridge
