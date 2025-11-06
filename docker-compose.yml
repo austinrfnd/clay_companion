@@ -60,7 +60,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     # Remove PID file if exists, then start Rails server
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
+    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
     volumes:
       # Mount application code for live reloading
       - .:/app

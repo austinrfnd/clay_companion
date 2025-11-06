@@ -1,0 +1,44 @@
+# frozen_string_literal: true
+
+##
+# PostgreSQL Database Configuration
+#
+# This configuration uses DATABASE_URL environment variable for all environments.
+# The DATABASE_URL is set in docker-compose.yml for development/test,
+# and should be set via environment variables in production.
+#
+# Format: postgres://username:password@host:port/database
+#
+# See: https://guides.rubyonrails.org/configuring.html#configuring-a-database
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # Connection pooling
+  # See: https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  # Use DATABASE_URL from docker-compose.yml
+  # Format: postgres://clay_companion:development_password@db:5432/clay_companion_development
+  url: <%= ENV.fetch("DATABASE_URL") %>
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  # Test environment uses same DATABASE_URL but with different database name
+  # The test service in docker-compose.yml sets this to clay_companion_test
+  url: <%= ENV.fetch("DATABASE_URL") { "postgres://clay_companion:development_password@db:5432/clay_companion_test" } %>
+
+# Production configuration
+# Set DATABASE_URL environment variable in production deployment
+# Example: postgres://username:password@host:port/database_name
+production:
+  <<: *default
+  url: <%= ENV.fetch("DATABASE_URL") %>
+  # Ensure SSL is enabled in production
+  # Uncomment if your production database requires SSL
+  # sslmode: require

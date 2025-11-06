@@ -1,64 +1,48 @@
-# frozen_string_literal: true
+# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
 
-##
-# .dockerignore
-#
-# Files and directories to exclude from Docker build context.
-# This speeds up builds and reduces image size.
+# Ignore git directory.
+/.git/
+/.gitignore
 
-# Git
-.git
-.gitignore
-.gitattributes
+# Ignore bundler config.
+/.bundle
 
-# Documentation
-README.md
-docs/
-requirements/
-*.md
+# Ignore all environment files (except templates).
+/.env*
+!/.env*.erb
 
-# Docker files
-Dockerfile*
-docker-compose*.yml
-.dockerignore
+# Ignore all default key files.
+/config/master.key
+/config/credentials/*.key
 
-# Environment files
-.env
-.env.*
-*.local
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
 
-# Rails temporary files
-tmp/
-log/
-storage/
-public/packs/
-public/packs-test/
-public/assets/
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/.keep
 
-# Node modules (will be installed in container)
-node_modules/
+# Ignore storage (uploaded files in development and any SQLite databases).
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/.keep
 
-# Bundler (will be installed in container)
-vendor/bundle
+# Ignore assets.
+/node_modules/
+/app/assets/builds/*
+!/app/assets/builds/.keep
+/public/assets
 
-# Test files
-spec/examples.txt
-coverage/
-.rspec
+# Ignore CI service files.
+/.github
 
-# Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
+# Ignore development files
+/.devcontainer
 
-# CI/CD
-.github/
-.gitlab-ci.yml
-.circleci/
-
-# Other
-*.log
-*.pid
+# Ignore Docker-related files
+/.dockerignore
+/Dockerfile*
