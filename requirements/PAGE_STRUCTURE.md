@@ -1,0 +1,568 @@
+# Clay Companion - Page Structure & Navigation
+
+**Last Updated**: 2025-11-05
+**Document Type**: Tech-Agnostic Page Requirements
+
+---
+
+## Overview
+
+This document defines the complete page structure, URL hierarchy, and navigation system for Clay Companion. It is technology-agnostic and focuses on information architecture and user navigation patterns.
+
+---
+
+## URL Structure
+
+### Complete Site Map
+
+```
+claycompanion.com/
+├── /                                    Platform Homepage (Discovery & Marketing)
+├── /about                               Platform About Page
+│
+└── /{artist-name}/                      [Public Portfolio]
+    ├── /                                Artist Profile (Landing Page)
+    ├── /gallery                         Gallery (All Public Artworks)
+    │   └── /{artwork-slug}              Individual Artwork Detail (Optional/TBD)
+    ├── /about                           About (Bio & Statement)
+    ├── /process                         Process/Studio (Behind-the-scenes)
+    ├── /exhibitions                     Exhibitions (Past & Upcoming)
+    ├── /press                           Press (Media Mentions)
+    ├── /techniques                      Techniques & Materials (Post-MVP)
+    └── /contact                         Contact (Display Info & Instagram)
+
+/login                                   Login Page (OR /dashboard/login)
+/signup                                  Signup Page (OR /dashboard/signup)
+
+/dashboard/                              [Protected Dashboard]
+├── /                                    Dashboard Home (Activity Feed)
+├── /catalog                             Artworks Catalog
+│   ├── /                                Catalog List View
+│   ├── /add                             Add New Artwork
+│   └── /{artwork-id}/edit               Edit Artwork
+├── /series                              Series Management
+│   ├── /                                Series List
+│   ├── /add                             Create New Series
+│   └── /{series-id}                     Series Detail Page
+│       └── /edit                        Edit Series (Optional)
+└── /settings                            Portfolio Settings
+    ├── /                                Settings Home/Navigation (OR redirect)
+    ├── /profile                         Profile Settings
+    ├── /exhibitions                     Exhibitions Management
+    ├── /press                           Press Mentions Management
+    ├── /studio                          Studio/Process Photos
+    ├── /techniques                      Techniques & Materials (Post-MVP)
+    └── /contact                         Contact Settings
+```
+
+---
+
+## Page Inventory
+
+### Platform Pages (Public)
+
+**Base URL**: `claycompanion.com/`
+
+| Page | URL | Purpose | Auth Required | Status |
+|------|-----|---------|---------------|--------|
+| Platform Homepage | `/` | Artist discovery, featured content, platform promotion | No | MVP |
+| Platform About | `/about` | Mission, story, features, how it works | No | MVP |
+
+**Page Details**:
+
+**Platform Homepage**:
+- Hero carousel with featured artwork
+- Search and filters (clay type, firing type, artist, location)
+- Featured artists showcase (3 artists)
+- Value proposition ("By artists, for artists")
+- Artist directory (browseable, filterable grid)
+- CTAs: "Explore Artists", "Start Your Portfolio"
+
+**Platform About**:
+- Hero with tagline
+- What is Clay Companion?
+- Who It's For (artists vs art lovers)
+- Features showcase (8-card grid)
+- How It Works (3-step onboarding)
+- Our Story (origin story)
+- Final CTA
+
+---
+
+### Artist Portfolio Pages (Public)
+
+**Base URL**: `claycompanion.com/{artist-name}/`
+
+| Page | URL | Purpose | Auth Required | Status |
+|------|-----|---------|---------------|--------|
+| Artist Profile | `/{artist-name}` | Landing page, featured work, intro | No | MVP |
+| Gallery | `/{artist-name}/gallery` | All public artworks, filterable by series | No | MVP |
+| Artwork Detail | `/{artist-name}/gallery/{artwork-slug}` | Individual artwork page (optional) | No | TBD |
+| About | `/{artist-name}/about` | Bio, statement, photo, education, awards | No | MVP |
+| Process/Studio | `/{artist-name}/process` | Behind-the-scenes photos with captions | No | MVP |
+| Exhibitions | `/{artist-name}/exhibitions` | Featured exhibitions + chronological history | No | MVP |
+| Press | `/{artist-name}/press` | Featured articles + chronological list | No | MVP |
+| Techniques | `/{artist-name}/techniques` | Materials & methods educational content | No | Post-MVP |
+| Contact | `/{artist-name}/contact` | Contact info, social links, Instagram feed | No | MVP |
+
+**Shared Features**:
+- Fixed/sticky navigation bar on all public pages
+- Footer with "Powered by Clay Companion" branding
+- Responsive design (mobile, tablet, desktop)
+- SEO optimized (meta tags, structured data)
+
+---
+
+### Authentication Pages
+
+| Page | URL | Purpose | Auth Required | Status |
+|------|-----|---------|---------------|--------|
+| Login | `/login` | Artist login | No (redirect if authenticated) | MVP |
+| Signup | `/signup` | Artist registration | No (redirect if authenticated) | MVP |
+| Password Reset | `/reset-password` | Forgot password flow | No | MVP |
+
+**Note**: URL convention TBD - Could be `/login` or `/dashboard/login` (to be decided)
+
+---
+
+### Dashboard Pages (Protected)
+
+**Base URL**: `claycompanion.com/dashboard/`
+
+| Page | URL | Purpose | Auth Required | Status |
+|------|-----|---------|---------------|--------|
+| Dashboard Home | `/dashboard` | Activity feed, quick actions, stats | Yes | MVP |
+| Catalog List | `/dashboard/catalog` | View all artworks with filters | Yes | MVP |
+| Add Artwork | `/dashboard/catalog/add` | Create new artwork | Yes | MVP |
+| Edit Artwork | `/dashboard/catalog/{id}/edit` | Edit existing artwork | Yes | MVP |
+| Series List | `/dashboard/series` | View all series | Yes | MVP |
+| Create Series | `/dashboard/series/add` | Create new series | Yes | MVP |
+| Series Detail | `/dashboard/series/{id}` | Manage series, groups, artworks | Yes | MVP |
+| Settings Home | `/dashboard/settings` | Settings navigation (OR redirect to profile) | Yes | TBD |
+| Profile Settings | `/dashboard/settings/profile` | Artist info, bio, photos | Yes | MVP |
+| Exhibitions | `/dashboard/settings/exhibitions` | Manage exhibitions | Yes | MVP |
+| Press | `/dashboard/settings/press` | Manage press mentions | Yes | MVP |
+| Studio Photos | `/dashboard/settings/studio` | Upload studio/process images | Yes | MVP |
+| Techniques | `/dashboard/settings/techniques` | Manage techniques list | Yes | Post-MVP |
+| Contact Settings | `/dashboard/settings/contact` | Contact info & Instagram integration | Yes | MVP |
+
+**Shared Features**:
+- Sidebar or top navigation on all dashboard pages
+- Breadcrumb navigation
+- "View Public Portfolio" link
+- Logout option
+- Responsive design
+
+---
+
+## Navigation Systems
+
+### Platform Navigation (Public Pages)
+
+**Platform Homepage/About Navigation**:
+```
+[Logo] Clay Companion
+├── Home
+├── About
+├── Browse Artists
+└── [CTA] Start Your Portfolio (signup)
+```
+
+---
+
+### Artist Portfolio Navigation
+
+**Fixed/Sticky Navigation Bar** (appears on all artist portfolio pages):
+
+```
+[Artist Name/Logo]
+├── Gallery
+├── About
+├── Process
+├── Exhibitions
+├── Press
+├── Techniques (Post-MVP)
+└── Contact
+```
+
+**Behavior**:
+- Fixed to top on scroll (sticky)
+- Active page indicator (underline or color change)
+- Mobile: Hamburger menu (☰) → Side drawer
+- Artist name/logo links back to artist profile landing page
+
+**Footer** (on all artist portfolio pages):
+```
+Social Media Icons (Instagram, Facebook, etc.)
+Quick Links (Gallery, About, Contact)
+"Powered by Clay Companion" branding
+```
+
+---
+
+### Dashboard Navigation
+
+**Sidebar or Top Navigation** (appears on all dashboard pages):
+
+```
+[Dashboard]
+├── 🏠 Dashboard
+├── 📁 Catalog
+├── 📚 Series
+├── ⚙️ Settings
+│   ├── Profile
+│   ├── Exhibitions
+│   ├── Press
+│   ├── Studio Photos
+│   ├── Techniques (Post-MVP)
+│   └── Contact
+├── 👁️ View Public Portfolio
+└── 🚪 Logout
+```
+
+**Behavior**:
+- Settings can expand/collapse to show subsections
+- Active page indicator (highlight or background)
+- Mobile: Collapsible menu or slide-out drawer
+- Responsive design
+
+**Breadcrumbs** (on dashboard pages):
+```
+Dashboard > Catalog
+Dashboard > Catalog > Add Artwork
+Dashboard > Series > "2024 Collection"
+Dashboard > Settings > Profile
+```
+
+---
+
+## URL Naming Conventions
+
+### Slug Generation
+
+**Artist Name Slugs**:
+- Lowercase only
+- Hyphens for spaces (not underscores)
+- Remove special characters
+- Examples:
+  - "Jane Doe" → `jane-doe`
+  - "Sarah Martinez-Ceramics" → `sarah-martinez-ceramics`
+
+**Artwork Slugs** (for dedicated artwork pages, if implemented):
+- Generated from artwork title
+- Lowercase, hyphens for spaces
+- Remove special characters
+- Append ID if title conflicts
+- Examples:
+  - "Vessel No. 47" → `vessel-no-47`
+  - "Blue Bowl" → `blue-bowl`
+  - "Blue Bowl" (second) → `blue-bowl-2` (or use ID)
+
+**URL Style**:
+- Lowercase only
+- Hyphens (not underscores)
+- No trailing slashes (or consistent trailing slashes - choose one)
+- Descriptive, human-readable
+- SEO-friendly
+
+---
+
+## Page-Level Requirements
+
+### All Pages
+
+**Meta Information**:
+- Unique page title (for browser tab and SEO)
+- Meta description (for search results)
+- Open Graph tags (for social sharing)
+- Canonical URL
+- Responsive viewport meta tag
+
+**Accessibility**:
+- Semantic HTML structure
+- Proper heading hierarchy (H1 → H2 → H3, no skipping)
+- Skip to main content link
+- ARIA landmarks (nav, main, footer)
+- Alt text on images
+- Focus indicators
+- Keyboard navigation
+
+**Performance**:
+- Fast load times (< 3s)
+- Lazy load images below fold
+- Optimize critical rendering path
+- Minimize HTTP requests
+- Compress assets
+
+---
+
+### Public Pages
+
+**SEO Requirements**:
+- Unique meta titles and descriptions per page
+- Structured data (Schema.org JSON-LD):
+  - Person (artist)
+  - CreativeWork (artworks)
+  - Event (exhibitions)
+- XML sitemap for all public pages
+- Robots.txt configuration
+- Social sharing preview images
+
+**Caching**:
+- Cache public pages for performance
+- Cache-control headers
+- CDN delivery for global speed
+
+---
+
+### Protected Pages (Dashboard)
+
+**Authentication**:
+- Require valid session/token
+- Redirect to login if unauthenticated
+- Preserve intended destination (redirect back after login)
+
+**Authorization**:
+- Verify user has access to requested resource
+- Prevent access to other artists' data
+
+**Session Management**:
+- Keep session alive during activity
+- Show warning before session timeout
+- Handle expired sessions gracefully
+
+---
+
+## Route Protection Matrix
+
+| Route Pattern | Public Access | Authenticated Access | Notes |
+|---------------|---------------|----------------------|-------|
+| `/` | ✅ Yes | ✅ Yes | Platform homepage |
+| `/about` | ✅ Yes | ✅ Yes | Platform about |
+| `/{artist-name}/*` | ✅ Yes | ✅ Yes | Artist portfolios |
+| `/login`, `/signup` | ✅ Yes | ❌ Redirect to dashboard | Auth pages |
+| `/dashboard/*` | ❌ Redirect to login | ✅ Yes | Protected dashboard |
+
+---
+
+## Error Pages
+
+### 404 - Not Found
+
+**Scenarios**:
+- Invalid artist name: `claycompanion.com/nonexistent-artist`
+- Invalid page URL: `claycompanion.com/artist-name/invalid-page`
+- Invalid artwork ID: `claycompanion.com/dashboard/catalog/invalid-id/edit`
+
+**Content**:
+- "Page not found" message
+- Suggestion: "Search for artists" or "Return to homepage"
+- Links to platform homepage or search
+- Design consistent with site aesthetic
+
+### 403 - Forbidden
+
+**Scenarios**:
+- Attempt to access another artist's dashboard
+- Attempt to edit another artist's content
+
+**Content**:
+- "Access denied" message
+- Suggestion: "Please login to your own account"
+- Link to login page
+- Link to homepage
+
+### 500 - Server Error
+
+**Scenarios**:
+- Database connection failure
+- Unexpected server errors
+- Third-party service failures
+
+**Content**:
+- "Something went wrong" message
+- Suggestion: "Please try again in a moment"
+- Link to homepage
+- Contact support option (email or link)
+
+---
+
+## Redirects
+
+### Authentication Redirects
+
+**Unauthenticated User Accesses Dashboard**:
+- From: `/dashboard/catalog`
+- To: `/login?redirect=/dashboard/catalog`
+- After login: Redirect to originally requested page
+
+**Authenticated User Accesses Auth Pages**:
+- From: `/login`
+- To: `/dashboard`
+- Prevents logged-in users from seeing login/signup
+
+### Legacy/Changed URLs (Post-MVP)
+
+**When URLs change**:
+- Implement 301 redirects from old to new URLs
+- Preserve SEO value and bookmarks
+- Update XML sitemap
+
+---
+
+## Open Questions
+
+### Artwork Detail Pages
+
+**Question**: Should clicking artwork in gallery open a modal/lightbox, or navigate to a dedicated page?
+
+**Options**:
+- **Option A**: Lightbox/modal (no separate page URL)
+  - Pros: Keeps users in gallery flow, simpler implementation
+  - Cons: Not shareable, no individual SEO for artworks
+
+- **Option B**: Dedicated artwork detail page with URL (`/{artist-name}/gallery/{artwork-slug}`)
+  - Pros: Shareable URLs, better SEO, deep linking
+  - Cons: More pages to implement, navigates away from gallery
+
+**Recommendation**: Hybrid approach:
+- Default: Click opens lightbox/modal
+- URL updates on lightbox open (pushState)
+- Direct URL access opens page with lightbox
+- Share button in lightbox copies URL
+- Best of both worlds: flow + shareable URLs
+
+---
+
+### Login URL Convention
+
+**Question**: Should login be at `/login` or `/dashboard/login`?
+
+**Options**:
+- **Option A**: `/login` (and `/signup`, `/reset-password`)
+  - Pros: Simpler, shorter, more conventional
+  - Cons: Not nested under dashboard
+
+- **Option B**: `/dashboard/login` (and `/dashboard/signup`)
+  - Pros: Organized under dashboard namespace
+  - Cons: Longer URL, less conventional
+
+**Recommendation**: `/login` (Option A)
+- More conventional and expected
+- Shorter, easier to remember
+- Auth is technically separate from dashboard
+
+---
+
+### Settings Landing Page
+
+**Question**: What happens when artist visits `/dashboard/settings`?
+
+**Options**:
+- **Option A**: Show navigation/overview of all settings sections
+  - Pros: Gives users orientation
+  - Cons: Extra page with little value
+
+- **Option B**: Redirect to `/dashboard/settings/profile` (first subsection)
+  - Pros: Fewer pages, direct access
+  - Cons: No settings overview
+
+- **Option C**: No `/settings` route, only subpages directly accessible
+  - Pros: Simplest
+  - Cons: No clear entry point
+
+**Recommendation**: Option A or B (to be decided during implementation)
+- Option A if settings is complex and needs overview
+- Option B for simplicity
+
+---
+
+## Mobile Navigation Considerations
+
+### Artist Portfolio (Mobile)
+
+**Hamburger Menu**:
+- Icon: ☰ (three horizontal lines)
+- Location: Top right corner
+- Tap to open: Slide-out drawer or overlay
+- Menu items:
+  - Gallery
+  - About
+  - Process
+  - Exhibitions
+  - Press
+  - Contact
+- Tap item to navigate, menu closes
+- Tap outside menu to close
+
+**Mobile Footer**:
+- Simplified footer on mobile
+- Essential links only
+- Social media icons (larger tap targets)
+
+### Dashboard (Mobile)
+
+**Collapsible Navigation**:
+- Hamburger menu or bottom tab bar
+- Essential navigation items visible
+- Settings submenu expandable
+- "View Portfolio" accessible
+- Logout accessible
+
+---
+
+## Accessibility Navigation
+
+### Keyboard Navigation
+
+**Tab Order**:
+- Logical tab order through interactive elements
+- Skip to main content link (first focusable element)
+- Skip nav links for screen readers
+
+**Keyboard Shortcuts**:
+- `Tab`: Move to next interactive element
+- `Shift + Tab`: Move to previous element
+- `Enter/Space`: Activate links and buttons
+- `Esc`: Close modals/lightboxes
+- `Arrow keys`: Navigate within menus or carousels
+
+### Screen Reader Navigation
+
+**Landmarks**:
+- `<header>`: Site header with navigation
+- `<nav>`: Navigation menus
+- `<main>`: Main page content
+- `<aside>`: Sidebars (if any)
+- `<footer>`: Site footer
+
+**Heading Structure**:
+- One `<h1>` per page (page title)
+- Logical `<h2>` - `<h6>` hierarchy
+- No skipping levels
+
+**ARIA Labels**:
+- `aria-label` on icon-only buttons
+- `aria-current="page"` on active nav item
+- `aria-expanded` on collapsible menus
+
+---
+
+## Notes
+
+This page structure is technology-agnostic and can be implemented with:
+- Server-side routing (traditional multi-page)
+- Client-side routing (SPA with framework router)
+- Hybrid approach (SSR + client-side hydration)
+- Static site generation with dynamic routes
+
+Choose routing approach based on:
+- Framework capabilities
+- SEO requirements
+- Performance needs
+- Development team preferences
+
+---
+
+**Document Version**: 1.0 (Tech-Agnostic)
+**Source Documents**: Extracted from PAGE_TREE.md, DECISIONS.md, wireframe specs
