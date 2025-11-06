@@ -186,7 +186,7 @@ clay_companion/
 - [x] Tech stack selected
 - [x] Docker development environment ✅
 - [x] Rails app initialized ✅
-- [ ] RSpec configured with TDD workflow
+- [x] RSpec configured with TDD workflow ✅
 - [ ] Tailwind CSS + Design system setup
 - [ ] Database schema created
 - [ ] Artist authentication (Devise)
