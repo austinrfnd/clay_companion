@@ -235,6 +235,10 @@ docker-compose exec web bundle exec rails db:drop db:create db:migrate db:seed
 
 This project follows **strict TDD**. Here's the mandatory workflow:
 
+**Additional Resources:**
+- [MODEL_IMPLEMENTATION_CHECKLIST.md](MODEL_IMPLEMENTATION_CHECKLIST.md) - Step-by-step checklist for implementing models with TDD
+- [TEST_SUITE_SUMMARY.md](TEST_SUITE_SUMMARY.md) - Overview of the complete test suite structure and coverage
+
 #### 1. Write Failing Test (RED)
 
 ```bash

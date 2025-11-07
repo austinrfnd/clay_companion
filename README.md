@@ -25,6 +25,8 @@ Clay Companion is a **Rails monolith** built with **Hotwire** for server-side re
 - **[Architecture Decisions](docs/ARCHITECTURE.md)** - Rails stack, infrastructure, and design patterns
 - **[Development Guide](docs/DEVELOPMENT.md)** - Docker setup, TDD workflow, and commands
 - **[Code Quality Standards](docs/CODE_QUALITY.md)** - Ruby/Rails best practices and conventions
+- **[Model Implementation Checklist](docs/MODEL_IMPLEMENTATION_CHECKLIST.md)** - Step-by-step guide for implementing models with TDD
+- **[Test Suite Summary](docs/TEST_SUITE_SUMMARY.md)** - Overview of test suite structure and coverage
 - **[API Documentation](docs/API.md)** - API endpoints for future mobile apps (Post-MVP)
 
 ## Tech Stack

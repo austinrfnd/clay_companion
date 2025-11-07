@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_06_233138) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_06_235802) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -81,11 +81,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_06_233138) do
     t.integer "display_order", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "series_id"
     t.index ["artist_id", "display_order"], name: "index_artworks_on_artist_id_and_display_order"
     t.index ["artist_id"], name: "index_artworks_on_artist_id"
     t.index ["artwork_group_id", "display_order"], name: "index_artworks_on_artwork_group_id_and_display_order"
     t.index ["artwork_group_id"], name: "index_artworks_on_artwork_group_id"
     t.index ["is_featured"], name: "index_artworks_on_is_featured"
+    t.index ["series_id"], name: "index_artworks_on_series_id"
   end
 
   create_table "exhibition_images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -173,6 +175,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_06_233138) do
   add_foreign_key "artwork_images", "artworks"
   add_foreign_key "artworks", "artists"
   add_foreign_key "artworks", "artwork_groups"
+  add_foreign_key "artworks", "series"
   add_foreign_key "exhibition_images", "exhibitions"
   add_foreign_key "exhibitions", "artists"
   add_foreign_key "press_mentions", "artists"
