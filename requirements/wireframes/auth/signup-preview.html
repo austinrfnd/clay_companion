@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Clay Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Design System Colors */
+    :root {
+      --celadon-green: #6E9180;
+      --celadon-dark: #527563;
+      --charcoal: #1F2421;
+      --slate: #5C6C62;
+      --pale-celadon: #A8C4B5;
+      --misty-white: #F8FAF9;
+      --white: #FFFFFF;
+      --error-red: #C73030;
+      --success-green: #0D8F68;
+      --warning-orange: #D68500;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: var(--misty-white);
+      color: var(--charcoal);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background-color: var(--white);
+      border-bottom: 1px solid rgba(168, 196, 181, 0.3);
+      padding: 16px 24px;
+    }
+
+    .header-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+
+    .header-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .header-link {
+      color: var(--slate);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 150ms ease;
+    }
+
+    .header-link:hover {
+      color: var(--celadon-green);
+      background-color: rgba(168, 196, 181, 0.1);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px 40px;
+    }
+
+    @media (max-width: 767px) {
+      .main-content {
+        padding: 40px 24px 24px;
+      }
+    }
+
+    /* Signup Container */
+    .signup-container {
+      width: 100%;
+      max-width: 600px;
+      background-color: var(--white);
+      border-radius: 4px;
+      padding: 48px 32px;
+    }
+
+    @media (max-width: 767px) {
+      .signup-container {
+        padding: 32px 24px;
+      }
+    }
+
+    /* Typography */
+    .signup-heading {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    @media (max-width: 767px) {
+      .signup-heading {
+        font-size: 36px;
+      }
+    }
+
+    .signup-subheading {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--slate);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 48px;
+      padding: 16px 12px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      color: var(--charcoal);
+      background-color: var(--white);
+      border: 1px solid rgba(168, 196, 181, 0.5);
+      border-radius: 8px;
+      transition: all 200ms ease;
+    }
+
+    .form-input::placeholder {
+      color: rgba(92, 108, 98, 0.6);
+    }
+
+    .form-input:hover {
+      border-color: var(--pale-celadon);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border: 2px solid var(--celadon-green);
+    }
+
+    .form-input.error {
+      border: 2px solid var(--error-red);
+    }
+
+    /* Password Toggle */
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--slate);
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 150ms ease;
+    }
+
+    .password-toggle:hover {
+      color: var(--celadon-green);
+    }
+
+    .password-toggle:focus {
+      outline: 2px solid var(--celadon-green);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .password-input {
+      padding-right: 48px;
+    }
+
+    /* Password Strength Indicator */
+    .password-strength {
+      margin-top: 8px;
+    }
+
+    .strength-bar-container {
+      width: 100%;
+      height: 4px;
+      background-color: rgba(168, 196, 181, 0.3);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+
+    .strength-bar {
+      height: 100%;
+      border-radius: 9999px;
+      transition: all 200ms ease;
+      width: 0%;
+    }
+
+    .strength-bar.weak {
+      background-color: var(--error-red);
+      width: 33%;
+    }
+
+    .strength-bar.medium {
+      background-color: var(--warning-orange);
+      width: 66%;
+    }
+
+    .strength-bar.strong {
+      background-color: var(--success-green);
+      width: 100%;
+    }
+
+    .strength-text {
+      font-size: 12px;
+      color: var(--slate);
+      font-weight: 400;
+    }
+
+    /* Password Requirements */
+    .password-requirements {
+      margin-top: 8px;
+      list-style: none;
+      padding: 0;
+    }
+
+    .requirement-item {
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .requirement-item.met {
+      color: var(--charcoal);
+    }
+
+    .requirement-item.unmet {
+      color: var(--slate);
+    }
+
+    .requirement-icon {
+      font-size: 14px;
+      width: 16px;
+      text-align: center;
+    }
+
+    .requirement-item.met .requirement-icon {
+      color: var(--success-green);
+    }
+
+    .requirement-item.unmet .requirement-icon {
+      color: var(--slate);
+    }
+
+    /* Terms Checkbox */
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--pale-celadon);
+      border-radius: 4px;
+      cursor: pointer;
+      appearance: none;
+      position: relative;
+      transition: all 150ms ease;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .checkbox:hover {
+      border-color: var(--celadon-green);
+    }
+
+    .checkbox:checked {
+      background-color: var(--celadon-green);
+      border-color: var(--celadon-green);
+    }
+
+    .checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .checkbox:focus {
+      outline: 2px solid var(--celadon-green);
+      outline-offset: 2px;
+    }
+
+    .checkbox-label {
+      font-size: 14px;
+      color: var(--charcoal);
+      cursor: pointer;
+      user-select: none;
+      line-height: 1.5;
+    }
+
+    .checkbox-label a {
+      color: var(--celadon-green);
+      text-decoration: none;
+    }
+
+    .checkbox-label a:hover {
+      text-decoration: underline;
+      color: var(--celadon-dark);
+    }
+
+    /* Error Message */
+    .error-message {
+      display: none;
+      margin-top: 8px;
+      padding: 12px;
+      background-color: rgba(199, 48, 48, 0.1);
+      border: 1px solid var(--error-red);
+      border-radius: 8px;
+      color: var(--error-red);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .error-message::before {
+      content: '⚠️ ';
+      margin-right: 4px;
+    }
+
+    /* Submit Button */
+    .submit-button {
+      width: 100%;
+      height: 48px;
+      background-color: var(--celadon-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 150ms ease;
+      box-shadow: 0 1px 2px rgba(31, 36, 33, 0.05);
+    }
+
+    .submit-button:hover {
+      background-color: #3f5a4d;
+    }
+
+    .submit-button:active {
+      background-color: #2d3f35;
+      transform: scale(0.98);
+    }
+
+    .submit-button:focus {
+      outline: 2px solid var(--celadon-green);
+      outline-offset: 2px;
+    }
+
+    .submit-button:disabled {
+      background-color: var(--pale-celadon);
+      color: rgba(92, 108, 98, 0.5);
+      cursor: not-allowed;
+    }
+
+    /* Divider */
+    .divider {
+      margin: 32px 0;
+      height: 1px;
+      background-color: rgba(168, 196, 181, 0.3);
+      border: none;
+    }
+
+    /* Sign In Link */
+    .signin-prompt {
+      text-align: center;
+      font-size: 16px;
+      color: var(--slate);
+    }
+
+    .signin-link {
+      color: var(--celadon-green);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 150ms ease;
+    }
+
+    .signin-link:hover {
+      text-decoration: underline;
+      color: var(--celadon-dark);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--misty-white);
+      padding: 24px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--slate);
+      border-top: 1px solid rgba(168, 196, 181, 0.3);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .footer-link {
+      color: var(--slate);
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+
+    .footer-link:hover {
+      color: var(--celadon-green);
+    }
+
+    /* Demo Controls */
+    .demo-controls {
+      margin-top: 24px;
+      padding: 16px;
+      background-color: rgba(168, 196, 181, 0.1);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--slate);
+    }
+
+    .demo-button {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 16px;
+      background-color: var(--celadon-green);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 150ms ease;
+      margin-right: 8px;
+    }
+
+    .demo-button:hover {
+      background-color: var(--celadon-dark);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="#" class="logo">Clay Companion</a>
+      <div class="header-links">
+        <a href="#" class="header-link">Sign Up</a>
+        <a href="#" class="header-link">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="signup-container">
+      <h1 class="signup-heading">Create Your Account</h1>
+      <p class="signup-subheading">Start building your portfolio today</p>
+
+      <form id="signupForm" action="#" method="post">
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <div class="input-wrapper">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input"
+              placeholder="artist@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <div class="error-message" id="emailError"></div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-input password-input"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              required
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              id="passwordToggle"
+              aria-label="Toggle password visibility"
+              aria-pressed="false"
+            >
+              <span id="toggleIcon">👁️</span>
+            </button>
+          </div>
+
+          <!-- Password Strength Indicator -->
+          <div class="password-strength" id="passwordStrength">
+            <div class="strength-bar-container">
+              <div class="strength-bar" id="strengthBar"></div>
+            </div>
+            <div class="strength-text" id="strengthText">Password Strength: <span id="strengthLevel">-</span></div>
+          </div>
+
+          <!-- Password Requirements -->
+          <ul class="password-requirements" id="passwordRequirements">
+            <li class="requirement-item" id="reqLength">
+              <span class="requirement-icon">✗</span>
+              <span>8-30 characters</span>
+            </li>
+            <li class="requirement-item" id="reqCase">
+              <span class="requirement-icon">✗</span>
+              <span>Uppercase and lowercase letters</span>
+            </li>
+            <li class="requirement-item" id="reqNumber">
+              <span class="requirement-icon">✗</span>
+              <span>At least one number</span>
+            </li>
+            <li class="requirement-item" id="reqSpecial">
+              <span class="requirement-icon">✗</span>
+              <span>At least one special character</span>
+            </li>
+          </ul>
+
+          <div class="error-message" id="passwordError"></div>
+        </div>
+
+        <!-- Terms Checkbox -->
+        <div class="checkbox-group">
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            class="checkbox"
+            required
+          />
+          <label for="terms" class="checkbox-label">
+            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+          </label>
+        </div>
+        <div class="error-message" id="termsError"></div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-button" id="submitButton">
+          Create Account
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <hr class="divider" />
+
+      <!-- Sign In Prompt -->
+      <p class="signin-prompt">
+        Already have an account? <a href="#" class="signin-link">Sign in</a>
+      </p>
+
+      <!-- Demo Controls -->
+      <div class="demo-controls">
+        <strong>Demo Controls:</strong>
+        <br>
+        <button type="button" class="demo-button" onclick="toggleErrorState()">
+          Toggle Error State
+        </button>
+        <button type="button" class="demo-button" onclick="fillStrongPassword()">
+          Fill Strong Password
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#" class="footer-link">Contact</a>
+      <a href="#" class="footer-link">About</a>
+      <a href="#" class="footer-link">Terms</a>
+      <a href="#" class="footer-link">Privacy</a>
+    </div>
+    <div>Powered by Clay Companion</div>
+  </footer>
+
+  <script>
+    // Password Visibility Toggle
+    const passwordToggle = document.getElementById('passwordToggle');
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggleIcon');
+    let isPasswordVisible = false;
+
+    passwordToggle.addEventListener('click', function() {
+      isPasswordVisible = !isPasswordVisible;
+      
+      if (isPasswordVisible) {
+        passwordInput.type = 'text';
+        toggleIcon.textContent = '🙈';
+        passwordToggle.setAttribute('aria-pressed', 'true');
+      } else {
+        passwordInput.type = 'password';
+        toggleIcon.textContent = '👁️';
+        passwordToggle.setAttribute('aria-pressed', 'false');
+      }
+    });
+
+    // Password Strength Checker
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthLevel = document.getElementById('strengthLevel');
+    const reqLength = document.getElementById('reqLength');
+    const reqCase = document.getElementById('reqCase');
+    const reqNumber = document.getElementById('reqNumber');
+    const reqSpecial = document.getElementById('reqSpecial');
+
+    function checkPasswordStrength(password) {
+      let metCount = 0;
+      
+      // Check length (8-30 characters)
+      const hasLength = password.length >= 8 && password.length <= 30;
+      updateRequirement(reqLength, hasLength);
+      if (hasLength) metCount++;
+
+      // Check uppercase and lowercase
+      const hasUpper = /[A-Z]/.test(password);
+      const hasLower = /[a-z]/.test(password);
+      const hasCase = hasUpper && hasLower;
+      updateRequirement(reqCase, hasCase);
+      if (hasCase) metCount++;
+
+      // Check number
+      const hasNum = /[0-9]/.test(password);
+      updateRequirement(reqNumber, hasNum);
+      if (hasNum) metCount++;
+
+      // Check special character
+      const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+      updateRequirement(reqSpecial, hasSpecial);
+      if (hasSpecial) metCount++;
+
+      // Update strength bar and text
+      strengthBar.className = 'strength-bar';
+      if (metCount === 0) {
+        strengthBar.style.width = '0%';
+        strengthLevel.textContent = '-';
+      } else if (metCount <= 2) {
+        strengthBar.classList.add('weak');
+        strengthLevel.textContent = 'Weak';
+      } else if (metCount === 3) {
+        strengthBar.classList.add('medium');
+        strengthLevel.textContent = 'Medium';
+      } else {
+        strengthBar.classList.add('strong');
+        strengthLevel.textContent = 'Strong';
+      }
+    }
+
+    function updateRequirement(element, met) {
+      const icon = element.querySelector('.requirement-icon');
+      if (met) {
+        element.classList.remove('unmet');
+        element.classList.add('met');
+        icon.textContent = '✓';
+        icon.style.color = 'var(--success-green)';
+      } else {
+        element.classList.remove('met');
+        element.classList.add('unmet');
+        icon.textContent = '✗';
+        icon.style.color = 'var(--slate)';
+      }
+    }
+
+    passwordInput.addEventListener('input', function() {
+      checkPasswordStrength(this.value);
+    });
+
+    // Form Submission
+    const signupForm = document.getElementById('signupForm');
+    const submitButton = document.getElementById('submitButton');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const termsError = document.getElementById('termsError');
+    const emailInput = document.getElementById('email');
+    const termsCheckbox = document.getElementById('terms');
+
+    signupForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Clear previous errors
+      emailError.classList.remove('show');
+      passwordError.classList.remove('show');
+      termsError.classList.remove('show');
+      emailInput.classList.remove('error');
+      passwordInput.classList.remove('error');
+
+      // Validate
+      let hasErrors = false;
+
+      if (!emailInput.value) {
+        emailError.textContent = 'Email is required';
+        emailError.classList.add('show');
+        emailInput.classList.add('error');
+        hasErrors = true;
+      }
+
+      const password = passwordInput.value;
+      const metCount = [reqLength, reqCase, reqNumber, reqSpecial].filter(req => req.classList.contains('met')).length;
+      
+      if (!password || metCount < 4) {
+        passwordError.textContent = '⚠️ Password does not meet all requirements';
+        passwordError.classList.add('show');
+        passwordInput.classList.add('error');
+        hasErrors = true;
+      }
+
+      if (!termsCheckbox.checked) {
+        termsError.textContent = '⚠️ You must agree to the Terms of Service and Privacy Policy';
+        termsError.classList.add('show');
+        hasErrors = true;
+      }
+
+      if (hasErrors) {
+        return;
+      }
+
+      // Show loading state
+      submitButton.disabled = true;
+      submitButton.textContent = 'Creating account...';
+      
+      // Simulate API call
+      setTimeout(() => {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Create Account';
+        alert('Account created! (This is a preview - no actual account creation)');
+      }, 1000);
+    });
+
+    // Error State Toggle (Demo)
+    function toggleErrorState() {
+      const hasError = emailInput.classList.contains('error');
+      
+      if (hasError) {
+        emailInput.classList.remove('error');
+        passwordInput.classList.remove('error');
+        emailError.classList.remove('show');
+        passwordError.classList.remove('show');
+        termsError.classList.remove('show');
+      } else {
+        emailInput.classList.add('error');
+        passwordInput.classList.add('error');
+        emailError.textContent = '⚠️ This email is already registered. Sign in instead?';
+        emailError.classList.add('show');
+        passwordError.textContent = '⚠️ Password does not meet all requirements';
+        passwordError.classList.add('show');
+      }
+    }
+
+    // Fill Strong Password (Demo)
+    function fillStrongPassword() {
+      passwordInput.value = 'SecurePass123!';
+      passwordInput.dispatchEvent(new Event('input'));
+    }
+
+    // Clear error on input
+    emailInput.addEventListener('input', function() {
+      if (this.classList.contains('error')) {
+        this.classList.remove('error');
+        emailError.classList.remove('show');
+      }
+    });
+
+    passwordInput.addEventListener('input', function() {
+      if (this.classList.contains('error')) {
+        this.classList.remove('error');
+        passwordError.classList.remove('show');
+      }
+    });
+
+    termsCheckbox.addEventListener('change', function() {
+      if (termsError.classList.contains('show')) {
+        termsError.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>
+

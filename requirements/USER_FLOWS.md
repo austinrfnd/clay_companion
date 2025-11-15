@@ -1,6 +1,6 @@
 # Clay Companion - User Flows
 
-**Last Updated**: 2025-11-05
+**Last Updated**: 2025-11-06
 **Document Type**: Tech-Agnostic User Journey Requirements
 
 ---
@@ -8,6 +8,14 @@
 ## Overview
 
 This document describes the key user journeys and interaction flows for Clay Companion. These flows are technology-agnostic and focus on user goals, actions, and expected outcomes.
+
+**Wireframe References**: Detailed wireframes and HTML previews for authentication flows are available in `requirements/wireframes/auth/`:
+- Login: `auth/login.md` | Preview: `auth/login-preview.html`
+- Signup: `auth/signup.md` | Preview: `auth/signup-preview.html`
+- Password Reset: `auth/password-reset.md` | Preview: `auth/password-reset-preview.html`
+- Email Verification: `auth/email-verification.md` | Preview: `auth/email-verification-preview.html`
+- Profile Setup: `auth/profile-setup.md` | Preview: `auth/profile-setup-preview.html`
+- Complete Auth Flows: `auth/AUTH_FLOWS.md` (comprehensive documentation)
 
 ---
 
@@ -17,6 +25,11 @@ This document describes the key user journeys and interaction flows for Clay Com
 
 **Goal**: Get a new artist from signup to published portfolio
 
+**Wireframe References**:
+- Signup: `requirements/wireframes/auth/signup.md` | Preview: `auth/signup-preview.html`
+- Email Verification: `requirements/wireframes/auth/email-verification.md` | Preview: `auth/email-verification-preview.html`
+- Profile Setup: `requirements/wireframes/auth/profile-setup.md` | Preview: `auth/profile-setup-preview.html`
+
 **Steps**:
 1. Visit platform homepage
 2. Click "Start Your Portfolio" or "Sign Up"
@@ -25,16 +38,19 @@ This document describes the key user journeys and interaction flows for Clay Com
    - Create password (with strength requirements)
    - Accept terms of service
    - Submit form
+   - See wireframe: `auth/signup.md` for complete specifications
 4. **Email Verification**:
    - Receive verification email
    - Click verification link
    - Confirmation message displayed
+   - See wireframe: `auth/email-verification.md` for all verification states
 5. **Profile Setup** (First-time login):
    - Enter full name (required)
    - Upload portrait photo (required)
    - Enter location (optional)
    - Enter bio (optional)
    - Skip to dashboard or continue setup
+   - See wireframe: `auth/profile-setup.md` for complete specifications
 6. **Add First Artwork** (Guided):
    - Click "Add Your First Artwork" button
    - Upload images (drag-and-drop or select)
@@ -60,6 +76,10 @@ This document describes the key user journeys and interaction flows for Clay Com
 
 **Goal**: Authenticated access to artist dashboard
 
+**Wireframe References**:
+- Login: `requirements/wireframes/auth/login.md` | Preview: `auth/login-preview.html`
+- Password Reset: `requirements/wireframes/auth/password-reset.md` | Preview: `auth/password-reset-preview.html`
+
 **Happy Path**:
 1. Visit login page (`/login` or `/dashboard/login`)
 2. Enter email address
@@ -68,6 +88,7 @@ This document describes the key user journeys and interaction flows for Clay Com
 5. Click "Login"
 6. Redirect to dashboard home
 7. See activity feed and quick actions
+8. See wireframe: `auth/login.md` for complete specifications
 
 **Error Cases**:
 
@@ -82,6 +103,7 @@ This document describes the key user journeys and interaction flows for Clay Com
 2. See error message: "Please verify your email first"
 3. Show "Resend verification" button
 4. Click to resend verification email
+5. See wireframe: `auth/email-verification.md` for verification flow
 
 **Forgot Password**:
 1. Click "Forgot password?" link
@@ -92,6 +114,7 @@ This document describes the key user journeys and interaction flows for Clay Com
 6. Receive email with reset link
 7. Click link, enter new password
 8. Redirect to login with success message
+9. See wireframe: `auth/password-reset.md` for complete two-step reset flow
 
 ---
 
@@ -653,5 +676,10 @@ When implementing these flows, ensure:
 
 ---
 
-**Document Version**: 1.0 (Tech-Agnostic)
+**Document Version**: 1.1 (Tech-Agnostic)
 **Source Documents**: Extracted from DECISIONS.md, FEATURES.md, PAGE_TREE.md
+
+**Related Documentation**:
+- Authentication Flows: `requirements/wireframes/auth/AUTH_FLOWS.md` (complete auth flow documentation)
+- Design System: `requirements/DESIGN_SYSTEM.md` (design tokens and patterns)
+- Features: `requirements/FEATURES.md` (feature requirements)
