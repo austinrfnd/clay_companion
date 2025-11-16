@@ -131,6 +131,39 @@ open http://localhost:3000
 
 See [DEVELOPMENT.md](docs/DEVELOPMENT.md) for detailed setup and workflow instructions.
 
+### Authentication
+
+Clay Companion uses **Devise** for authentication with the following features:
+
+- **Email/Password Authentication**: Secure login and signup
+- **Email Confirmation**: Required before account activation (24-hour token expiry)
+- **Password Reset**: Secure password recovery via email (6-hour token expiry)
+- **Remember Me**: Optional persistent sessions (2 weeks)
+- **Profile Setup**: Required after email verification (profile photo, full name, location, bio)
+
+**Custom Routes** (matching wireframe requirements):
+- `/login` - Sign in page
+- `/signup` - Registration page
+- `/logout` - Sign out
+- `/password/reset` - Request password reset
+- `/email/verify/:token` - Email confirmation
+- `/email/resend` - Resend confirmation email
+- `/profile_setup` - Complete profile after verification
+
+**Email Configuration**:
+- Development: Emails are saved to `tmp/letter_opener/` (no SMTP needed)
+- Production: Configure SMTP settings in `config/environments/production.rb`
+
+**Testing Authentication**:
+```bash
+# Run authentication tests
+docker-compose run --rm test bundle exec rspec spec/requests/artists/
+docker-compose run --rm test bundle exec rspec spec/controllers/artists/
+docker-compose run --rm test bundle exec rspec spec/features/authentication_flows_spec.rb
+```
+
+See [requirements/auth/auth-development-plan.md](requirements/auth/auth-development-plan.md) for complete authentication implementation details.
+
 ### Running Tests
 
 ```bash
@@ -192,7 +225,7 @@ clay_companion/
 
 ## Implementation Roadmap
 
-### Phase 1: Foundation (Weeks 1-2) 🚧 Current
+### Phase 1: Foundation (Weeks 1-2) ✅ Complete
 - [x] Requirements finalized
 - [x] Tech stack selected
 - [x] Docker development environment ✅
@@ -200,7 +233,7 @@ clay_companion/
 - [x] RSpec configured with TDD workflow ✅
 - [x] Tailwind CSS + Design system setup ✅
 - [x] Database schema created ✅
-- [ ] Artist authentication (Devise)
+- [x] Artist authentication (Devise) ✅
 
 ### Phase 2: Core Features (Weeks 3-5)
 - [ ] Artist profile management

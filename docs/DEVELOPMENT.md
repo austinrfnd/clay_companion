@@ -158,12 +158,47 @@ docker-compose exec web [command]
 
 ### Environment Variables
 
+**Development** (Docker Compose handles these automatically):
 ```bash
-# .env (not committed to git)
+# .env (not committed to git - optional, Docker Compose uses defaults)
 DATABASE_URL=postgres://clay_companion:development_password@db:5432/clay_companion_development
 REDIS_URL=redis://redis:6379/0
 RAILS_ENV=development
+DOCKER_ENV=true  # Set automatically in Docker containers
 ```
+
+**Production** (required):
+```bash
+# Database
+DATABASE_URL=postgres://user:password@host:5432/clay_companion_production
+
+# Redis (for Action Cable, future background jobs)
+REDIS_URL=redis://host:6379/0
+
+# Rails
+RAILS_ENV=production
+RAILS_MASTER_KEY=<master-key-from-config/master.key>
+SECRET_KEY_BASE=<generated-secret-key>
+
+# Email (SMTP configuration)
+SMTP_ADDRESS=smtp.example.com
+SMTP_PORT=587
+SMTP_DOMAIN=claycompanion.com
+SMTP_USERNAME=your-email@claycompanion.com
+SMTP_PASSWORD=your-password
+SMTP_AUTHENTICATION=plain
+SMTP_ENABLE_STARTTLS_AUTO=true
+
+# Active Storage (Google Cloud Storage)
+GOOGLE_CLOUD_PROJECT=your-project-id
+GOOGLE_CLOUD_KEYFILE=path/to/keyfile.json
+GOOGLE_CLOUD_BUCKET=clay-companion-storage
+```
+
+**Authentication-specific**:
+- No additional environment variables needed for Devise
+- Email sender configured in `config/initializers/devise.rb` (noreply@claycompanion.com)
+- Email delivery method configured per environment (letter_opener in dev, SMTP in production)
 
 ---
 
@@ -1060,6 +1095,43 @@ docker-compose run --rm test bundle exec rails tmp:clear
 
 # Run tests with verbose output
 docker-compose run --rm test bundle exec rspec --format documentation
+```
+
+### Authentication Issues
+
+**Email not sending in development**:
+```bash
+# Check letter_opener directory
+ls -la tmp/letter_opener/
+
+# Emails are saved as HTML files in tmp/letter_opener/
+# Open them in a browser to view
+
+# If emails aren't being saved, check Docker logs
+docker-compose logs web | grep -i mail
+```
+
+**Can't confirm email**:
+```bash
+# Check confirmation token expiry (24 hours)
+# Request a new confirmation email from /email/resend
+
+# In Rails console, manually confirm an artist:
+docker-compose exec web bundle exec rails console
+artist = Artist.find_by(email: 'test@example.com')
+artist.confirm
+```
+
+**Password reset not working**:
+```bash
+# Check reset token expiry (6 hours)
+# Request a new password reset from /password/reset
+
+# In Rails console, manually reset password:
+docker-compose exec web bundle exec rails console
+artist = Artist.find_by(email: 'test@example.com')
+artist.send_reset_password_instructions
+# Check tmp/letter_opener/ for the reset email
 ```
 
 ### Asset Issues
