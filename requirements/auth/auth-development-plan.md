@@ -928,24 +928,74 @@ end
 
 ## Phase 6: Email Templates
 
-### Phase 6.1: Devise Email Templates
+### Phase 6.1: Email Wireframes ✅ COMPLETED
+
+**Status**: ✅ Complete
+
+**Objective**: Create wireframe specifications and HTML preview files for Devise email templates
+
+**Tasks Completed**:
+- [x] Create email confirmation wireframe specification
+- [x] Create email confirmation HTML preview template
+- [x] Create password reset email wireframe specification
+- [x] Create password reset email HTML preview template
+- [x] Follow existing wireframe format and structure
+- [x] Include design system colors and styling
+- [x] Include ceramic "C" logo placeholder
+- [x] Ensure email client compatibility (table-based layout, inline CSS)
+- [x] Mobile responsive design
+- [x] WCAG AA accessibility compliance
+
+**Files Created**:
+- `requirements/wireframes/auth/email-confirmation.md` - Complete wireframe specification for confirmation email
+- `requirements/wireframes/auth/email-confirmation-preview.html` - Complete HTML/CSS email template preview
+- `requirements/wireframes/auth/email-password-reset.md` - Complete wireframe specification for password reset email
+- `requirements/wireframes/auth/email-password-reset-preview.html` - Complete HTML/CSS email template preview
+
+**Wireframe Features**:
+- Branded HTML emails with design system colors (Celadon Green palette)
+- Ceramic "C" logo in header (placeholder ready for actual logo)
+- Styled call-to-action buttons (Celadon Dark background, white text)
+- Table-based layout for email client compatibility
+- Inline CSS (no external stylesheets)
+- Mobile responsive (600px max width)
+- WCAG AA compliant color contrast
+- Clear messaging and security notices
+- Expiry notices (24 hours for confirmation, 6 hours for password reset)
+
+**Email Client Compatibility**:
+- Gmail (web, iOS, Android)
+- Apple Mail (macOS, iOS)
+- Outlook (Windows, web, Mac)
+- Yahoo Mail
+- Other major email clients
+
+**Reference**: Wireframes follow the same format as existing auth wireframes (`login.md`, `signup.md`, etc.)
+
+---
+
+### Phase 6.2: Devise Email Template Implementation
 
 **Status**: ⏳ Pending
 
-**Objective**: Customize Devise email templates
+**Objective**: Implement customized Devise email templates based on wireframes
 
 **Tasks**:
-- [ ] Generate Devise mailer views: `rails generate devise:views`
 - [ ] Customize confirmation email:
   - `app/views/devise/mailer/confirmation_instructions.html.erb`
-  - Match brand styling
+  - Match wireframe specifications
+  - Use ceramic "C" logo (from `public/clay_companion_logo.png`)
+  - Implement table-based layout with inline CSS
   - Clear call-to-action button
 - [ ] Customize password reset email:
   - `app/views/devise/mailer/reset_password_instructions.html.erb`
-  - Match brand styling
+  - Match wireframe specifications
+  - Use ceramic "C" logo
+  - Implement table-based layout with inline CSS
   - Clear call-to-action button
 - [ ] Test emails in development (letter_opener)
 - [ ] Ensure emails are responsive
+- [ ] Verify email client compatibility
 
 **Test Files to Create**:
 - `spec/mailers/devise_mailer_spec.rb`
@@ -1114,7 +1164,8 @@ end
 - ✅ Phase 4.3: Photo Upload Controller (implemented, tests pending)
 - ✅ Phase 5.1: Tailwind CSS Configuration
 - ✅ Phase 5.2: Accessibility Audit
-- ⏳ Phase 6: Email Templates
+- ✅ Phase 6.1: Email Wireframes
+- ⏳ Phase 6.2: Email Template Implementation
 - ⏳ Phase 7: Integration Testing
 - ⏳ Phase 8: Documentation
 
