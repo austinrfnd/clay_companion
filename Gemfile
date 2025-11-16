@@ -71,7 +71,7 @@ end
 
 group :test do
   # Testing tools
-  gem "shoulda-matchers", "~> 6.0"
+  gem "shoulda-matchers", "~> 7.0"
   gem "database_cleaner-active_record", "~> 2.1"
   gem "capybara", "~> 3.39"
   gem "selenium-webdriver"
