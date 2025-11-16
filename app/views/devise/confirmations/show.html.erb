@@ -1,0 +1,114 @@
+<%#
+  Email Confirmation Show View
+  URL: /email/verify/:token
+  States: Success, Error (Invalid/Expired Token), Already Verified
+  
+  Handles email confirmation results when user clicks verification link.
+  Matches wireframe specifications from requirements/wireframes/auth/email-verification.md
+  
+  Features:
+  - Success state: Shows confirmation success and redirect button
+  - Error state: Shows invalid/expired token error with resend option
+  - Already verified state: Shows already confirmed message with sign in link
+  
+  Note: Flash messages are cleared here to avoid duplicate error display
+%>
+
+<%# 
+  Detect error state.
+  We check if there's an invalid token error by looking at resource errors.
+  The controller doesn't set flash for invalid tokens to avoid duplicate display.
+  
+  For invalid tokens, Devise creates a new resource with errors, so resource will exist
+  but have errors on confirmation_token or email fields.
+%>
+<% 
+  # Check if we have an invalid token error
+  # Devise sets errors on the resource when token is invalid
+  has_invalid_token_error = resource.present? && resource.errors.any? && 
+    (resource.errors[:confirmation_token].any? || 
+     resource.errors[:email].any? ||
+     resource.errors.full_messages.any? { |msg| msg.downcase.include?('invalid') || msg.downcase.include?('expired') || msg.downcase.include?('not found') })
+  
+  # Check if already verified (resource exists, is confirmed, but has errors from trying to confirm again)
+  is_already_verified = resource.present? && resource.persisted? && resource.confirmed? && resource.errors.any?
+%>
+
+<div class="auth-page-container">
+  <div class="auth-form-container">
+    <% if has_invalid_token_error %>
+      <%# State 3: Verification Error (Invalid/Expired Token) %>
+      <div class="auth-form-header">
+        <h1 class="auth-form-title">Verification Link Invalid</h1>
+      </div>
+
+      <div class="email-verification-message email-verification-message-error">
+        <span class="email-verification-icon">⚠️</span>
+        <div class="email-verification-content">
+          <p class="email-verification-text">
+            This verification link is invalid or has expired.
+          </p>
+          <p class="email-verification-instructions">
+            Verification links expire after 24 hours for security reasons. Please request a new verification email.
+          </p>
+        </div>
+      </div>
+
+      <div class="email-verification-actions">
+        <%= form_with url: resend_confirmation_path, method: :post, local: true, class: "email-verification-resend-form" do |f| %>
+          <%= f.submit "Resend Verification Email", class: "auth-button auth-button-secondary" %>
+        <% end %>
+
+        <div class="email-verification-divider"></div>
+
+        <p class="email-verification-help-text">
+          Already verified?
+          <%= link_to "Sign in", new_artist_session_path, class: "email-verification-link" %>
+        </p>
+      </div>
+    <% elsif is_already_verified %>
+      <%# State 4: Already Verified %>
+      <div class="auth-form-header">
+        <h1 class="auth-form-title">Email Already Verified</h1>
+      </div>
+
+      <div class="email-verification-message email-verification-message-success">
+        <span class="email-verification-icon">✓</span>
+        <div class="email-verification-content">
+          <p class="email-verification-text">
+            This email address has already been verified.
+          </p>
+          <p class="email-verification-instructions">
+            You can access your account by signing in.
+          </p>
+        </div>
+      </div>
+
+      <div class="email-verification-actions">
+        <%= link_to "Sign In", new_artist_session_path, class: "auth-button auth-button-primary" %>
+      </div>
+    <% else %>
+      <%# State 2: Verification Success (This should normally redirect, but shown here as fallback) %>
+      <div class="auth-form-header">
+        <h1 class="auth-form-title">Email Verified Successfully</h1>
+      </div>
+
+      <div class="email-verification-message email-verification-message-success">
+        <span class="email-verification-icon">✓</span>
+        <div class="email-verification-content">
+          <p class="email-verification-text">
+            Your email address has been verified!
+          </p>
+          <p class="email-verification-instructions">
+            You can now access all features of your account.
+          </p>
+        </div>
+      </div>
+
+      <div class="email-verification-actions">
+        <%= link_to "Continue to Dashboard", dashboard_path, class: "auth-button auth-button-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

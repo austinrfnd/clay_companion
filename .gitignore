@@ -6,7 +6,7 @@ out/
 
 # Dependencies
 node_modules/
-vendor/
+vendor/bundle/
 venv/
 __pycache__/
 
@@ -31,6 +31,7 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+log/
 
 # Database
 *.db
@@ -41,3 +42,24 @@ yarn-error.log*
 tmp/
 temp/
 *.tmp
+
+# Rails specific
+/storage/
+/public/packs/
+/public/packs-test/
+/public/assets/
+/config/master.key
+/config/credentials/*.key
+
+# Testing
+/coverage/
+/spec/examples.txt
+
+# Docker
+/docker-compose.override.yml
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

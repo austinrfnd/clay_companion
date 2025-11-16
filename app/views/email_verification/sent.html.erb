@@ -1,0 +1,63 @@
+<%#
+  Email Verification Sent View
+  URL: /email_verification_sent
+  State 1: Verification Sent (After Signup)
+  
+  Displays confirmation that verification email has been sent.
+  Matches wireframe specifications from requirements/wireframes/auth/email-verification.md
+  
+  Features:
+  - Success message with email address
+  - Instructions about checking email
+  - Resend verification email button
+  - Link to try different email address
+  
+  Note: Flash messages are cleared to avoid duplicate display
+%>
+
+<%# Clear flash messages to avoid duplicate - we show the message in the content area %>
+<% flash.clear %>
+
+<div class="email-verification-page-container">
+  <div class="email-verification-container">
+    <h1 class="email-verification-heading">Verify Your Email Address</h1>
+    
+    <div class="email-verification-success-message">
+      <% if @email %>
+        We've sent a verification email to <strong><%= @email %></strong>
+      <% else %>
+        We've sent a verification email to your email address
+      <% end %>
+    </div>
+
+    <p class="email-verification-info-text">
+      Please check your email and click the verification link to activate your account.<br>
+      The link will expire in 24 hours.
+    </p>
+
+    <%= form_with url: resend_confirmation_path, method: :post, local: true, class: "email-verification-resend-form" do |f| %>
+      <% if @email %>
+        <%= f.hidden_field :email, name: "artist[email]", value: @email %>
+      <% else %>
+        <div class="auth-form-field">
+          <%= f.label :email, "Email Address", class: "auth-form-label" %>
+          <%= f.email_field :email, 
+              name: "artist[email]",
+              autofocus: true, 
+              autocomplete: "email",
+              placeholder: "artist@example.com",
+              class: "auth-form-input",
+              aria: { required: true } %>
+        </div>
+      <% end %>
+      <%= f.submit "Resend Verification Email", class: "email-verification-secondary-button" %>
+    <% end %>
+
+    <hr class="email-verification-divider" />
+
+    <p class="email-verification-help-text">
+      Didn't receive the email? Check your spam folder or<br>
+      <%= link_to "try a different email address", new_confirmation_path, class: "email-verification-info-link" %>
+    </p>
+  </div>
+</div>

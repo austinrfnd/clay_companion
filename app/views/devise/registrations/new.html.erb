@@ -1,0 +1,155 @@
+<%#
+  Signup View
+  URL: /signup
+  
+  Displays the signup form for new artists to create accounts.
+  Matches wireframe specifications from requirements/wireframes/auth/signup.md
+  
+  Features:
+  - Email input
+  - Password input with strength indicator
+  - Password confirmation input
+  - Real-time password strength feedback
+  - Password requirements checklist
+  - Terms of Service checkbox
+  - Error message display
+%>
+
+<div class="auth-page-container">
+  <div class="auth-form-container">
+    <div class="auth-form-header">
+      <h1 class="auth-form-title">Create Your Account</h1>
+      <p class="auth-form-subtitle">Start building your portfolio today</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |f| %>
+      <div class="auth-form-field">
+        <%= f.label :email, "Email Address", class: "auth-form-label" %>
+        <%= f.email_field :email, 
+            autofocus: true, 
+            autocomplete: "email",
+            placeholder: "artist@example.com",
+            value: params.dig(:artist, :email),
+            class: "auth-form-input",
+            aria: { required: true } %>
+        <% if resource.errors[:email].any? %>
+          <%= error_message(resource.errors[:email].first, field_id: 'email') %>
+        <% end %>
+      </div>
+
+      <div class="auth-form-field">
+        <%= f.label :full_name, "Full Name", class: "auth-form-label" %>
+        <%= f.text_field :full_name, 
+            autocomplete: "name",
+            placeholder: "Jane Smith",
+            value: params.dig(:artist, :full_name),
+            class: "auth-form-input",
+            aria: { required: true } %>
+        <% if resource.errors[:full_name].any? %>
+          <%= error_message(resource.errors[:full_name].first, field_id: 'full_name') %>
+        <% end %>
+      </div>
+
+      <div class="auth-form-field" data-controller="password-strength password-toggle">
+        <%= f.label :password, "Password", class: "auth-form-label" %>
+        <div class="auth-form-input-wrapper">
+          <%= f.password_field :password, 
+              autocomplete: "new-password",
+              placeholder: "Create a password",
+              class: "auth-form-input auth-form-input-password",
+              data: { 
+                password_strength_target: "input",
+                password_toggle_target: "input",
+                action: "input->password-strength#updateStrength keyup->password-strength#updateStrength"
+              },
+              aria: { required: true } %>
+          <button type="button" 
+                  class="auth-form-password-toggle"
+                  data-action="click->password-toggle#toggle"
+                  data-password-toggle-target="button"
+                  aria-label="Toggle password visibility">
+            <span data-password-toggle-target="icon">👁️</span>
+          </button>
+        </div>
+
+        <!-- Password Strength Indicator -->
+        <div class="password-strength-indicator">
+          <div class="password-strength-bar-container">
+            <div class="password-strength-bar" data-password-strength-target="strengthBar"></div>
+          </div>
+          <div class="password-strength-text">
+            Password Strength: <span data-password-strength-target="strengthLevel">-</span>
+          </div>
+        </div>
+
+        <!-- Password Requirements -->
+        <ul class="password-requirements" data-password-strength-target="requirements">
+          <li class="password-requirement-item" data-requirement="length">
+            <span class="requirement-icon requirement-unmet">✗</span>
+            <span class="requirement-text requirement-unmet">8-30 characters</span>
+          </li>
+          <li class="password-requirement-item" data-requirement="case">
+            <span class="requirement-icon requirement-unmet">✗</span>
+            <span class="requirement-text requirement-unmet">Uppercase and lowercase letters</span>
+          </li>
+          <li class="password-requirement-item" data-requirement="number">
+            <span class="requirement-icon requirement-unmet">✗</span>
+            <span class="requirement-text requirement-unmet">At least one number</span>
+          </li>
+          <li class="password-requirement-item" data-requirement="special">
+            <span class="requirement-icon requirement-unmet">✗</span>
+            <span class="requirement-text requirement-unmet">At least one special character</span>
+          </li>
+        </ul>
+
+        <% if resource.errors[:password].any? %>
+          <%= error_message(resource.errors[:password].first, field_id: 'password') %>
+        <% end %>
+      </div>
+
+      <div class="auth-form-field" data-controller="password-toggle">
+        <%= f.label :password_confirmation, "Confirm Password", class: "auth-form-label" %>
+        <div class="auth-form-input-wrapper">
+          <%= f.password_field :password_confirmation, 
+              autocomplete: "new-password",
+              placeholder: "Confirm your password",
+              class: "auth-form-input auth-form-input-password",
+              data: { password_toggle_target: "input" },
+              aria: { required: true } %>
+          <button type="button" 
+                  class="auth-form-password-toggle"
+                  data-action="click->password-toggle#toggle"
+                  data-password-toggle-target="button"
+                  aria-label="Toggle password visibility">
+            <span data-password-toggle-target="icon">👁️</span>
+          </button>
+        </div>
+        <% if resource.errors[:password_confirmation].any? %>
+          <%= error_message(resource.errors[:password_confirmation].first, field_id: 'password_confirmation') %>
+        <% end %>
+      </div>
+
+      <div class="auth-form-field">
+        <div class="auth-form-checkbox-wrapper">
+          <%= check_box_tag "artist[terms_accepted]", "1", false, { class: "auth-form-checkbox", required: true } %>
+          <%= label_tag "artist_terms_accepted", class: "auth-form-checkbox-label" do %>
+            I agree to the <%= link_to "Terms of Service", "#", target: "_blank", class: "auth-form-link-inline" %> and <%= link_to "Privacy Policy", "#", target: "_blank", class: "auth-form-link-inline" %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="auth-form-actions">
+        <%= f.submit "Create Account", class: "auth-form-submit" %>
+      </div>
+    <% end %>
+
+    <div class="auth-form-divider"></div>
+
+    <div class="auth-form-footer">
+      <p class="auth-form-footer-text">
+        Already have an account?
+        <%= link_to "Sign in", new_artist_session_path, class: "auth-form-footer-link" %>
+      </p>
+    </div>
+  </div>
+</div>

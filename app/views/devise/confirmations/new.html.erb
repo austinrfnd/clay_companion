@@ -1,0 +1,51 @@
+<%#
+  Resend Confirmation Email View
+  URL: /email/resend
+  
+  Displays the form for resending confirmation email.
+  Matches wireframe specifications from requirements/wireframes/auth/email-verification.md
+  
+  Features:
+  - Email input field
+  - Submit button
+  - Sign in link
+  - Error message display
+%>
+
+<div class="auth-page-container">
+  <div class="auth-form-container">
+    <div class="auth-form-header">
+      <h1 class="auth-form-title">Resend Verification Email</h1>
+      <p class="auth-form-subtitle">Enter your email address to receive a new verification link</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: resend_confirmation_path, html: { method: :post, class: "auth-form" }) do |f| %>
+      <div class="auth-form-field">
+        <%= f.label :email, "Email Address", class: "auth-form-label" %>
+        <%= f.email_field :email, 
+            autofocus: true, 
+            autocomplete: "email",
+            placeholder: "artist@example.com",
+            value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),
+            class: "auth-form-input",
+            aria: { required: true } %>
+        <% if resource.errors[:email].any? %>
+          <%= error_message(resource.errors[:email].first, field_id: 'email') %>
+        <% end %>
+      </div>
+
+      <div class="auth-form-actions">
+        <%= f.submit "Resend Verification Email", class: "auth-form-submit" %>
+      </div>
+    <% end %>
+
+    <div class="auth-form-divider"></div>
+
+    <div class="auth-form-footer">
+      <p class="auth-form-footer-text">
+        Already verified?
+        <%= link_to "Sign in", new_artist_session_path, class: "auth-form-footer-link" %>
+      </p>
+    </div>
+  </div>
+</div>

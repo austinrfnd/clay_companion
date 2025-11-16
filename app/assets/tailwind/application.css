@@ -1,0 +1,862 @@
+@import "tailwindcss";
+
+/**
+ * Clay Companion Design System
+ *
+ * Custom Tailwind CSS v4 configuration with design tokens for the
+ * Clay Companion platform. Follows the "Artwork-First" philosophy
+ * with gallery-like minimalism.
+ *
+ * Design System Reference: requirements/DESIGN_SYSTEM.md
+ */
+
+@theme {
+  /* ============================================
+   * COLOR PALETTE
+   * ============================================ */
+
+  /* Primary Colors - Celadon Green */
+  --color-celadon: #6E9180;
+  --color-celadon-dark: #527563;
+  --color-celadon-light: #8FAA9D;
+
+  /* Neutral Colors */
+  --color-charcoal: #1F2421;
+  --color-slate: #5C6C62;
+  --color-pale-celadon: #A8C4B5;
+  --color-mist: #F8FAF9;
+  --color-misty-white: #F8FAF9;
+  --color-white: #FFFFFF;
+
+  /* Semantic Colors */
+  --color-success: #0D8F68;
+  --color-error: #C73030;
+  --color-warning: #D68500;
+  --color-info: #2563EB;
+
+  /* ============================================
+   * TYPOGRAPHY
+   * ============================================ */
+
+  /* Font Families */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 2rem;      /* 32px */
+  --font-size-4xl: 3rem;      /* 48px */
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* ============================================
+   * SPACING
+   * ============================================ */
+
+  /* Base unit: 4px */
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-12: 3rem;     /* 48px */
+  --spacing-16: 4rem;     /* 64px */
+  --spacing-20: 5rem;     /* 80px */
+
+  /* Gallery-specific spacing */
+  --spacing-gallery-gap: 2.5rem; /* 40px - generous spacing for artwork */
+
+  /* ============================================
+   * BORDER RADIUS
+   * ============================================ */
+
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-xl: 1rem;      /* 16px */
+  --radius-full: 9999px;  /* Fully rounded */
+
+  /* ============================================
+   * SHADOWS
+   * ============================================ */
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+
+  /* ============================================
+   * BREAKPOINTS
+   * ============================================ */
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* ============================================
+ * BASE STYLES
+ * ============================================ */
+
+* {
+  @apply border-slate;
+}
+
+body {
+  @apply bg-mist text-charcoal font-sans;
+}
+
+/* ============================================
+ * CUSTOM UTILITIES
+ * ============================================ */
+
+/* Artwork-first gallery spacing */
+.gallery-grid {
+  @apply grid gap-gallery-gap;
+}
+
+/* Accessible focus states */
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-celadon;
+}
+
+/* Button reset for Celadon buttons */
+.btn-celadon {
+  @apply bg-celadon-dark text-white hover:bg-celadon active:bg-celadon-dark;
+  @apply px-6 py-3 rounded-md font-medium;
+  @apply transition-colors duration-200;
+}
+
+/* ============================================
+ * SHARED COMPONENTS
+ * ============================================ */
+
+/* Platform Header */
+.platform-header {
+  @apply bg-white border-b border-pale-celadon/30;
+}
+
+.platform-header-container {
+  @apply max-w-[1440px] mx-auto;
+}
+
+.platform-header-content {
+  @apply flex items-center justify-between px-4 py-4 md:px-6;
+}
+
+.platform-logo {
+  @apply no-underline focus:outline-2 focus:outline-offset-2 focus:outline-celadon rounded;
+  @apply transition-all duration-150;
+}
+
+.platform-logo-text {
+  @apply text-xl font-semibold text-charcoal;
+  font-family: var(--font-sans);
+}
+
+.platform-header-nav {
+  @apply flex items-center gap-2 md:gap-4;
+}
+
+.platform-header-link {
+  @apply text-sm font-medium text-slate px-3 py-2 md:px-4 rounded-md;
+  @apply hover:text-celadon hover:bg-pale-celadon/10;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon;
+  @apply transition-all duration-150;
+  @apply min-h-[44px] flex items-center; /* Touch-friendly tap target */
+  font-family: var(--font-sans);
+}
+
+/* Platform Footer */
+.platform-footer {
+  @apply bg-misty-white border-t border-pale-celadon/30 mt-auto;
+}
+
+.platform-footer-container {
+  @apply max-w-[1440px] mx-auto px-4 py-6 md:px-6 text-center;
+}
+
+.platform-footer-nav {
+  @apply flex items-center justify-center gap-2 md:gap-4 flex-wrap mb-2;
+}
+
+.platform-footer-link {
+  @apply text-sm text-slate no-underline px-2 py-1 rounded;
+  @apply hover:text-celadon transition-colors duration-150;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon;
+  @apply min-h-[44px] flex items-center; /* Touch-friendly tap target */
+  font-family: var(--font-sans);
+}
+
+.platform-footer-text {
+  @apply text-sm text-slate mt-2;
+  font-family: var(--font-sans);
+}
+
+/* Flash Messages */
+.flash-messages {
+  @apply fixed top-16 md:top-20 left-1/2 transform -translate-x-1/2 z-50;
+  @apply max-w-2xl w-full px-4;
+}
+
+.flash-message {
+  @apply flex items-start gap-3 p-3 rounded-md mb-3;
+  @apply border shadow-sm;
+  @apply transition-all duration-200;
+}
+
+.flash-message-success {
+  @apply bg-success/10 border-success text-success;
+}
+
+.flash-message-error {
+  @apply bg-error/10 border-error text-error;
+}
+
+.flash-message-warning {
+  @apply bg-warning/10 border-warning text-warning;
+}
+
+.flash-message-info {
+  @apply bg-info/10 border-info text-info;
+}
+
+.flash-message-default {
+  @apply bg-slate/10 border-slate text-slate;
+}
+
+.flash-message-icon {
+  @apply flex-shrink-0 text-base;
+}
+
+.flash-message-text {
+  @apply flex-1 text-sm;
+  font-family: var(--font-sans);
+}
+
+.flash-message-close {
+  @apply flex-shrink-0 text-lg font-bold opacity-60;
+  @apply hover:opacity-100 transition-opacity duration-150;
+  @apply bg-transparent border-0 cursor-pointer;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon;
+}
+
+/* Screen reader only */
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only.focus\:not-sr-only:focus {
+  @apply static w-auto h-auto p-2 m-0 overflow-visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ============================================
+ * AUTHENTICATION FORMS
+ * ============================================ */
+
+/* Auth Page Container */
+.auth-page-container {
+  @apply flex justify-center items-start min-h-screen pt-10 md:pt-20 pb-12 px-6;
+}
+
+/* Auth Form Container */
+.auth-form-container {
+  @apply w-full max-w-[600px] bg-white rounded-md p-6 md:p-8;
+  @apply shadow-sm;
+}
+
+/* Auth Form Header */
+.auth-form-header {
+  @apply text-center mb-8;
+}
+
+.auth-form-title {
+  @apply text-4xl md:text-5xl font-bold text-charcoal mb-2;
+  font-family: var(--font-sans);
+}
+
+.auth-form-subtitle {
+  @apply text-lg text-slate;
+  font-family: var(--font-sans);
+}
+
+/* Auth Form */
+.auth-form {
+  @apply space-y-6;
+}
+
+/* Auth Form Field */
+.auth-form-field {
+  @apply space-y-2;
+}
+
+.auth-form-label {
+  @apply block text-sm font-medium text-charcoal mb-2;
+  font-family: var(--font-sans);
+}
+
+/* Auth Form Input */
+.auth-form-input {
+  @apply w-full h-12 px-3 py-4 rounded-md;
+  @apply border border-pale-celadon/50 bg-white text-charcoal;
+  @apply placeholder:text-slate/60;
+  @apply focus:border-celadon focus:ring-2 focus:ring-celadon focus:ring-offset-0;
+  @apply transition-all duration-200;
+  @apply disabled:bg-misty-white disabled:cursor-not-allowed;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+.auth-form-input:invalid {
+  @apply border-error;
+}
+
+.auth-form-input-wrapper {
+  @apply relative;
+}
+
+.auth-form-input-password {
+  @apply pr-12; /* Space for toggle button */
+}
+
+/* Password Toggle Button */
+.auth-form-password-toggle {
+  @apply absolute right-3 top-1/2 -translate-y-1/2;
+  @apply p-3 text-slate hover:text-celadon;
+  @apply bg-transparent border-0 cursor-pointer;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon rounded;
+  @apply transition-colors duration-150;
+  @apply flex items-center justify-center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.auth-form-password-toggle span {
+  @apply text-xl;
+}
+
+/* Auth Form Checkbox */
+.auth-form-checkbox-wrapper {
+  @apply flex items-center gap-2;
+}
+
+.auth-form-checkbox {
+  @apply w-5 h-5 rounded border-2 border-pale-celadon;
+  @apply checked:bg-celadon checked:border-celadon;
+  @apply focus:ring-2 focus:ring-celadon focus:ring-offset-0;
+  @apply cursor-pointer;
+  @apply transition-all duration-150;
+}
+
+.auth-form-checkbox-label {
+  @apply text-base text-slate cursor-pointer;
+  @apply select-none;
+  font-family: var(--font-sans);
+}
+
+/* Auth Form Options */
+.auth-form-options {
+  @apply flex items-center justify-between;
+}
+
+.auth-form-link-wrapper {
+  @apply flex items-center;
+}
+
+.auth-form-link {
+  @apply text-sm text-celadon no-underline;
+  @apply hover:text-celadon-dark hover:underline;
+  @apply transition-colors duration-150;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon rounded;
+  font-family: var(--font-sans);
+}
+
+/* Auth Form Actions */
+.auth-form-actions {
+  @apply mt-8;
+}
+
+.auth-form-submit {
+  @apply w-full h-12 px-6 rounded-md;
+  @apply bg-celadon-dark text-white font-semibold;
+  @apply hover:bg-[#3f5a4d] active:bg-[#2d3f35] active:scale-[0.98];
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon;
+  @apply disabled:bg-pale-celadon disabled:text-slate/50 disabled:cursor-not-allowed;
+  @apply transition-all duration-150;
+  @apply shadow-sm;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+/* Auth Form Divider */
+.auth-form-divider {
+  @apply my-8 h-px bg-pale-celadon/30;
+}
+
+/* Auth Form Footer */
+.auth-form-footer {
+  @apply text-center;
+}
+
+.auth-form-footer-text {
+  @apply text-base text-charcoal;
+  font-family: var(--font-sans);
+}
+
+.auth-form-footer-link {
+  @apply text-base font-semibold text-celadon no-underline;
+  @apply hover:text-celadon-dark hover:underline;
+  @apply transition-colors duration-150;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon rounded;
+  font-family: var(--font-sans);
+}
+
+/* Password Strength Indicator */
+.password-strength-indicator {
+  @apply mt-2 space-y-1;
+}
+
+.password-strength-bar-container {
+  @apply w-full h-1 bg-pale-celadon/30 rounded-full overflow-hidden;
+}
+
+.password-strength-bar {
+  @apply h-full rounded-full transition-all duration-200;
+  width: 0%;
+}
+
+.password-strength-bar.strength-weak {
+  @apply bg-error;
+}
+
+.password-strength-bar.strength-medium {
+  @apply bg-warning;
+}
+
+.password-strength-bar.strength-strong {
+  @apply bg-success;
+}
+
+.password-strength-text {
+  @apply text-xs text-slate;
+  font-family: var(--font-sans);
+}
+
+/* Password Requirements */
+.password-requirements {
+  @apply mt-2 space-y-1 list-none p-0;
+}
+
+.password-requirement-item {
+  @apply flex items-center gap-2 text-xs;
+  font-family: var(--font-sans);
+}
+
+.requirement-icon {
+  @apply flex-shrink-0 w-4 text-center;
+  @apply transition-colors duration-150;
+}
+
+.requirement-icon.requirement-met {
+  @apply text-success;
+}
+
+.requirement-icon.requirement-unmet {
+  @apply text-slate;
+}
+
+.requirement-text {
+  @apply transition-colors duration-150;
+}
+
+.requirement-text.requirement-met {
+  @apply text-charcoal;
+}
+
+.requirement-text.requirement-unmet {
+  @apply text-slate;
+}
+
+/* ============================================
+ * EMAIL VERIFICATION VIEWS
+ * ============================================ */
+
+/* Email Verification Page Container */
+.email-verification-page-container {
+  @apply flex items-center justify-center min-h-screen;
+  padding: 80px 24px 40px; /* Matches wireframe exactly: top, sides, bottom */
+}
+
+@media (max-width: 767px) {
+  .email-verification-page-container {
+    padding: 40px 24px 24px; /* Matches wireframe mobile exactly */
+  }
+}
+
+/* Email Verification Container */
+.email-verification-container {
+  @apply w-full max-w-[600px] bg-white;
+  @apply py-12 px-8;
+  border-radius: 4px; /* Matches wireframe exactly */
+}
+
+@media (max-width: 767px) {
+  .email-verification-container {
+    @apply py-8 px-6;
+  }
+}
+
+/* Email Verification Heading */
+.email-verification-heading {
+  font-size: 48px; /* 3rem - matches wireframe exactly */
+  font-weight: 700; /* Bold - matches wireframe */
+  line-height: 1.2; /* Matches wireframe exactly */
+  letter-spacing: -0.02em;
+  color: var(--color-charcoal);
+  margin-bottom: 24px; /* 1.5rem - matches wireframe exactly */
+  text-align: center;
+  font-family: var(--font-sans);
+}
+
+@media (max-width: 767px) {
+  .email-verification-heading {
+    font-size: 36px; /* 2.25rem */
+  }
+}
+
+/* Success Message (matches wireframe exactly) */
+.email-verification-success-message {
+  padding: 12px; /* 0.75rem - matches wireframe */
+  border-radius: 8px; /* 0.5rem - matches wireframe */
+  margin-bottom: 24px; /* 1.5rem - matches wireframe */
+  background-color: rgba(13, 143, 104, 0.1); /* success/10 - matches wireframe */
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+  font-size: 14px; /* 0.875rem - matches wireframe */
+  line-height: 1.5;
+  font-family: var(--font-sans);
+}
+
+.email-verification-success-message::before {
+  content: '✓ ';
+  margin-right: 4px;
+}
+
+.email-verification-success-message strong {
+  @apply font-semibold;
+}
+
+/* Error Message (for other states) */
+.email-verification-error-message {
+  @apply p-3 rounded-md mb-6;
+  @apply bg-error/10 border border-error text-error;
+  @apply text-sm leading-normal;
+  font-family: var(--font-sans);
+}
+
+.email-verification-error-message::before {
+  content: '⚠️ ';
+  margin-right: 4px;
+}
+
+/* Info Text */
+.email-verification-info-text {
+  @apply text-center text-slate;
+  font-size: 16px; /* 1rem - matches wireframe */
+  line-height: 1.6;
+  margin-bottom: 32px; /* 2rem - matches wireframe */
+  font-family: var(--font-sans);
+}
+
+/* Email Verification Resend Form */
+.email-verification-resend-form {
+  @apply w-full;
+}
+
+/* Email Verification Secondary Button */
+.email-verification-secondary-button {
+  @apply w-full;
+  height: 48px; /* Matches wireframe exactly */
+  @apply rounded-md;
+  @apply bg-white text-celadon-dark border-2 border-celadon-dark;
+  font-size: 16px; /* 1rem - matches wireframe */
+  @apply font-semibold;
+  @apply hover:bg-pale-celadon/10;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon;
+  @apply disabled:bg-pale-celadon disabled:text-slate/50 disabled:cursor-not-allowed;
+  @apply transition-all duration-150;
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+
+.email-verification-secondary-button:active {
+  @apply bg-pale-celadon/20;
+  transform: scale(0.98);
+}
+
+/* Email Verification Divider */
+.email-verification-divider {
+  margin: 32px 0; /* 2rem - matches wireframe exactly */
+  height: 1px;
+  border: none;
+  @apply bg-pale-celadon/30;
+}
+
+/* Email Verification Help Text */
+.email-verification-help-text {
+  @apply text-center text-slate;
+  font-size: 14px; /* 0.875rem - matches wireframe inline style */
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+.email-verification-info-link {
+  @apply text-sm text-celadon no-underline font-semibold;
+  @apply hover:text-celadon-dark hover:underline;
+  @apply transition-colors duration-150;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon rounded;
+  font-family: var(--font-sans);
+}
+
+/* Auth Buttons (for email verification pages) */
+.auth-button {
+  @apply w-full h-12 px-6 rounded-md;
+  @apply font-semibold;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply transition-all duration-150;
+  @apply shadow-sm;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  min-height: 48px; /* Touch-friendly */
+}
+
+.auth-button-primary {
+  @apply bg-celadon-dark text-white;
+  @apply hover:bg-[#3f5a4d] active:bg-[#2d3f35] active:scale-[0.98];
+}
+
+.auth-button-secondary {
+  @apply bg-white text-celadon-dark border-2 border-celadon-dark;
+  @apply hover:bg-celadon/10 active:bg-celadon/20 active:scale-[0.98];
+}
+
+/* Inline link in checkbox label */
+.auth-form-link-inline {
+  @apply text-celadon no-underline;
+  @apply hover:text-celadon-dark hover:underline;
+  @apply transition-colors duration-150;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon rounded;
+  font-family: var(--font-sans);
+}
+
+/* ============================================
+ * PROFILE SETUP STYLES
+ * ============================================ */
+
+/* Profile Setup Row (Photo + Fields) */
+.profile-setup-row {
+  @apply flex gap-4 mb-6;
+}
+
+@media (max-width: 767px) {
+  .profile-setup-row {
+    @apply flex-col;
+  }
+}
+
+/* Photo Column (25% width on desktop) */
+.profile-setup-photo-column {
+  width: 25%;
+}
+
+@media (max-width: 767px) {
+  .profile-setup-photo-column {
+    width: 100%;
+  }
+}
+
+/* Fields Column (75% width on desktop) */
+.profile-setup-fields-column {
+  width: 75%;
+  @apply flex flex-col;
+}
+
+@media (max-width: 767px) {
+  .profile-setup-fields-column {
+    width: 100%;
+  }
+}
+
+/* Profile Photo Upload Zone */
+.profile-photo-upload-zone {
+  @apply relative border-2 border-dashed border-pale-celadon rounded-lg;
+  @apply bg-misty-white;
+  @apply p-6;
+  min-height: 120px;
+  @apply flex items-center justify-center;
+  @apply cursor-pointer;
+  @apply transition-all duration-150;
+  @apply focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-celadon;
+}
+
+@media (max-width: 767px) {
+  .profile-photo-upload-zone {
+    min-height: 150px;
+    @apply p-4;
+  }
+}
+
+.profile-photo-upload-zone.drag-over {
+  @apply border-celadon bg-celadon/5;
+}
+
+.profile-photo-file-input {
+  @apply absolute inset-0 w-full h-full opacity-0 cursor-pointer;
+  @apply z-10;
+}
+
+.profile-photo-upload-content {
+  @apply text-center;
+  pointer-events: none;
+}
+
+.profile-photo-upload-icon {
+  font-size: 32px;
+  @apply mb-2;
+}
+
+.profile-photo-upload-text {
+  @apply text-base font-medium text-charcoal mb-1;
+  font-family: var(--font-sans);
+}
+
+.profile-photo-upload-hint {
+  @apply text-sm text-slate mb-2;
+  font-family: var(--font-sans);
+}
+
+.profile-photo-upload-requirements {
+  @apply text-xs text-slate;
+  font-family: var(--font-sans);
+}
+
+/* Profile Photo Preview */
+.profile-photo-preview {
+  @apply max-w-full max-h-full rounded;
+  @apply border border-pale-celadon;
+  @apply object-cover;
+  width: 120px;
+  height: 120px;
+  @apply mx-auto;
+}
+
+@media (max-width: 767px) {
+  .profile-photo-preview {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+  }
+}
+
+/* Profile Photo Remove Button */
+.profile-photo-remove {
+  @apply absolute top-2 right-2;
+  @apply w-8 h-8 rounded-full;
+  @apply bg-error text-white;
+  @apply flex items-center justify-center;
+  @apply text-xl font-bold;
+  @apply cursor-pointer;
+  @apply hover:bg-[#a02020];
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-error;
+  @apply transition-colors duration-150;
+  @apply z-20;
+  line-height: 1;
+  font-family: var(--font-sans);
+}
+
+/* Profile Photo Change Link */
+.profile-photo-change {
+  @apply block text-center mt-2 text-sm text-celadon;
+  @apply no-underline;
+  @apply hover:text-celadon-dark hover:underline;
+  @apply transition-colors duration-150;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon rounded;
+  font-family: var(--font-sans);
+}
+
+/* Profile Bio Character Counter */
+.profile-bio-character-counter {
+  @apply text-right text-xs text-slate mt-1;
+  font-family: var(--font-sans);
+}
+
+.profile-bio-character-counter.error {
+  @apply text-error;
+}
+
+/* Profile Setup Skip Link */
+.profile-setup-skip {
+  @apply text-center mt-4;
+}
+
+.profile-setup-skip-link {
+  @apply text-sm text-slate no-underline;
+  @apply hover:text-celadon hover:underline;
+  @apply transition-colors duration-150;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon rounded;
+  font-family: var(--font-sans);
+}
+
+/* Auth Form Textarea */
+.auth-form-textarea {
+  @apply w-full px-3 py-3 rounded-lg;
+  @apply border border-pale-celadon/50;
+  @apply bg-white text-charcoal;
+  @apply placeholder-slate/50;
+  @apply focus:outline-2 focus:outline-offset-2 focus:outline-celadon;
+  @apply focus:border-celadon;
+  @apply resize-y;
+  min-height: 120px;
+  font-size: 16px; /* 1rem */
+  line-height: 1.6;
+  font-family: var(--font-sans);
+  @apply transition-all duration-150;
+}
+
+.auth-form-textarea:disabled {
+  @apply bg-misty-white cursor-not-allowed opacity-50;
+}
+
+.auth-form-textarea.error {
+  @apply border-error;
+}
+
+/* Required Indicator */
+.required-indicator {
+  @apply text-error;
+  @apply ml-1;
+}

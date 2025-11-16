@@ -1,0 +1,156 @@
+<%#
+  Profile Setup View
+  URL: /profile_setup
+  Purpose: First-time profile setup for new artists after email verification
+  
+  Handles profile completion with:
+  - Portrait photo upload (required)
+  - Full name (required, pre-filled from signup)
+  - Location (optional)
+  - Bio (optional, up to 2000 characters)
+  
+  Matches wireframe specifications from requirements/wireframes/auth/profile-setup.md
+%>
+
+<% flash.clear %>
+
+<div class="auth-page-container">
+  <div class="auth-form-container">
+    <div class="auth-form-header">
+      <h1 class="auth-form-title">Welcome to Clay Companion</h1>
+      <p class="auth-form-subheading">Let's set up your artist profile</p>
+    </div>
+
+    <%= form_with model: @artist, url: profile_setup_path, method: :patch, local: true, multipart: true, class: "profile-setup-form", data: { controller: "photo-upload character-counter", character_counter_max_length_value: 2000 } do |f| %>
+      
+      <!-- Portrait Photo and Full Name/Location Row -->
+      <div class="profile-setup-row">
+        <!-- Portrait Photo Upload (25% width) -->
+        <div class="profile-setup-photo-column">
+          <div class="auth-form-field">
+            <%= f.label :profile_photo, "Portrait Photo", class: "auth-form-label" do %>
+              Portrait Photo <span class="required-indicator">*</span>
+            <% end %>
+            
+            <div class="profile-photo-upload-zone" 
+                 data-photo-upload-target="uploadZone"
+                 data-action="dragover->photo-upload#handleDragOver 
+                             dragleave->photo-upload#handleDragLeave 
+                             drop->photo-upload#handleDrop 
+                             click->photo-upload#handleClick">
+              <%= f.file_field :profile_photo, 
+                  accept: "image/jpeg,image/png,image/jpg",
+                  class: "profile-photo-file-input",
+                  data: { 
+                    photo_upload_target: "fileInput",
+                    action: "change->photo-upload#handleFileSelect"
+                  },
+                  aria: { required: true, label: "Portrait photo upload" } %>
+              
+              <div class="profile-photo-upload-content" data-photo-upload-target="uploadContent">
+                <div class="profile-photo-upload-icon">📷</div>
+                <div class="profile-photo-upload-text">Upload Photo</div>
+                <div class="profile-photo-upload-hint">or drag here</div>
+                <div class="profile-photo-upload-requirements">JPG, PNG up to 5MB</div>
+              </div>
+              
+              <% if @artist.profile_photo.attached? && @artist.profile_photo.persisted? %>
+                <%= image_tag @artist.profile_photo, 
+                    class: "profile-photo-preview",
+                    data: { photo_upload_target: "preview" },
+                    alt: "Portrait preview" %>
+              <% else %>
+                <img src="" alt="" class="profile-photo-preview" style="display: none;" data-photo-upload-target="preview" />
+              <% end %>
+              
+              <button type="button" 
+                      class="profile-photo-remove" 
+                      data-photo-upload-target="removeButton"
+                      data-action="click->photo-upload#handleRemove"
+                      style="<%= 'display: none;' unless @artist.profile_photo.attached? && @artist.profile_photo.persisted? %>"
+                      aria-label="Remove photo">
+                ×
+              </button>
+              
+              <a href="#" 
+                 class="profile-photo-change" 
+                 data-photo-upload-target="changeLink"
+                 data-action="click->photo-upload#handleChange"
+                 style="<%= 'display: none;' unless @artist.profile_photo.attached? && @artist.profile_photo.persisted? %>">
+                Change photo
+              </a>
+            </div>
+            
+            <% if @artist.errors[:profile_photo].any? %>
+              <%= error_message(@artist.errors[:profile_photo].first, field_id: 'profile_photo') %>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Right Column: Full Name and Location (75% width) -->
+        <div class="profile-setup-fields-column">
+          <!-- Full Name Field -->
+          <div class="auth-form-field">
+            <%= f.label :full_name, "Full Name", class: "auth-form-label" do %>
+              Full Name <span class="required-indicator">*</span>
+            <% end %>
+            <%= f.text_field :full_name, 
+                autocomplete: "name",
+                placeholder: "Jane Smith",
+                class: "auth-form-input",
+                aria: { required: true } %>
+            <% if @artist.errors[:full_name].any? %>
+              <%= error_message(@artist.errors[:full_name].first, field_id: 'full_name') %>
+            <% end %>
+          </div>
+
+          <!-- Location Field -->
+          <div class="auth-form-field">
+            <%= f.label :location, "Location", class: "auth-form-label" %>
+            <%= f.text_field :location, 
+                autocomplete: "address-level2",
+                placeholder: "Portland, OR",
+                class: "auth-form-input" %>
+            <p class="auth-form-helper-text">Optional - City, State/Country</p>
+            <% if @artist.errors[:location].any? %>
+              <%= error_message(@artist.errors[:location].first, field_id: 'location') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bio Field -->
+      <div class="auth-form-field">
+        <%= f.label :bio, "Bio", class: "auth-form-label" %>
+        <%= f.text_area :bio, 
+            placeholder: "Tell us about yourself and your work...",
+            maxlength: 2000,
+            rows: 6,
+            class: "auth-form-textarea",
+            data: { 
+              character_counter_target: "textarea",
+              action: "input->character-counter#updateCount"
+            } %>
+        <div class="profile-bio-character-counter" data-character-counter-target="counter">
+          <span data-character-counter-target="count"><%= @artist.bio&.length || 0 %></span> / 2000 characters
+        </div>
+        <p class="auth-form-helper-text">Optional - up to 2000 characters</p>
+        <% if @artist.errors[:bio].any? %>
+          <%= error_message(@artist.errors[:bio].first, field_id: 'bio') %>
+        <% end %>
+      </div>
+
+      <!-- Submit Button -->
+      <%= f.submit "Complete Setup", class: "auth-button auth-button-primary" %>
+
+    <% end %>
+
+    <!-- Divider -->
+    <hr class="auth-form-divider" />
+
+    <!-- Skip Link -->
+    <div class="profile-setup-skip">
+      <%= link_to "Skip for now", dashboard_path, class: "profile-setup-skip-link" %>
+    </div>
+  </div>
+</div>

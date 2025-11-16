@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Email - Clay Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Design System Colors */
+    :root {
+      --celadon-green: #6E9180;
+      --celadon-dark: #527563;
+      --charcoal: #1F2421;
+      --slate: #5C6C62;
+      --pale-celadon: #A8C4B5;
+      --misty-white: #F8FAF9;
+      --white: #FFFFFF;
+      --error-red: #C73030;
+      --success-green: #0D8F68;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: var(--misty-white);
+      color: var(--charcoal);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background-color: var(--white);
+      border-bottom: 1px solid rgba(168, 196, 181, 0.3);
+      padding: 16px 24px;
+    }
+
+    .header-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+
+    .header-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .header-link {
+      color: var(--slate);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 150ms ease;
+    }
+
+    .header-link:hover {
+      color: var(--celadon-green);
+      background-color: rgba(168, 196, 181, 0.1);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px 40px;
+    }
+
+    @media (max-width: 767px) {
+      .main-content {
+        padding: 40px 24px 24px;
+      }
+    }
+
+    /* Verification Container */
+    .verification-container {
+      width: 100%;
+      max-width: 600px;
+      background-color: var(--white);
+      border-radius: 4px;
+      padding: 48px 32px;
+    }
+
+    @media (max-width: 767px) {
+      .verification-container {
+        padding: 32px 24px;
+      }
+    }
+
+    /* Typography */
+    .verification-heading {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    @media (max-width: 767px) {
+      .verification-heading {
+        font-size: 36px;
+      }
+    }
+
+    .verification-subheading {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--slate);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    /* Success Message */
+    .success-message {
+      padding: 12px;
+      background-color: rgba(13, 143, 104, 0.1);
+      border: 1px solid var(--success-green);
+      border-radius: 8px;
+      color: var(--success-green);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .success-message::before {
+      content: '✓ ';
+      margin-right: 4px;
+    }
+
+    /* Error Message */
+    .error-message {
+      padding: 12px;
+      background-color: rgba(199, 48, 48, 0.1);
+      border: 1px solid var(--error-red);
+      border-radius: 8px;
+      color: var(--error-red);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .error-message::before {
+      content: '⚠️ ';
+      margin-right: 4px;
+    }
+
+    /* Info Text */
+    .info-text {
+      text-align: center;
+      color: var(--slate);
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* Submit Button */
+    .submit-button {
+      width: 100%;
+      height: 48px;
+      background-color: var(--celadon-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 150ms ease;
+      box-shadow: 0 1px 2px rgba(31, 36, 33, 0.05);
+    }
+
+    .submit-button:hover {
+      background-color: #3f5a4d;
+    }
+
+    .submit-button:active {
+      background-color: #2d3f35;
+      transform: scale(0.98);
+    }
+
+    .submit-button:focus {
+      outline: 2px solid var(--celadon-green);
+      outline-offset: 2px;
+    }
+
+    .submit-button:disabled {
+      background-color: var(--pale-celadon);
+      color: rgba(92, 108, 98, 0.5);
+      cursor: not-allowed;
+    }
+
+    /* Secondary Button */
+    .secondary-button {
+      width: 100%;
+      height: 48px;
+      background-color: var(--white);
+      color: var(--celadon-dark);
+      border: 2px solid var(--celadon-dark);
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+
+    .secondary-button:hover {
+      background-color: rgba(168, 196, 181, 0.1);
+    }
+
+    .secondary-button:focus {
+      outline: 2px solid var(--celadon-green);
+      outline-offset: 2px;
+    }
+
+    .secondary-button:disabled {
+      background-color: var(--pale-celadon);
+      color: rgba(92, 108, 98, 0.5);
+      cursor: not-allowed;
+    }
+
+    /* Divider */
+    .divider {
+      margin: 32px 0;
+      height: 1px;
+      background-color: rgba(168, 196, 181, 0.3);
+      border: none;
+    }
+
+    /* Links */
+    .signin-prompt {
+      text-align: center;
+      font-size: 16px;
+      color: var(--slate);
+    }
+
+    .signin-link {
+      color: var(--celadon-green);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 150ms ease;
+    }
+
+    .signin-link:hover {
+      text-decoration: underline;
+      color: var(--celadon-dark);
+    }
+
+    .info-link {
+      color: var(--celadon-green);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 150ms ease;
+    }
+
+    .info-link:hover {
+      text-decoration: underline;
+      color: var(--celadon-dark);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--misty-white);
+      padding: 24px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--slate);
+      border-top: 1px solid rgba(168, 196, 181, 0.3);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .footer-link {
+      color: var(--slate);
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+
+    .footer-link:hover {
+      color: var(--celadon-green);
+    }
+
+    /* Step Visibility */
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    /* Demo Controls */
+    .demo-controls {
+      margin-top: 24px;
+      padding: 16px;
+      background-color: rgba(168, 196, 181, 0.1);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--slate);
+    }
+
+    .demo-button {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 16px;
+      background-color: var(--celadon-green);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 150ms ease;
+      margin-right: 8px;
+    }
+
+    .demo-button:hover {
+      background-color: var(--celadon-dark);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="#" class="logo">Clay Companion</a>
+      <div class="header-links">
+        <a href="#" class="header-link">Sign Up</a>
+        <a href="#" class="header-link">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="verification-container">
+      <!-- State 1: Verification Sent -->
+      <div class="step active" id="step1">
+        <h1 class="verification-heading">Verify Your Email Address</h1>
+        
+        <div class="success-message">
+          We've sent a verification email to <strong id="sentEmail">artist@example.com</strong>
+        </div>
+
+        <p class="info-text">
+          Please check your email and click the verification link to activate your account.<br>
+          The link will expire in 24 hours.
+        </p>
+
+        <button type="button" class="secondary-button" id="resendButton">
+          Resend Verification Email
+        </button>
+
+        <!-- Divider -->
+        <hr class="divider" />
+
+        <p style="text-align: center; font-size: 14px; color: var(--slate);">
+          Didn't receive the email? Check your spam folder or<br>
+          <a href="#" class="info-link" onclick="showStep1(); return false;">try a different email address</a>
+        </p>
+      </div>
+
+      <!-- State 2: Verification Success -->
+      <div class="step" id="step2">
+        <h1 class="verification-heading">Email Verified Successfully</h1>
+        
+        <div class="success-message">
+          Your email address has been verified!
+        </div>
+
+        <p class="info-text">
+          You can now access all features of your account.
+        </p>
+
+        <button type="button" class="submit-button" id="continueButton">
+          Continue to Dashboard
+        </button>
+      </div>
+
+      <!-- State 3: Verification Error -->
+      <div class="step" id="step3">
+        <h1 class="verification-heading">Verification Link Invalid</h1>
+        
+        <div class="error-message">
+          This verification link is invalid or has expired.
+        </div>
+
+        <p class="info-text">
+          Verification links expire after 24 hours for security reasons.<br>
+          Please request a new verification email.
+        </p>
+
+        <button type="button" class="secondary-button" id="resendErrorButton">
+          Resend Verification Email
+        </button>
+
+        <!-- Divider -->
+        <hr class="divider" />
+
+        <p class="signin-prompt">
+          Already verified? <a href="#" class="signin-link">Sign in</a>
+        </p>
+      </div>
+
+      <!-- State 4: Already Verified -->
+      <div class="step" id="step4">
+        <h1 class="verification-heading">Email Already Verified</h1>
+        
+        <div class="success-message">
+          This email address has already been verified.
+        </div>
+
+        <p class="info-text">
+          You can access your account by signing in.
+        </p>
+
+        <button type="button" class="submit-button" id="signinButton">
+          Sign In
+        </button>
+      </div>
+
+      <!-- Demo Controls -->
+      <div class="demo-controls">
+        <strong>Demo Controls:</strong>
+        <br>
+        <button type="button" class="demo-button" onclick="showStep(1)">
+          State 1: Email Sent
+        </button>
+        <button type="button" class="demo-button" onclick="showStep(2)">
+          State 2: Success
+        </button>
+        <button type="button" class="demo-button" onclick="showStep(3)">
+          State 3: Invalid/Expired
+        </button>
+        <button type="button" class="demo-button" onclick="showStep(4)">
+          State 4: Already Verified
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#" class="footer-link">Contact</a>
+      <a href="#" class="footer-link">About</a>
+      <a href="#" class="footer-link">Terms</a>
+      <a href="#" class="footer-link">Privacy</a>
+    </div>
+    <div>Powered by Clay Companion</div>
+  </footer>
+
+  <script>
+    // Step Navigation
+    function showStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+      document.getElementById(`step${stepNumber}`).classList.add('active');
+    }
+
+    // Resend Email Button (State 1)
+    document.getElementById('resendButton').addEventListener('click', function() {
+      this.disabled = true;
+      this.textContent = 'Sending...';
+      
+      setTimeout(() => {
+        this.disabled = false;
+        this.textContent = 'Resend Verification Email';
+        alert('Verification email sent again!');
+      }, 1000);
+    });
+
+    // Resend Email Button (State 3 - Error)
+    document.getElementById('resendErrorButton').addEventListener('click', function() {
+      this.disabled = true;
+      this.textContent = 'Sending...';
+      
+      setTimeout(() => {
+        this.disabled = false;
+        this.textContent = 'Resend Verification Email';
+        alert('Verification email sent! Please check your email.');
+        showStep(1); // Show email sent state
+      }, 1000);
+    });
+
+    // Continue to Dashboard Button
+    document.getElementById('continueButton').addEventListener('click', function() {
+      this.disabled = true;
+      this.textContent = 'Loading...';
+      
+      setTimeout(() => {
+        alert('Redirecting to dashboard... (This is a preview)');
+        this.disabled = false;
+        this.textContent = 'Continue to Dashboard';
+      }, 1000);
+    });
+
+    // Sign In Button
+    document.getElementById('signinButton').addEventListener('click', function() {
+      alert('Redirecting to login... (This is a preview)');
+    });
+  </script>
+</body>
+</html>
+

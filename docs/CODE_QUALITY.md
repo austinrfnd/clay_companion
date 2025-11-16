@@ -750,6 +750,8 @@ end
 
 See [DEVELOPMENT.md](DEVELOPMENT.md) for complete TDD workflow.
 
+**Model Implementation**: When implementing new models, refer to [MODEL_IMPLEMENTATION_CHECKLIST.md](MODEL_IMPLEMENTATION_CHECKLIST.md) for a comprehensive checklist of required associations, validations, scopes, and methods.
+
 ### HTML Test Attributes (Mandatory)
 
 **All interactive HTML elements** must have `data-test-id` attributes for E2E testing.

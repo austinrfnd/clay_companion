@@ -1,0 +1,264 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe StudioImage, type: :model do
+  ##
+  # Test Overview
+  # This spec tests the StudioImage model which represents behind-the-scenes photos
+  # of artist studios and creative processes. It validates associations, required fields,
+  # length constraints, positive integer validation for dimensions/file_size, and scopes.
+  #
+  # Coverage areas:
+  # - Associations (belongs_to artist)
+  # - Validations (presence, length, numericality)
+  # - Default values (display_order)
+  # - Scopes (ordered)
+  ##
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:artist) }
+  end
+
+  describe 'validations' do
+    subject { build(:studio_image) }
+
+    describe 'image_url' do
+      it { is_expected.to validate_presence_of(:image_url) }
+
+      it 'accepts valid image URLs' do
+        valid_urls = [
+          'https://example.com/studio.jpg',
+          'https://s3.amazonaws.com/bucket/studio_image.png',
+          'https://cdn.example.com/images/studio_123.webp',
+          'http://localhost:3000/test.jpg'
+        ]
+
+        valid_urls.each do |url|
+          image = build(:studio_image, image_url: url)
+          expect(image).to be_valid, "Expected '#{url}' to be valid"
+        end
+      end
+
+      it 'rejects empty image_url' do
+        image = build(:studio_image, image_url: '')
+        expect(image).not_to be_valid
+        expect(image.errors[:image_url]).to be_present
+      end
+    end
+
+    describe 'alt_text' do
+      it { is_expected.to validate_length_of(:alt_text).is_at_most(500) }
+      it { is_expected.to allow_value(nil).for(:alt_text) }
+
+      it 'accepts alt_text at maximum length' do
+        image = build(:studio_image, alt_text: 'A' * 500)
+        expect(image).to be_valid
+      end
+
+      it 'rejects alt_text exceeding 500 characters' do
+        image = build(:studio_image, alt_text: 'A' * 501)
+        expect(image).not_to be_valid
+        expect(image.errors[:alt_text]).to be_present
+      end
+    end
+
+    describe 'caption' do
+      it { is_expected.to validate_length_of(:caption).is_at_most(1000) }
+      it { is_expected.to allow_value(nil).for(:caption) }
+
+      it 'accepts caption at maximum length' do
+        image = build(:studio_image, caption: 'A' * 1000)
+        expect(image).to be_valid
+      end
+
+      it 'rejects caption exceeding 1000 characters' do
+        image = build(:studio_image, caption: 'A' * 1001)
+        expect(image).not_to be_valid
+        expect(image.errors[:caption]).to be_present
+      end
+
+      it 'accepts descriptive captions' do
+        valid_captions = [
+          'Working on a new series in my Portland studio',
+          'Preparing clay for throwing on the wheel',
+          'Glazing process for the minimalist bowl collection'
+        ]
+
+        valid_captions.each do |caption|
+          image = build(:studio_image, caption: caption)
+          expect(image).to be_valid, "Expected caption '#{caption}' to be valid"
+        end
+      end
+    end
+
+    describe 'width' do
+      it { is_expected.to allow_value(nil).for(:width) }
+      it { is_expected.to validate_numericality_of(:width).only_integer.is_greater_than(0) }
+
+      it 'accepts positive width values' do
+        valid_widths = [1, 100, 1920, 4000, 10000]
+
+        valid_widths.each do |width|
+          image = build(:studio_image, width: width)
+          expect(image).to be_valid, "Expected width #{width} to be valid"
+        end
+      end
+
+      it 'rejects zero width' do
+        image = build(:studio_image, width: 0)
+        expect(image).not_to be_valid
+        expect(image.errors[:width]).to be_present
+      end
+
+      it 'rejects negative width' do
+        image = build(:studio_image, width: -100)
+        expect(image).not_to be_valid
+        expect(image.errors[:width]).to be_present
+      end
+
+      it 'rejects non-integer width' do
+        image = build(:studio_image, width: 100.5)
+        expect(image).not_to be_valid
+        expect(image.errors[:width]).to be_present
+      end
+    end
+
+    describe 'height' do
+      it { is_expected.to allow_value(nil).for(:height) }
+      it { is_expected.to validate_numericality_of(:height).only_integer.is_greater_than(0) }
+
+      it 'accepts positive height values' do
+        valid_heights = [1, 100, 1080, 3000, 10000]
+
+        valid_heights.each do |height|
+          image = build(:studio_image, height: height)
+          expect(image).to be_valid, "Expected height #{height} to be valid"
+        end
+      end
+
+      it 'rejects zero height' do
+        image = build(:studio_image, height: 0)
+        expect(image).not_to be_valid
+        expect(image.errors[:height]).to be_present
+      end
+
+      it 'rejects negative height' do
+        image = build(:studio_image, height: -100)
+        expect(image).not_to be_valid
+        expect(image.errors[:height]).to be_present
+      end
+    end
+
+    describe 'file_size' do
+      it { is_expected.to allow_value(nil).for(:file_size) }
+      it { is_expected.to validate_numericality_of(:file_size).only_integer.is_greater_than(0) }
+
+      it 'accepts positive file_size values' do
+        valid_sizes = [1, 1024, 655_360, 1_048_576, 10_485_760]
+
+        valid_sizes.each do |size|
+          image = build(:studio_image, file_size: size)
+          expect(image).to be_valid, "Expected file_size #{size} to be valid"
+        end
+      end
+
+      it 'rejects zero file_size' do
+        image = build(:studio_image, file_size: 0)
+        expect(image).not_to be_valid
+        expect(image.errors[:file_size]).to be_present
+      end
+
+      it 'rejects negative file_size' do
+        image = build(:studio_image, file_size: -1000)
+        expect(image).not_to be_valid
+        expect(image.errors[:file_size]).to be_present
+      end
+    end
+  end
+
+  describe 'default values' do
+    it 'sets display_order to 0 by default' do
+      image = StudioImage.new
+      expect(image.display_order).to eq(0)
+    end
+  end
+
+  describe 'scopes' do
+    let(:artist) { create(:artist) }
+
+    describe '.ordered' do
+      it 'returns images ordered by display_order ascending' do
+        image3 = create(:studio_image, artist: artist, display_order: 2)
+        image1 = create(:studio_image, artist: artist, display_order: 0)
+        image2 = create(:studio_image, artist: artist, display_order: 1)
+
+        expect(StudioImage.ordered).to eq([image1, image2, image3])
+      end
+
+      it 'handles same display_order values' do
+        image1 = create(:studio_image, artist: artist, display_order: 0)
+        image2 = create(:studio_image, artist: artist, display_order: 0)
+
+        expect(StudioImage.ordered.count).to eq(2)
+      end
+    end
+  end
+
+  describe 'display_order functionality' do
+    let(:artist) { create(:artist) }
+
+    it 'allows custom display_order values' do
+      image1 = create(:studio_image, artist: artist, display_order: 5)
+      image2 = create(:studio_image, artist: artist, display_order: 10)
+
+      expect(image1.display_order).to eq(5)
+      expect(image2.display_order).to eq(10)
+    end
+
+    it 'maintains display_order on update' do
+      image = create(:studio_image, artist: artist, display_order: 3)
+      image.update!(display_order: 7)
+
+      expect(image.reload.display_order).to eq(7)
+    end
+
+    it 'allows multiple images with same display_order' do
+      image1 = create(:studio_image, artist: artist, display_order: 1)
+      image2 = create(:studio_image, artist: artist, display_order: 1)
+
+      expect(image1.display_order).to eq(image2.display_order)
+    end
+  end
+
+  describe 'factory' do
+    it 'creates valid studio_image with default factory' do
+      image = build(:studio_image)
+      expect(image).to be_valid
+    end
+
+    it 'creates minimal studio_image' do
+      image = build(:studio_image, :minimal)
+      expect(image).to be_valid
+      expect(image.alt_text).to be_nil
+      expect(image.caption).to be_nil
+      expect(image.width).to be_nil
+      expect(image.height).to be_nil
+      expect(image.file_size).to be_nil
+    end
+
+    it 'creates studio_image with long caption' do
+      image = build(:studio_image, :with_long_caption)
+      expect(image).to be_valid
+      expect(image.caption.length).to eq(1000)
+    end
+
+    it 'creates high resolution studio_image' do
+      image = build(:studio_image, :high_resolution)
+      expect(image).to be_valid
+      expect(image.width).to eq(4000)
+      expect(image.height).to eq(3000)
+      expect(image.file_size).to be > 1_000_000
+    end
+  end
+end

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Setup - Clay Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Design System Colors */
+    :root {
+      --celadon-green: #6E9180;
+      --celadon-dark: #527563;
+      --charcoal: #1F2421;
+      --slate: #5C6C62;
+      --pale-celadon: #A8C4B5;
+      --misty-white: #F8FAF9;
+      --white: #FFFFFF;
+      --error-red: #C73030;
+      --success-green: #0D8F68;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: var(--misty-white);
+      color: var(--charcoal);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background-color: var(--white);
+      border-bottom: 1px solid rgba(168, 196, 181, 0.3);
+      padding: 16px 24px;
+    }
+
+    .header-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+
+    .header-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .header-link {
+      color: var(--slate);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 150ms ease;
+    }
+
+    .header-link:hover {
+      color: var(--celadon-green);
+      background-color: rgba(168, 196, 181, 0.1);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px 40px;
+    }
+
+    @media (max-width: 767px) {
+      .main-content {
+        padding: 40px 24px 24px;
+      }
+    }
+
+    /* Profile Setup Container */
+    .profile-container {
+      width: 100%;
+      max-width: 600px;
+      background-color: var(--white);
+      border-radius: 4px;
+      padding: 48px 32px;
+    }
+
+    @media (max-width: 767px) {
+      .profile-container {
+        padding: 32px 24px;
+      }
+    }
+
+    /* Typography */
+    .profile-heading {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    @media (max-width: 767px) {
+      .profile-heading {
+        font-size: 36px;
+      }
+    }
+
+    .profile-subheading {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--slate);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 767px) {
+      .form-group-row {
+        flex-direction: column;
+      }
+    }
+
+    .form-group-photo {
+      width: 25%;
+    }
+
+    @media (max-width: 767px) {
+      .form-group-photo {
+        width: 100%;
+      }
+    }
+
+    .form-group-name {
+      width: 75%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: 767px) {
+      .form-group-name {
+        width: 100%;
+      }
+    }
+
+    .form-field-in-column {
+      margin-bottom: 24px;
+    }
+
+    .form-field-in-column:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+
+    .required-indicator {
+      color: var(--error-red);
+      margin-left: 2px;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 48px;
+      padding: 16px 12px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      color: var(--charcoal);
+      background-color: var(--white);
+      border: 1px solid rgba(168, 196, 181, 0.5);
+      border-radius: 8px;
+      transition: all 200ms ease;
+    }
+
+    .form-input-name {
+      width: 100%;
+    }
+
+    .form-input::placeholder {
+      color: rgba(92, 108, 98, 0.6);
+    }
+
+    .form-input:hover {
+      border-color: var(--pale-celadon);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border: 2px solid var(--celadon-green);
+    }
+
+    .form-input.error {
+      border: 2px solid var(--error-red);
+    }
+
+    .form-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      color: var(--charcoal);
+      background-color: var(--white);
+      border: 1px solid rgba(168, 196, 181, 0.5);
+      border-radius: 8px;
+      transition: all 200ms ease;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-textarea::placeholder {
+      color: rgba(92, 108, 98, 0.6);
+    }
+
+    .form-textarea:hover {
+      border-color: var(--pale-celadon);
+    }
+
+    .form-textarea:focus {
+      outline: none;
+      border: 2px solid var(--celadon-green);
+    }
+
+    .form-textarea.error {
+      border: 2px solid var(--error-red);
+    }
+
+    /* Photo Upload Zone */
+    .upload-zone {
+      border: 2px dashed var(--pale-celadon);
+      border-radius: 8px;
+      background-color: var(--misty-white);
+      padding: 24px 16px;
+      text-align: center;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 200ms ease;
+      position: relative;
+    }
+
+    @media (max-width: 767px) {
+      .upload-zone {
+        min-height: 150px;
+        padding: 48px 24px;
+      }
+    }
+
+    .upload-zone:hover {
+      border-color: var(--celadon-green);
+      background-color: rgba(110, 145, 128, 0.05);
+    }
+
+    .upload-zone.drag-over {
+      border-color: var(--celadon-green);
+      background-color: rgba(110, 145, 128, 0.1);
+    }
+
+    .upload-zone.has-image {
+      padding: 24px;
+      min-height: auto;
+    }
+
+    .upload-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 767px) {
+      .upload-icon {
+        font-size: 32px;
+        margin-bottom: 16px;
+      }
+    }
+
+    .upload-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 767px) {
+      .upload-text {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+    }
+
+    .upload-hint {
+      font-size: 12px;
+      color: var(--slate);
+      margin-bottom: 2px;
+    }
+
+    @media (max-width: 767px) {
+      .upload-hint {
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+    }
+
+    .upload-requirements {
+      font-size: 10px;
+      color: var(--slate);
+    }
+
+    @media (max-width: 767px) {
+      .upload-requirements {
+        font-size: 12px;
+      }
+    }
+
+    .photo-preview {
+      width: 100%;
+      max-width: 120px;
+      height: auto;
+      aspect-ratio: 1;
+      border-radius: 4px;
+      object-fit: cover;
+      border: 1px solid var(--pale-celadon);
+      margin-bottom: 12px;
+    }
+
+    .remove-photo {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: var(--error-red);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 150ms ease;
+    }
+
+    .remove-photo:hover {
+      background-color: #a02020;
+    }
+
+    .change-photo {
+      color: var(--celadon-green);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 150ms ease;
+    }
+
+    .change-photo:hover {
+      text-decoration: underline;
+      color: var(--celadon-dark);
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    /* Character Counter */
+    .char-counter {
+      text-align: right;
+      font-size: 12px;
+      color: var(--slate);
+      margin-top: 4px;
+    }
+
+    .char-counter.warning {
+      color: var(--error-red);
+    }
+
+    /* Helper Text */
+    .helper-text {
+      font-size: 12px;
+      color: var(--slate);
+      margin-top: 4px;
+    }
+
+    /* Error Message */
+    .error-message {
+      display: none;
+      margin-top: 8px;
+      padding: 12px;
+      background-color: rgba(199, 48, 48, 0.1);
+      border: 1px solid var(--error-red);
+      border-radius: 8px;
+      color: var(--error-red);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .error-message::before {
+      content: '⚠️ ';
+      margin-right: 4px;
+    }
+
+    /* Submit Button */
+    .submit-button {
+      width: 100%;
+      height: 48px;
+      background-color: var(--celadon-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 150ms ease;
+      box-shadow: 0 1px 2px rgba(31, 36, 33, 0.05);
+    }
+
+    .submit-button:hover {
+      background-color: #3f5a4d;
+    }
+
+    .submit-button:active {
+      background-color: #2d3f35;
+      transform: scale(0.98);
+    }
+
+    .submit-button:focus {
+      outline: 2px solid var(--celadon-green);
+      outline-offset: 2px;
+    }
+
+    .submit-button:disabled {
+      background-color: var(--pale-celadon);
+      color: rgba(92, 108, 98, 0.5);
+      cursor: not-allowed;
+    }
+
+    /* Divider */
+    .divider {
+      margin: 32px 0;
+      height: 1px;
+      background-color: rgba(168, 196, 181, 0.3);
+      border: none;
+    }
+
+    /* Skip Link */
+    .skip-link {
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .skip-link a {
+      color: var(--slate);
+      text-decoration: none;
+      transition: all 150ms ease;
+    }
+
+    .skip-link a:hover {
+      color: var(--celadon-green);
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--misty-white);
+      padding: 24px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--slate);
+      border-top: 1px solid rgba(168, 196, 181, 0.3);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .footer-link {
+      color: var(--slate);
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+
+    .footer-link:hover {
+      color: var(--celadon-green);
+    }
+
+    /* Demo Controls */
+    .demo-controls {
+      margin-top: 24px;
+      padding: 16px;
+      background-color: rgba(168, 196, 181, 0.1);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--slate);
+    }
+
+    .demo-button {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 16px;
+      background-color: var(--celadon-green);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 150ms ease;
+      margin-right: 8px;
+    }
+
+    .demo-button:hover {
+      background-color: var(--celadon-dark);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="#" class="logo">Clay Companion</a>
+      <div class="header-links">
+        <a href="#" class="header-link">Sign Up</a>
+        <a href="#" class="header-link">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="profile-container">
+      <h1 class="profile-heading">Welcome to Clay Companion</h1>
+      <p class="profile-subheading">Let's set up your artist profile</p>
+
+      <form id="profileForm" action="#" method="post">
+        <!-- Portrait Photo and Full Name Row -->
+        <div class="form-group-row">
+          <!-- Portrait Photo Upload -->
+          <div class="form-group-photo">
+            <label for="photoUpload" class="form-label">
+              Portrait Photo <span class="required-indicator">*</span>
+            </label>
+            <div class="upload-zone" id="uploadZone">
+              <input
+                type="file"
+                id="photoUpload"
+                name="portrait_photo"
+                class="file-input"
+                accept="image/jpeg,image/png,image/jpg"
+                required
+              />
+              <div id="uploadContent">
+                <div class="upload-icon">📷</div>
+                <div class="upload-text">Upload Photo</div>
+                <div class="upload-hint">or drag here</div>
+                <div class="upload-requirements">JPG, PNG up to 5MB</div>
+              </div>
+              <img id="photoPreview" class="photo-preview" style="display: none;" alt="Portrait preview" />
+              <button type="button" class="remove-photo" id="removePhoto" style="display: none;">×</button>
+              <a href="#" class="change-photo" id="changePhoto" style="display: none;">Change photo</a>
+            </div>
+            <div class="error-message" id="photoError"></div>
+          </div>
+
+          <!-- Right Column: Full Name and Location -->
+          <div class="form-group-name">
+            <!-- Full Name Field -->
+            <div class="form-field-in-column">
+              <label for="fullName" class="form-label">
+                Full Name <span class="required-indicator">*</span>
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="full_name"
+                class="form-input form-input-name"
+                placeholder="Jane Smith"
+                autocomplete="name"
+                required
+              />
+              <div class="error-message" id="fullNameError"></div>
+            </div>
+
+            <!-- Location Field -->
+            <div class="form-field-in-column">
+              <label for="location" class="form-label">Location</label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                class="form-input"
+                placeholder="Portland, OR"
+                autocomplete="address-level2"
+              />
+              <div class="helper-text">Optional - City, State/Country</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bio Field -->
+        <div class="form-group">
+          <label for="bio" class="form-label">Bio</label>
+          <textarea
+            id="bio"
+            name="bio"
+            class="form-textarea"
+            placeholder="Tell us about yourself and your work..."
+            maxlength="2000"
+            rows="6"
+          ></textarea>
+          <div class="char-counter" id="charCounter">0 / 2000 characters</div>
+          <div class="helper-text">Optional - up to 2000 characters</div>
+          <div class="error-message" id="bioError"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-button" id="submitButton">
+          Complete Setup
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <hr class="divider" />
+
+      <!-- Skip Link -->
+      <div class="skip-link">
+        <a href="#" id="skipLink">Skip for now</a>
+      </div>
+
+      <!-- Demo Controls -->
+      <div class="demo-controls">
+        <strong>Demo Controls:</strong>
+        <br>
+        <button type="button" class="demo-button" onclick="toggleErrorState()">
+          Toggle Error State
+        </button>
+        <button type="button" class="demo-button" onclick="fillSampleData()">
+          Fill Sample Data
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#" class="footer-link">Contact</a>
+      <a href="#" class="footer-link">About</a>
+      <a href="#" class="footer-link">Terms</a>
+      <a href="#" class="footer-link">Privacy</a>
+    </div>
+    <div>Powered by Clay Companion</div>
+  </footer>
+
+  <script>
+    // Photo Upload
+    const uploadZone = document.getElementById('uploadZone');
+    const photoUpload = document.getElementById('photoUpload');
+    const uploadContent = document.getElementById('uploadContent');
+    const photoPreview = document.getElementById('photoPreview');
+    const removePhoto = document.getElementById('removePhoto');
+    const changePhoto = document.getElementById('changePhoto');
+    const photoError = document.getElementById('photoError');
+
+    // Click to upload
+    uploadZone.addEventListener('click', function(e) {
+      if (e.target !== removePhoto && e.target !== changePhoto) {
+        photoUpload.click();
+      }
+    });
+
+    changePhoto.addEventListener('click', function(e) {
+      e.preventDefault();
+      photoUpload.click();
+    });
+
+    // Drag and drop
+    uploadZone.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      uploadZone.classList.add('drag-over');
+    });
+
+    uploadZone.addEventListener('dragleave', function() {
+      uploadZone.classList.remove('drag-over');
+    });
+
+    uploadZone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFileSelect(files[0]);
+      }
+    });
+
+    // File input change
+    photoUpload.addEventListener('change', function() {
+      if (this.files.length > 0) {
+        handleFileSelect(this.files[0]);
+      }
+    });
+
+    function handleFileSelect(file) {
+      // Validate file type
+      if (!file.type.match('image/jpeg') && !file.type.match('image/png') && !file.type.match('image/jpg')) {
+        photoError.textContent = '⚠️ Only JPG and PNG images are supported';
+        photoError.classList.add('show');
+        return;
+      }
+
+      // Validate file size (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        photoError.textContent = '⚠️ Image must be under 5MB. Please compress and try again.';
+        photoError.classList.add('show');
+        return;
+      }
+
+      // Clear errors
+      photoError.classList.remove('show');
+      uploadZone.classList.remove('error');
+
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        photoPreview.src = e.target.result;
+        photoPreview.style.display = 'block';
+        uploadContent.style.display = 'none';
+        removePhoto.style.display = 'flex';
+        changePhoto.style.display = 'block';
+        uploadZone.classList.add('has-image');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Remove photo
+    removePhoto.addEventListener('click', function(e) {
+      e.stopPropagation();
+      photoPreview.style.display = 'none';
+      uploadContent.style.display = 'block';
+      removePhoto.style.display = 'none';
+      changePhoto.style.display = 'none';
+      uploadZone.classList.remove('has-image');
+      photoUpload.value = '';
+      photoError.classList.remove('show');
+    });
+
+    // Character Counter
+    const bio = document.getElementById('bio');
+    const charCounter = document.getElementById('charCounter');
+
+    bio.addEventListener('input', function() {
+      const length = this.value.length;
+      const maxLength = 2000;
+      charCounter.textContent = `${length} / ${maxLength} characters`;
+      
+      if (length > maxLength) {
+        charCounter.classList.add('warning');
+        bio.classList.add('error');
+      } else {
+        charCounter.classList.remove('warning');
+        bio.classList.remove('error');
+      }
+    });
+
+    // Form Submission
+    const profileForm = document.getElementById('profileForm');
+    const submitButton = document.getElementById('submitButton');
+    const fullNameInput = document.getElementById('fullName');
+    const fullNameError = document.getElementById('fullNameError');
+    const bioError = document.getElementById('bioError');
+
+    profileForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Clear previous errors
+      fullNameError.classList.remove('show');
+      photoError.classList.remove('show');
+      bioError.classList.remove('show');
+      fullNameInput.classList.remove('error');
+      uploadZone.classList.remove('error');
+      bio.classList.remove('error');
+
+      let hasErrors = false;
+
+      // Validate full name
+      if (!fullNameInput.value.trim()) {
+        fullNameError.textContent = 'Full name is required';
+        fullNameError.classList.add('show');
+        fullNameInput.classList.add('error');
+        hasErrors = true;
+      }
+
+      // Validate photo
+      if (!photoUpload.files.length && !photoPreview.style.display || photoPreview.style.display === 'none') {
+        photoError.textContent = '⚠️ Portrait photo is required';
+        photoError.classList.add('show');
+        uploadZone.classList.add('error');
+        hasErrors = true;
+      }
+
+      // Validate bio length
+      if (bio.value.length > 2000) {
+        bioError.textContent = '⚠️ Bio must be 2000 characters or less';
+        bioError.classList.add('show');
+        bio.classList.add('error');
+        hasErrors = true;
+      }
+
+      if (hasErrors) {
+        return;
+      }
+
+      // Show loading state
+      submitButton.disabled = true;
+      submitButton.textContent = 'Saving...';
+      
+      // Simulate API call
+      setTimeout(() => {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Complete Setup';
+        alert('Profile setup complete! (This is a preview - redirecting to dashboard would happen here)');
+      }, 1000);
+    });
+
+    // Skip Link
+    document.getElementById('skipLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Skipping profile setup... (This is a preview - redirecting to dashboard would happen here)');
+    });
+
+    // Error State Toggle (Demo)
+    function toggleErrorState() {
+      const hasError = fullNameInput.classList.contains('error');
+      
+      if (hasError) {
+        fullNameInput.classList.remove('error');
+        uploadZone.classList.remove('error');
+        bio.classList.remove('error');
+        fullNameError.classList.remove('show');
+        photoError.classList.remove('show');
+        bioError.classList.remove('show');
+      } else {
+        fullNameInput.classList.add('error');
+        uploadZone.classList.add('error');
+        fullNameError.textContent = 'Full name is required';
+        fullNameError.classList.add('show');
+        photoError.textContent = '⚠️ Portrait photo is required';
+        photoError.classList.add('show');
+      }
+    }
+
+    // Fill Sample Data (Demo)
+    function fillSampleData() {
+      fullNameInput.value = 'Jane Smith';
+      location.value = 'Portland, OR';
+      bio.value = 'I am a ceramic artist specializing in functional stoneware and porcelain. My work explores the relationship between form and function, creating pieces that are both beautiful and practical. I fire my work in a reduction kiln to cone 10, creating rich, earthy glazes that complement the natural clay body.';
+      bio.dispatchEvent(new Event('input'));
+    }
+
+    // Clear error on input
+    fullNameInput.addEventListener('input', function() {
+      if (this.classList.contains('error')) {
+        this.classList.remove('error');
+        fullNameError.classList.remove('show');
+      }
+    });
+
+    bio.addEventListener('input', function() {
+      if (this.value.length <= 2000 && this.classList.contains('error')) {
+        this.classList.remove('error');
+        bioError.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>
+
