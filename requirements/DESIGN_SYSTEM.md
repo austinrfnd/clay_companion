@@ -472,6 +472,84 @@ Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
 
 ---
 
+## Sidebar Navigation Specifications
+
+### Settings Sidebar
+
+**Visual**:
+- Position: Left side, persistent across all settings pages
+- Width: 240px (desktop), hidden/collapsible on mobile
+- Background: White (#FFFFFF)
+- Border: 1px solid rgba(168, 196, 181, 0.3) on right
+- Height: Full viewport height (sticky)
+
+**Sidebar Header** (Optional):
+- Padding: 16px (1rem) vertical, 24px (1.5rem) horizontal
+- Border bottom: 1px solid rgba(168, 196, 181, 0.3)
+- Text: 14px (0.875rem), Semibold 600, Charcoal (#1F2421)
+- Text transform: Uppercase, letter spacing: 0.05em
+
+**Section Headers** (For grouping):
+- Padding: 8px (0.5rem) vertical, 24px (1.5rem) horizontal
+- Text: 12px (0.75rem), Semibold 600, Slate (#5C6C62)
+- Text transform: Uppercase, letter spacing: 0.05em
+- Margin top: 8px (0.5rem) for first section
+
+**Menu Items**:
+- Height: 44px (2.75rem) - Touch-friendly
+- Padding: 12px (0.75rem) vertical, 24px (1.5rem) horizontal
+- Margin: 2px (0.125rem) vertical between items
+- Icon: 20px (1.25rem) Lucide icon on left, 12px (0.75rem) gap from text
+- Text: 14px (0.875rem)
+- Border radius: 0 (square corners)
+- Transition: All properties, 150ms duration
+
+**Active State**:
+- Background: Misty White (#F8FAF9)
+- Left border: 3px solid Celadon Green (#6E9180)
+- Text color: Charcoal (#1F2421)
+- Font weight: Semibold 600
+- Icon color: Celadon Green (#6E9180)
+
+**Inactive State**:
+- Background: Transparent
+- Text color: Slate (#5C6C62)
+- Font weight: Medium 500
+- Icon color: Slate (#5C6C62)
+- Hover: Background changes to Misty White at 70% opacity
+
+**Focus State**:
+- Outline: None (removed default)
+- Ring: 2px solid Celadon Green (#6E9180)
+- Ring offset: 2px
+- Visible on keyboard navigation only (`:focus-visible`)
+
+**Section Dividers**:
+- Height: 1px
+- Background: Pale Celadon at 30% opacity
+- Margin: 8px (0.5rem) vertical, 24px (1.5rem) horizontal
+
+**Icon System**:
+- Library: Lucide Icons (as specified in Icon System section)
+- Size: 20px (1.25rem) square
+- Stroke width: 2px
+- Color: Inherits from parent (Celadon Green for active, Slate for inactive)
+- `aria-hidden="true"` on icon SVG (text label provides meaning)
+
+**Responsive Behavior**:
+- Desktop (1024px+): Always visible, 240px fixed width
+- Tablet (768px-1023px): Collapsible, toggle button to show/hide
+- Mobile (0-767px): Hidden by default, hamburger menu to toggle, opens as slide-out drawer
+
+**Accessibility**:
+- Keyboard navigation: Tab through menu items, Enter/Space to activate
+- Focus state: 2px Celadon Green ring with 2px offset (visible on keyboard navigation)
+- ARIA: `aria-current="page"` on active item
+- Screen reader: Clear text labels for each menu item (icons are decorative)
+- Icon accessibility: `aria-hidden="true"` on icon SVGs
+
+---
+
 ## File Upload Specifications
 
 ### Drag & Drop Zone

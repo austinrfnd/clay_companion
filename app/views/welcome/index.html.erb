@@ -16,51 +16,61 @@
       <!-- Colors Section -->
       <section>
         <h2 class="text-3xl font-semibold text-charcoal mb-8">Color Palette</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
           <!-- Primary Colors -->
           <div class="space-y-2">
-            <div class="h-24 bg-celadon rounded-lg shadow-md"></div>
-            <p class="text-sm font-medium text-charcoal">Celadon</p>
+            <div class="h-24 bg-celadon rounded border border-pale-celadon"></div>
+            <p class="text-sm font-medium text-charcoal">Celadon Green</p>
             <p class="text-xs text-slate">#6E9180</p>
           </div>
           <div class="space-y-2">
-            <div class="h-24 bg-celadon-dark rounded-lg shadow-md"></div>
+            <div class="h-24 bg-celadon-dark rounded border border-pale-celadon"></div>
             <p class="text-sm font-medium text-charcoal">Celadon Dark</p>
             <p class="text-xs text-slate">#527563</p>
           </div>
 
           <!-- Neutral Colors -->
           <div class="space-y-2">
-            <div class="h-24 bg-charcoal rounded-lg shadow-md"></div>
+            <div class="h-24 bg-charcoal rounded border border-pale-celadon"></div>
             <p class="text-sm font-medium text-charcoal">Charcoal</p>
             <p class="text-xs text-slate">#1F2421</p>
           </div>
           <div class="space-y-2">
-            <div class="h-24 bg-slate rounded-lg shadow-md"></div>
+            <div class="h-24 bg-slate rounded border border-pale-celadon"></div>
             <p class="text-sm font-medium text-charcoal">Slate</p>
             <p class="text-xs text-slate">#5C6C62</p>
           </div>
 
           <!-- Semantic Colors -->
           <div class="space-y-2">
-            <div class="h-24 bg-success rounded-lg shadow-md"></div>
+            <div class="h-24 bg-success rounded border border-pale-celadon"></div>
             <p class="text-sm font-medium text-charcoal">Success</p>
             <p class="text-xs text-slate">#0D8F68</p>
           </div>
           <div class="space-y-2">
-            <div class="h-24 bg-error rounded-lg shadow-md"></div>
+            <div class="h-24 bg-error rounded border border-pale-celadon"></div>
             <p class="text-sm font-medium text-charcoal">Error</p>
             <p class="text-xs text-slate">#C73030</p>
           </div>
           <div class="space-y-2">
-            <div class="h-24 bg-warning rounded-lg shadow-md"></div>
+            <div class="h-24 bg-warning rounded border border-pale-celadon"></div>
             <p class="text-sm font-medium text-charcoal">Warning</p>
             <p class="text-xs text-slate">#D68500</p>
           </div>
           <div class="space-y-2">
-            <div class="h-24 bg-info rounded-lg shadow-md"></div>
+            <div class="h-24 bg-info rounded border border-pale-celadon"></div>
             <p class="text-sm font-medium text-charcoal">Info</p>
             <p class="text-xs text-slate">#2563EB</p>
+          </div>
+          <div class="space-y-2">
+            <div class="h-24 bg-pale-celadon rounded border border-pale-celadon"></div>
+            <p class="text-sm font-medium text-charcoal">Pale Celadon</p>
+            <p class="text-xs text-slate">#A8C4B5</p>
+          </div>
+          <div class="space-y-2">
+            <div class="h-24 bg-mist rounded border border-pale-celadon"></div>
+            <p class="text-sm font-medium text-charcoal">Misty White</p>
+            <p class="text-xs text-slate">#F8FAF9</p>
           </div>
         </div>
       </section>
@@ -68,60 +78,292 @@
       <!-- Typography Section -->
       <section>
         <h2 class="text-3xl font-semibold text-charcoal mb-8">Typography</h2>
-        <div class="bg-white rounded-lg shadow-md p-8 space-y-4">
-          <p class="text-4xl font-bold text-charcoal">Inter Bold (48px)</p>
-          <p class="text-3xl font-semibold text-charcoal">Inter Semibold (32px)</p>
-          <p class="text-2xl font-medium text-charcoal">Inter Medium (24px)</p>
-          <p class="text-xl text-charcoal">Inter Regular (20px)</p>
-          <p class="text-lg text-slate">Inter Regular (18px) - Body text</p>
-          <p class="text-base text-slate">Inter Regular (16px) - Base size</p>
-          <p class="text-sm text-slate">Inter Regular (14px) - Small text</p>
-          <p class="text-xs text-slate">Inter Regular (12px) - Tiny text</p>
+        <div class="bg-white rounded-lg border border-pale-celadon p-8 space-y-4">
+          <h1 class="text-5xl font-bold text-charcoal">H1 - Inter Bold (48px/3rem)</h1>
+          <h2 class="text-4xl font-bold text-charcoal">H2 - Inter Bold (36px/2.25rem)</h2>
+          <h3 class="text-3xl font-semibold text-charcoal">H3 - Inter Semibold (30px/1.875rem)</h3>
+          <h4 class="text-2xl font-semibold text-charcoal">H4 - Inter Semibold (24px/1.5rem)</h4>
+          <h5 class="text-xl font-semibold text-charcoal">H5 - Inter Semibold (20px/1.25rem)</h5>
+          <h6 class="text-lg font-semibold text-charcoal">H6 - Inter Semibold (18px/1.125rem)</h6>
+          <p class="text-lg text-slate">Body Large - Inter Regular (18px/1.125rem)</p>
+          <p class="text-base text-charcoal">Body - Inter Regular (16px/1rem)</p>
+          <p class="text-sm text-slate">Small - Inter Regular (14px/0.875rem)</p>
+          <p class="text-xs text-slate">Tiny - Inter Regular (12px/0.75rem)</p>
         </div>
       </section>
 
       <!-- Buttons Section -->
       <section>
         <h2 class="text-3xl font-semibold text-charcoal mb-8">Buttons</h2>
-        <div class="flex flex-wrap gap-4">
-          <button class="btn-celadon">
-            Primary Button
-          </button>
-          <button class="bg-white text-charcoal border-2 border-charcoal px-6 py-3 rounded-md font-medium hover:bg-mist transition-colors duration-200">
-            Secondary Button
-          </button>
-          <button class="bg-success text-white px-6 py-3 rounded-md font-medium hover:opacity-90 transition-opacity duration-200">
-            Success Button
-          </button>
-          <button class="bg-error text-white px-6 py-3 rounded-md font-medium hover:opacity-90 transition-opacity duration-200">
-            Error Button
-          </button>
+        <div class="bg-white rounded-lg border border-pale-celadon p-8 space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-charcoal mb-4">Variants</h3>
+            <div class="flex flex-wrap gap-4">
+              <button class="bg-celadon-dark text-white px-6 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2">
+                Primary (Celadon Dark)
+              </button>
+              <button class="bg-white text-celadon-dark border-2 border-celadon-dark px-6 py-3 rounded-lg font-medium hover:bg-mist transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2">
+                Secondary
+              </button>
+              <button class="bg-transparent text-slate border border-pale-celadon px-6 py-3 rounded-lg font-medium hover:border-celadon transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2">
+                Outline
+              </button>
+              <button class="bg-transparent text-slate px-6 py-3 rounded-lg font-medium hover:bg-mist transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2">
+                Ghost
+              </button>
+              <button class="bg-error text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity duration-150 focus:outline-none focus:ring-2 focus:ring-error focus:ring-offset-2">
+                Destructive
+              </button>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-charcoal mb-4">Sizes</h3>
+            <div class="flex flex-wrap items-center gap-4">
+              <button class="bg-celadon-dark text-white px-3 py-2 text-sm rounded-lg font-medium">
+                Small (32px)
+              </button>
+              <button class="bg-celadon-dark text-white px-4 py-2.5 text-base rounded-lg font-medium">
+                Medium (40px)
+              </button>
+              <button class="bg-celadon-dark text-white px-6 py-3 text-lg rounded-lg font-medium">
+                Large (48px)
+              </button>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-charcoal mb-4">States</h3>
+            <div class="flex flex-wrap gap-4">
+              <button class="bg-celadon-dark text-white px-6 py-3 rounded-lg font-medium">
+                Default
+              </button>
+              <button class="bg-celadon-dark text-white px-6 py-3 rounded-lg font-medium opacity-50 cursor-not-allowed" disabled>
+                Disabled
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- Spacing Section -->
       <section>
         <h2 class="text-3xl font-semibold text-charcoal mb-8">Spacing & Layout</h2>
-        <div class="bg-white rounded-lg shadow-md p-8">
-          <p class="text-lg text-charcoal mb-4">Gallery Grid Example (40px gaps)</p>
-          <div class="gallery-grid grid-cols-3">
-            <div class="h-32 bg-celadon rounded-lg"></div>
-            <div class="h-32 bg-celadon rounded-lg"></div>
-            <div class="h-32 bg-celadon rounded-lg"></div>
+        <div class="bg-white rounded-lg border border-pale-celadon p-8 space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-charcoal mb-4">Spacing Scale (4px base unit)</h3>
+            <div class="space-y-2">
+              <div class="flex items-center gap-4">
+                <div class="w-1 h-4 bg-celadon"></div>
+                <span class="text-sm text-slate">4px (spacing-1)</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-2 h-4 bg-celadon"></div>
+                <span class="text-sm text-slate">8px (spacing-2)</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-3 h-4 bg-celadon"></div>
+                <span class="text-sm text-slate">12px (spacing-3)</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-4 h-4 bg-celadon"></div>
+                <span class="text-sm text-slate">16px (spacing-4)</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-6 h-4 bg-celadon"></div>
+                <span class="text-sm text-slate">24px (spacing-6)</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-4 bg-celadon"></div>
+                <span class="text-sm text-slate">40px (spacing-10) - Gallery gap</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-charcoal mb-4">Gallery Grid Example (40px gaps)</h3>
+            <div class="grid grid-cols-3 gap-10">
+              <div class="h-32 bg-celadon rounded"></div>
+              <div class="h-32 bg-celadon rounded"></div>
+              <div class="h-32 bg-celadon rounded"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Inputs Section -->
+      <section>
+        <h2 class="text-3xl font-semibold text-charcoal mb-8">Form Inputs</h2>
+        <div class="bg-white rounded-lg border border-pale-celadon p-8 space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Text Input (Default)</label>
+            <input type="text" placeholder="Enter text..." class="w-full h-12 px-4 border border-pale-celadon rounded-lg focus:outline-none focus:ring-2 focus:ring-celadon focus:border-transparent">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Text Input (Error State)</label>
+            <input type="text" placeholder="Invalid input" class="w-full h-12 px-4 border-2 border-error rounded-lg focus:outline-none focus:ring-2 focus:ring-error">
+            <p class="text-xs text-error mt-1">This field is required</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Textarea</label>
+            <textarea rows="4" placeholder="Enter longer text..." class="w-full px-4 py-3 border border-pale-celadon rounded-lg focus:outline-none focus:ring-2 focus:ring-celadon focus:border-transparent resize-y"></textarea>
+          </div>
+          <div>
+            <label class="flex items-center gap-2 text-sm font-medium text-charcoal">
+              <input type="checkbox" class="w-5 h-5 border-2 border-pale-celadon rounded focus:ring-2 focus:ring-celadon">
+              <span>Checkbox option</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cards Section -->
+      <section>
+        <h2 class="text-3xl font-semibold text-charcoal mb-8">Cards</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white border border-pale-celadon rounded p-6 hover:border-celadon transition-colors duration-150">
+            <h3 class="text-xl font-semibold text-charcoal mb-2">Card Title</h3>
+            <p class="text-sm text-slate">Card content with flat design and subtle border.</p>
+          </div>
+          <div class="bg-white border border-pale-celadon rounded p-6 hover:border-celadon transition-colors duration-150">
+            <h3 class="text-xl font-semibold text-charcoal mb-2">Card Title</h3>
+            <p class="text-sm text-slate">No shadow, gallery-like aesthetic.</p>
+          </div>
+          <div class="bg-white border border-pale-celadon rounded p-6 hover:border-celadon transition-colors duration-150">
+            <h3 class="text-xl font-semibold text-charcoal mb-2">Card Title</h3>
+            <p class="text-sm text-slate">Hover state changes border color.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Sidebar Section -->
+      <section>
+        <h2 class="text-3xl font-semibold text-charcoal mb-8">Settings Sidebar Navigation</h2>
+        <div class="bg-white rounded-lg border border-pale-celadon overflow-hidden">
+          <div class="flex min-h-[500px]">
+            <!-- Sidebar -->
+            <div class="w-60 bg-white border-r border-pale-celadon flex-shrink-0">
+              <!-- Sidebar Header (Optional Enhancement) -->
+              <div class="px-6 py-4 border-b border-pale-celadon/30">
+                <h3 class="text-sm font-semibold text-charcoal uppercase tracking-wider">Settings</h3>
+              </div>
+              
+              <nav class="py-2">
+                <!-- Account & Security Section -->
+                <div class="px-6 py-2 mt-2">
+                  <h4 class="text-xs font-semibold text-slate uppercase tracking-wider">Account & Security</h4>
+                </div>
+                
+                <!-- Account (Active) -->
+                <a href="#" class="flex items-center gap-3 h-11 px-6 my-0.5 bg-mist border-l-4 border-celadon text-charcoal font-semibold text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2" aria-current="page">
+                  <svg class="w-5 h-5 text-celadon flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  <span>Account</span>
+                </a>
+                
+                <!-- Privacy -->
+                <a href="#" class="flex items-center gap-3 h-11 px-6 my-0.5 text-slate hover:bg-mist/70 font-medium text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2">
+                  <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <span>Privacy</span>
+                </a>
+                
+                <!-- Divider -->
+                <div class="h-px bg-pale-celadon/30 mx-6 my-2"></div>
+                
+                <!-- Content & Portfolio Section -->
+                <div class="px-6 py-2">
+                  <h4 class="text-xs font-semibold text-slate uppercase tracking-wider">Content & Portfolio</h4>
+                </div>
+                
+                <!-- Profile -->
+                <a href="#" class="flex items-center gap-3 h-11 px-6 my-0.5 text-slate hover:bg-mist/70 font-medium text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2">
+                  <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span>Profile</span>
+                </a>
+                
+                <!-- My Studio -->
+                <a href="#" class="flex items-center gap-3 h-11 px-6 my-0.5 text-slate hover:bg-mist/70 font-medium text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2">
+                  <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                  <span>My Studio</span>
+                </a>
+                
+                <!-- My Work -->
+                <a href="#" class="flex items-center gap-3 h-11 px-6 my-0.5 text-slate hover:bg-mist/70 font-medium text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2">
+                  <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span>My Work</span>
+                </a>
+              </nav>
+            </div>
+            
+            <!-- Content Area -->
+            <div class="flex-1 bg-mist p-8">
+              <h3 class="text-2xl font-bold text-charcoal mb-4">Settings Content Area</h3>
+              <p class="text-slate mb-4">This is where the settings page content would appear. The sidebar is 240px wide and persistent across all settings pages.</p>
+              <div class="bg-white rounded border border-pale-celadon p-4 mt-6">
+                <h4 class="text-sm font-semibold text-charcoal mb-2">Improvements Implemented:</h4>
+                <ul class="text-sm text-slate space-y-1 list-disc list-inside">
+                  <li>Lucide icons replace emojis for professional appearance</li>
+                  <li>Enhanced spacing with better vertical rhythm (my-0.5 between items)</li>
+                  <li>Improved hover states (70% opacity) with smooth transitions</li>
+                  <li>Visible focus rings for keyboard navigation accessibility</li>
+                  <li>Typography hierarchy: Active = Semibold, Inactive = Medium</li>
+                  <li>Section grouping with headers and dividers</li>
+                  <li>Sidebar header for context</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Border Radius Section -->
+      <section>
+        <h2 class="text-3xl font-semibold text-charcoal mb-8">Border Radius</h2>
+        <div class="bg-white rounded-lg border border-pale-celadon p-8">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+            <div class="text-center">
+              <div class="h-20 bg-celadon rounded-none mb-2"></div>
+              <p class="text-xs text-slate">None (0px)</p>
+            </div>
+            <div class="text-center">
+              <div class="h-20 bg-celadon rounded mb-2"></div>
+              <p class="text-xs text-slate">SM (4px)</p>
+            </div>
+            <div class="text-center">
+              <div class="h-20 bg-celadon rounded-lg mb-2"></div>
+              <p class="text-xs text-slate">MD (8px)</p>
+            </div>
+            <div class="text-center">
+              <div class="h-20 bg-celadon rounded-xl mb-2"></div>
+              <p class="text-xs text-slate">LG (12px)</p>
+            </div>
+            <div class="text-center">
+              <div class="h-20 bg-celadon rounded-full mb-2"></div>
+              <p class="text-xs text-slate">Full (9999px)</p>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- Status Section -->
-      <section class="bg-white rounded-lg shadow-md p-8">
-        <h2 class="text-2xl font-semibold text-charcoal mb-4">✅ Design System Ready</h2>
+      <section class="bg-white rounded-lg border border-pale-celadon p-8">
+        <h2 class="text-2xl font-semibold text-charcoal mb-4">✅ Design System Status</h2>
         <ul class="space-y-2 text-slate">
-          <li>✓ Celadon Green color palette configured</li>
+          <li>✓ Celadon Green color palette configured (WCAG AA compliant)</li>
           <li>✓ Inter font family loaded from Google Fonts</li>
           <li>✓ 4px base spacing system</li>
           <li>✓ Tailwind CSS v4 with custom theme</li>
-          <li>✓ Accessible focus states</li>
-          <li>✓ Gallery-specific utilities</li>
+          <li>✓ Accessible focus states (2px Celadon Green outline)</li>
+          <li>✓ Gallery-specific utilities (40px gaps)</li>
+          <li>✓ Settings sidebar navigation component</li>
+          <li>✓ Flat design with subtle borders (no heavy shadows)</li>
+          <li>✓ Responsive breakpoints (Mobile, Tablet, Desktop)</li>
         </ul>
       </section>
 
