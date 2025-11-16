@@ -30,6 +30,9 @@ class ProfileSetupController < ApplicationController
   #
   # @return [void]
   def update
+    # Reload artist to ensure we have the latest state (especially for attachments)
+    @artist.reload
+    
     # Check if profile photo is required (not already attached)
     if !@artist.profile_photo.attached? && profile_setup_params[:profile_photo].blank?
       @artist.errors.add(:profile_photo, 'is required')

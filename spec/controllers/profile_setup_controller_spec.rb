@@ -227,6 +227,8 @@ RSpec.describe ProfileSetupController, type: :controller do
           # Attach a profile photo first
           artist_with_photo.profile_photo.attach(io: File.open('spec/fixtures/files/test_image.jpg'), filename: 'test.jpg', content_type: 'image/jpeg')
           artist_with_photo.save! # Ensure attachment is persisted
+          # Reload to ensure attachment is properly loaded
+          artist_with_photo.reload
         end
 
         it 'allows updating other fields without requiring photo again' do
