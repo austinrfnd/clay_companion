@@ -1,0 +1,22 @@
+<%#
+  Flash Messages Partial
+  
+  Displays flash messages (notice, alert, error, success, warning, info).
+  Uses design system colors and styling via ApplicationHelper#flash_message.
+  
+  Specifications:
+  - Success: Green background, border, icon
+  - Error/Alert: Red background, border, icon
+  - Warning: Orange background, border, icon
+  - Info: Blue background, border, icon
+  - Notice: Success styling (green)
+%>
+<% if flash.any? %>
+  <div class="flash-messages" role="alert" aria-live="polite" aria-atomic="true">
+    <% flash.each do |type, message| %>
+      <% next if message.blank? %>
+      <%= flash_message(type, message) %>
+    <% end %>
+  </div>
+<% end %>
+

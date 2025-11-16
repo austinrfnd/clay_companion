@@ -29,7 +29,7 @@ gem "image_processing", "~> 1.12"
 gem "aws-sdk-s3", require: false  # For Google Cloud Storage compatibility
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -42,6 +42,7 @@ group :development, :test do
   gem "rspec-rails", "~> 6.1"
   gem "factory_bot_rails", "~> 6.4"
   gem "faker", "~> 3.2"
+  gem "rails-controller-testing"  # For template rendering tests in controller specs
 
   # Debugging
   gem "pry-rails"
@@ -63,6 +64,9 @@ group :development do
   # Performance profiling
   gem "rack-mini-profiler"
   gem "bullet"  # N+1 query detection
+
+  # Email preview in browser for development
+  gem "letter_opener"
 end
 
 group :test do

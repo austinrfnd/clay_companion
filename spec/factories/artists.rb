@@ -1,9 +1,20 @@
 # frozen_string_literal: true
 
+##
+# Artist Factory
+#
+# Factory for creating Artist test records with Devise authentication.
+# Includes password and password_confirmation for Devise :validatable module.
+#
 FactoryBot.define do
   factory :artist do
     sequence(:email) { |n| "artist#{n}@example.com" }
+    password { "Password123!" }
+    password_confirmation { "Password123!" }
     full_name { "Jane Doe" }
+    
+    # Skip confirmation email sending in tests (use skip_confirmation! if needed)
+    # Confirmation emails are tested separately
     bio { "Jane is a ceramic artist specializing in functional pottery with a focus on minimalist design." }
     artist_statement { "I create work that explores the intersection of form and function in everyday objects." }
     profile_photo_url { "https://example.com/photos/profile.jpg" }

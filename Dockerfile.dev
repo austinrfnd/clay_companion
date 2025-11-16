@@ -53,7 +53,8 @@ COPY Gemfile* ./
 RUN if [ -f Gemfile ]; then bundle install; fi
 
 # Copy package.json and package-lock.json (when they exist)
-COPY package*.json ./
+# Use wildcard with optional flag to prevent failure if files don't exist
+COPY package*.json* ./
 
 # Install npm packages (skip this if package.json doesn't exist yet)
 RUN if [ -f package.json ]; then npm install; fi

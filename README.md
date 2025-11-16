@@ -146,6 +146,15 @@ docker-compose exec web bundle exec guard
 
 ## Development Workflow
 
+### Tailwind CSS
+
+**Tailwind CSS is automatically built when the Docker container starts.** The `docker-compose.yml` is configured to run `bin/rails tailwindcss:build` before starting the Rails server, ensuring styles are always up-to-date.
+
+If you make changes to Tailwind CSS files and need to rebuild manually:
+```bash
+docker-compose exec web bin/rails tailwindcss:build
+```
+
 This project follows **strict Test-Driven Development (TDD)**:
 
 1. **Write failing unit/integration tests first** (use `test-driven-development` Claude skill)

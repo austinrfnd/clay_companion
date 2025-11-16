@@ -1,0 +1,25 @@
+<%#
+  Platform Footer Partial
+  
+  Displays footer links and "Powered by Clay Companion" text.
+  Used across all pages (auth and dashboard).
+  
+  Specifications:
+  - Background: Misty White (#F8FAF9)
+  - Border: 1px solid rgba(168, 196, 181, 0.3) on top
+  - Padding: 24px all sides
+  - Text: Inter 14px Regular, Slate color
+  - Links: Contact, About, Terms, Privacy
+%>
+<footer class="platform-footer" role="contentinfo">
+  <div class="platform-footer-container">
+    <nav class="platform-footer-nav" aria-label="Footer navigation">
+      <%= link_to "Contact", "#", class: "platform-footer-link" %>
+      <%= link_to "About", "#", class: "platform-footer-link" %>
+      <%= link_to "Terms", "#", class: "platform-footer-link" %>
+      <%= link_to "Privacy", "#", class: "platform-footer-link" %>
+    </nav>
+    <p class="platform-footer-text">Powered by Clay Companion</p>
+  </div>
+</footer>
+

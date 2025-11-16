@@ -55,7 +55,7 @@ This document provides a complete overview of all authentication flows in Clay C
 **Purpose**: Register new artists to create accounts
 
 **Key Features**:
-- Email and password signup
+- Email, full name, and password signup
 - Real-time password strength indicator
 - Password requirements checklist
 - Terms of Service acceptance
@@ -65,10 +65,11 @@ This document provides a complete overview of all authentication flows in Clay C
 **User Flow**:
 1. User visits `/signup`
 2. Enters email address
-3. Creates password (with real-time strength feedback)
-4. Accepts Terms of Service
-5. Clicks "Create Account"
-6. Redirects to email verification confirmation
+3. Enters full name
+4. Creates password (with real-time strength feedback)
+5. Accepts Terms of Service
+6. Clicks "Create Account"
+7. Redirects to email verification confirmation
 
 **Password Requirements**:
 - 8-30 characters
@@ -78,6 +79,7 @@ This document provides a complete overview of all authentication flows in Clay C
 
 **Error Cases**:
 - Email already exists
+- Full name missing or invalid
 - Weak password (doesn't meet requirements)
 - Terms not accepted
 - Invalid email format
@@ -176,7 +178,7 @@ This document provides a complete overview of all authentication flows in Clay C
 
 **Key Features**:
 - Welcome message
-- Required fields: Full name, Portrait photo
+- Required fields: Portrait photo
 - Optional fields: Location, Bio
 - Photo upload (drag-and-drop or click)
 - Character counter for bio
@@ -185,11 +187,10 @@ This document provides a complete overview of all authentication flows in Clay C
 **User Flow**:
 1. User completes email verification
 2. Redirects to profile setup (first-time login)
-3. Enters full name (required)
-4. Uploads portrait photo (required)
-5. (Optional) Enters location and bio
-6. Clicks "Complete Setup" or "Skip for now"
-7. Redirects to dashboard
+3. Uploads portrait photo (required)
+4. (Optional) Enters location and bio
+5. Clicks "Complete Setup" or "Skip for now"
+6. Redirects to dashboard
 
 **Error Cases**:
 - Required fields missing
@@ -206,7 +207,7 @@ This document provides a complete overview of all authentication flows in Clay C
 
 **Complete Flow**:
 1. **Signup** (`/signup`)
-   - Create account with email/password
+   - Create account with email, full name, and password
    - Accept Terms of Service
    - Submit form
 
@@ -216,7 +217,6 @@ This document provides a complete overview of all authentication flows in Clay C
    - Email verified successfully
 
 3. **Profile Setup** (`/onboarding/profile-setup`)
-   - Enter full name (required)
    - Upload portrait photo (required)
    - (Optional) Enter location and bio
    - Complete setup or skip

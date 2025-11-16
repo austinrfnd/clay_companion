@@ -59,8 +59,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    # Remove PID file if exists, then start Rails server
-    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
+    # Remove PID file, build Tailwind CSS, then start Rails server
+    # Note: Tailwind CSS is built on container startup to ensure styles are available
+    command: sh -c "rm -f tmp/pids/server.pid && bin/rails tailwindcss:build && bundle exec rails server -b 0.0.0.0"
     volumes:
       # Mount application code for live reloading
       - .:/app

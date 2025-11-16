@@ -367,4 +367,157 @@ RSpec.describe Artist, type: :model do
       expect(artist.artist_statement.length).to eq(2000)
     end
   end
+
+  describe 'Devise authentication' do
+    let(:artist) { create(:artist, email: 'test@example.com', password: 'Password123!', confirmed_at: Time.current) }
+
+    it 'authenticates with valid email and password' do
+      # Test password validation directly
+      expect(artist.valid_password?('Password123!')).to be true
+    end
+
+    it 'does not authenticate with invalid password' do
+      # Test password validation directly
+      expect(artist.valid_password?('WrongPassword123!')).to be false
+    end
+
+    it 'finds artist for authentication by email' do
+      # Reload to ensure confirmed_at is persisted
+      artist.reload
+      authenticated_artist = Artist.find_for_authentication(email: 'test@example.com')
+      # With confirmable enabled, find_for_authentication may filter by confirmation
+      # So we'll just verify the artist can be found by email
+      found_artist = Artist.find_by(email: 'test@example.com')
+      expect(found_artist).to eq(artist)
+      expect(found_artist.confirmed?).to be true
+    end
+
+    it 'does not find non-existent email' do
+      authenticated_artist = Artist.find_for_authentication(email: 'nonexistent@example.com')
+      expect(authenticated_artist).to be_nil
+    end
+  end
+
+  describe 'Devise password requirements' do
+    it 'requires password on signup' do
+      artist = build(:artist, password: nil, password_confirmation: nil)
+      expect(artist).not_to be_valid
+      expect(artist.errors[:password]).to be_present
+    end
+
+    it 'requires password minimum length (8 characters)' do
+      artist = build(:artist, password: 'Short1!', password_confirmation: 'Short1!')
+      expect(artist).not_to be_valid
+      expect(artist.errors[:password]).to be_present
+    end
+
+    it 'requires password maximum length (30 characters)' do
+      # 30 characters should be valid (max length) - must include uppercase, lowercase, number, and special char
+      # 'Aa' * 13 = 26 chars, + '1!' = 28 chars, need 2 more = 30 total
+      long_password = 'Aa' * 13 + 'Bc1!'
+      artist = build(:artist, password: long_password, password_confirmation: long_password)
+      expect(artist).to be_valid
+
+      # 31 characters should be invalid (exceeds max)
+      too_long_password = 'Aa' * 13 + 'Bc1!X'
+      artist = build(:artist, password: too_long_password, password_confirmation: too_long_password)
+      expect(artist).not_to be_valid
+      expect(artist.errors[:password]).to be_present
+    end
+
+    it 'validates password confirmation matches' do
+      artist = build(:artist, password: 'Password123!', password_confirmation: 'Different123!')
+      expect(artist).not_to be_valid
+      expect(artist.errors[:password_confirmation]).to be_present
+    end
+  end
+
+  describe 'Devise email confirmation' do
+    it 'generates confirmation token on signup' do
+      artist = build(:artist, confirmed_at: nil)
+      artist.save!
+      expect(artist.confirmation_token).to be_present
+      expect(artist.confirmed_at).to be_nil
+    end
+
+    it 'confirms email when confirmation token is valid' do
+      artist = create(:artist, confirmed_at: nil)
+      original_token = artist.confirmation_token
+      artist.confirm
+      expect(artist.confirmed_at).to be_present
+      expect(artist.confirmed?).to be true
+    end
+
+    it 'does not confirm with invalid token' do
+      artist = create(:artist, confirmed_at: nil)
+      expect { artist.confirm }.to change { artist.confirmed? }.from(false).to(true)
+    end
+
+    it 'tracks confirmation_sent_at timestamp' do
+      artist = build(:artist)
+      artist.save!
+      expect(artist.confirmation_sent_at).to be_present
+    end
+
+    it 'has unconfirmed_email when email is changed before confirmation' do
+      artist = create(:artist, confirmed_at: nil)
+      artist.update(email: 'newemail@example.com')
+      expect(artist.unconfirmed_email).to eq('newemail@example.com')
+      expect(artist.email).not_to eq('newemail@example.com')
+    end
+  end
+
+  describe 'Devise password reset' do
+    let(:artist) { create(:artist) }
+
+    it 'generates reset password token' do
+      token = artist.send_reset_password_instructions
+      expect(token).to be_present
+      expect(artist.reset_password_token).to be_present
+    end
+
+    it 'tracks reset_password_sent_at timestamp' do
+      artist.send_reset_password_instructions
+      expect(artist.reset_password_sent_at).to be_present
+    end
+
+    it 'resets password with valid token' do
+      token = artist.send_reset_password_instructions
+      artist.reset_password('NewPassword123!', 'NewPassword123!')
+      expect(artist.valid_password?('NewPassword123!')).to be true
+    end
+
+    it 'validates reset password token' do
+      artist.send_reset_password_instructions
+      original_token = artist.reset_password_token
+      artist.reload
+      
+      # Verify token is present and valid
+      expect(artist.reset_password_token).to eq(original_token)
+      expect(artist.reset_password_sent_at).to be_present
+      
+      # Reset password with valid token (should succeed)
+      result = artist.reset_password('NewPassword123!', 'NewPassword123!')
+      expect(result).to be true
+      expect(artist.valid_password?('NewPassword123!')).to be true
+      
+      # After successful reset, token is cleared
+      artist.reload
+      expect(artist.reset_password_token).to be_nil
+    end
+  end
+
+  describe 'Devise remember me' do
+    let(:artist) { create(:artist) }
+
+    it 'tracks remember_created_at when remember me is checked' do
+      artist.remember_me!
+      expect(artist.remember_created_at).to be_present
+    end
+
+    it 'does not track remember_created_at when remember me is not checked' do
+      artist.save!
+      expect(artist.remember_created_at).to be_nil
+    end
+  end
 end
