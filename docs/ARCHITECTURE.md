@@ -247,28 +247,63 @@ docs/                                      # Technical documentation
 ### Web Application (MVP)
 **Strategy**: Cookie-based sessions with Devise
 
-```ruby
-# app/controllers/application_controller.rb
-class ApplicationController < ActionController::Base
-  before_action :authenticate_artist!
+**Implementation Status**: ✅ Complete
 
-  def current_artist
-    @current_artist ||= Artist.find(session[:artist_id])
-  end
-end
-```
+**Features Implemented**:
+- Email/password authentication via Devise
+- Email confirmation required (24-hour token expiry)
+- Password reset via email (6-hour token expiry)
+- Remember me functionality (2 weeks)
+- Session timeout (30 minutes)
+- Profile setup after email verification
+- Custom routes matching wireframe requirements
 
-**Routes**:
-- `POST /artists/sign_up` - Registration
-- `POST /artists/sign_in` - Login
-- `DELETE /artists/sign_out` - Logout
-- `GET /artists/password/new` - Password reset
+**Custom Routes** (implemented):
+- `GET /login` - Sign in page
+- `POST /login` - Authenticate
+- `GET /signup` - Registration page
+- `POST /signup` - Create account
+- `DELETE /logout` - Sign out
+- `GET /password/reset` - Request password reset
+- `POST /password/reset` - Send reset email
+- `GET /password/reset/:token` - Reset password form
+- `PATCH /password/reset/:token` - Update password
+- `GET /email/verify/:token` - Confirm email
+- `GET /email/resend` - Resend confirmation form
+- `POST /email/resend` - Resend confirmation email
+- `GET /profile_setup` - Profile setup form
+- `PATCH /profile_setup` - Save profile
 
-**Security**:
-- CSRF protection enabled (Rails default)
+**Custom Controllers**:
+- `Artists::SessionsController` - Login/logout with profile completeness redirect
+- `Artists::RegistrationsController` - Signup with email verification redirect
+- `Artists::PasswordsController` - Password reset with custom routes and expiry checks
+- `Artists::ConfirmationsController` - Email verification with profile setup redirect
+- `ProfileSetupController` - Profile completion after email verification
+- `EmailVerificationController` - Email verification sent page
+
+**Security Features**:
+- Password complexity requirements (8-30 chars, uppercase, lowercase, number, special char)
+- Email enumeration prevention (same response for valid/invalid emails)
+- Secure token generation and expiry (24h confirmation, 6h password reset)
+- CSRF protection (Rails default)
+- Password hashing via bcrypt (Devise default)
 - Secure cookies (httponly, secure in production)
-- Password strength validation (minimum 8 characters)
-- Email confirmation (optional for MVP)
+
+**Email Templates**:
+- Branded HTML emails with design system colors
+- Table-based layout for email client compatibility
+- Inline CSS for maximum compatibility
+- Ceramic "C" logo in header
+- Confirmation and password reset templates implemented
+
+**Test Coverage**: 90.07% (751 examples, 0 failures)
+- Request specs: 735 examples covering all flows
+- Controller specs: 111 examples
+- Feature specs: 16 examples (11 passing, 5 skipped with detailed notes)
+- Mailer specs: 24 examples
+
+See [requirements/auth/auth-development-plan.md](../requirements/auth/auth-development-plan.md) for complete implementation details.
 
 ### API (Post-MVP)
 **Strategy**: Token-based authentication (JWT or Devise Token Auth)
