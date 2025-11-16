@@ -45,14 +45,16 @@ claycompanion.com/
 │   ├── /add                             Create New Series
 │   └── /{series-id}                     Series Detail Page
 │       └── /edit                        Edit Series (Optional)
-└── /settings                            Portfolio Settings
-    ├── /                                Settings Home/Navigation (OR redirect)
+└── /settings                            Settings Hub
+    ├── /                                Settings Index (Dashboard Placeholder)
+    ├── /account                         Account Settings
+    ├── /privacy                         Privacy Settings (Post-MVP)
     ├── /profile                         Profile Settings
+    ├── /studio                          Studio Settings
+    ├── /work                            Work Settings
     ├── /exhibitions                     Exhibitions Management
-    ├── /press                           Press Mentions Management
-    ├── /studio                          Studio/Process Photos
-    ├── /techniques                      Techniques & Materials (Post-MVP)
-    └── /contact                         Contact Settings
+    ├── /press                           Press Management
+    └── /techniques                      Techniques (Post-MVP)
 ```
 
 ---
@@ -138,17 +140,19 @@ claycompanion.com/
 | Series List | `/dashboard/series` | View all series | Yes | MVP |
 | Create Series | `/dashboard/series/add` | Create new series | Yes | MVP |
 | Series Detail | `/dashboard/series/{id}` | Manage series, groups, artworks | Yes | MVP |
-| Settings Home | `/dashboard/settings` | Settings navigation (OR redirect to profile) | Yes | TBD |
-| Profile Settings | `/dashboard/settings/profile` | Artist info, bio, photos | Yes | MVP |
+| Settings Home | `/dashboard/settings` | Settings hub with dashboard placeholder | Yes | MVP |
+| Account Settings | `/dashboard/settings/account` | Basic account info (name, location, profile photo) | Yes | MVP |
+| Privacy Settings | `/dashboard/settings/privacy` | Password and security settings | Yes | Post-MVP |
+| Profile Settings | `/dashboard/settings/profile` | Public profile content (bio, statement, education, awards, social links, contact) | Yes | MVP |
+| Studio Settings | `/dashboard/settings/studio` | Studio photos and process page settings | Yes | MVP |
+| Work Settings | `/dashboard/settings/work` | Links to catalog, series, exhibitions, press management | Yes | MVP |
 | Exhibitions | `/dashboard/settings/exhibitions` | Manage exhibitions | Yes | MVP |
 | Press | `/dashboard/settings/press` | Manage press mentions | Yes | MVP |
-| Studio Photos | `/dashboard/settings/studio` | Upload studio/process images | Yes | MVP |
 | Techniques | `/dashboard/settings/techniques` | Manage techniques list | Yes | Post-MVP |
-| Contact Settings | `/dashboard/settings/contact` | Contact info & Instagram integration | Yes | MVP |
 
 **Shared Features**:
 - Sidebar or top navigation on all dashboard pages
-- Breadcrumb navigation
+- Settings pages use persistent sidebar navigation (no breadcrumbs)
 - "View Public Portfolio" link
 - Logout option
 - Responsive design
@@ -202,7 +206,7 @@ Quick Links (Gallery, About, Contact)
 
 ### Dashboard Navigation
 
-**Sidebar or Top Navigation** (appears on all dashboard pages):
+**Main Dashboard Navigation** (appears on all dashboard pages):
 
 ```
 [Dashboard]
@@ -210,29 +214,37 @@ Quick Links (Gallery, About, Contact)
 ├── 📁 Catalog
 ├── 📚 Series
 ├── ⚙️ Settings
-│   ├── Profile
-│   ├── Exhibitions
-│   ├── Press
-│   ├── Studio Photos
-│   ├── Techniques (Post-MVP)
-│   └── Contact
 ├── 👁️ View Public Portfolio
 └── 🚪 Logout
 ```
 
+**Settings Hub Navigation** (persistent sidebar on all settings pages):
+
+```
+[Settings Sidebar - 240px width]
+├── 👤 Account
+├── 🔒 Privacy
+├── 📝 Profile
+├── 🏠 My Studio
+└── 🎨 My Work
+```
+
 **Behavior**:
-- Settings can expand/collapse to show subsections
-- Active page indicator (highlight or background)
+- Main dashboard uses top navigation or sidebar
+- Settings pages have dedicated persistent sidebar (left side, 240px)
+- Active page indicator in settings sidebar (highlighted background, left border)
+- Settings sidebar always visible on desktop, collapsible on tablet, hidden on mobile (hamburger toggle)
 - Mobile: Collapsible menu or slide-out drawer
 - Responsive design
 
-**Breadcrumbs** (on dashboard pages):
+**Breadcrumbs** (on non-settings dashboard pages):
 ```
 Dashboard > Catalog
 Dashboard > Catalog > Add Artwork
 Dashboard > Series > "2024 Collection"
-Dashboard > Settings > Profile
 ```
+
+**Note**: Settings pages do NOT use breadcrumbs - they use the persistent sidebar navigation instead.
 
 ---
 
@@ -456,24 +468,22 @@ Dashboard > Settings > Profile
 
 ### Settings Landing Page
 
-**Question**: What happens when artist visits `/dashboard/settings`?
+**Decision**: `/dashboard/settings` shows a Settings Hub with:
+- **Persistent Sidebar**: Left navigation with all 5 settings sections (Account, Privacy, Profile, My Studio, My Work)
+- **Main Content Area**: Placeholder for future dashboard content
+  - Profile view statistics
+  - Friend/connection requests
+  - Pending purchases of your work
+  - Recent activity feed
+  - Notifications
+  - Quick actions/widgets
+  - Analytics and insights
 
-**Options**:
-- **Option A**: Show navigation/overview of all settings sections
-  - Pros: Gives users orientation
-  - Cons: Extra page with little value
-
-- **Option B**: Redirect to `/dashboard/settings/profile` (first subsection)
-  - Pros: Fewer pages, direct access
-  - Cons: No settings overview
-
-- **Option C**: No `/settings` route, only subpages directly accessible
-  - Pros: Simplest
-  - Cons: No clear entry point
-
-**Recommendation**: Option A or B (to be decided during implementation)
-- Option A if settings is complex and needs overview
-- Option B for simplicity
+**Structure**:
+- Settings index page (`/dashboard/settings`) serves as the hub
+- All settings sub-pages share the same persistent sidebar
+- Sidebar provides consistent navigation across all settings pages
+- Main content area on index page will be designed in a future phase
 
 ---
 
@@ -502,12 +512,18 @@ Dashboard > Settings > Profile
 
 ### Dashboard (Mobile)
 
-**Collapsible Navigation**:
+**Main Dashboard Navigation**:
 - Hamburger menu or bottom tab bar
 - Essential navigation items visible
-- Settings submenu expandable
 - "View Portfolio" accessible
 - Logout accessible
+
+**Settings Pages (Mobile)**:
+- Settings sidebar hidden by default
+- Hamburger menu button in header to toggle sidebar
+- Sidebar opens as slide-out drawer from left
+- All 5 settings sections accessible in drawer
+- Active section highlighted in drawer
 
 ---
 
