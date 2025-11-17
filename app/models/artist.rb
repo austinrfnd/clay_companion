@@ -48,6 +48,18 @@ class Artist < ApplicationRecord
   validates :artist_statement, length: { maximum: 2000 }, allow_blank: true
   validates :location, length: { maximum: 100 }, allow_blank: true
   validates :contact_phone, length: { maximum: 20 }, allow_blank: true
+  
+  # Contact email validation (optional, but must be valid format if provided)
+  validates :contact_email, format: { with: /\A[^@\s]+@[^@\s]+\.[^@\s]+\z/, message: 'must be a valid email address' },
+                            allow_blank: true
+  
+  # URL validations (optional, but must be valid HTTP/HTTPS URL if provided)
+  validates :website_url, format: { with: /\Ahttps?:\/\/.+\z/i, message: 'must be a valid HTTP or HTTPS URL' },
+                          allow_blank: true
+  validates :instagram_url, format: { with: /\Ahttps?:\/\/.+\z/i, message: 'must be a valid HTTP or HTTPS URL' },
+                            allow_blank: true
+  validates :facebook_url, format: { with: /\Ahttps?:\/\/.+\z/i, message: 'must be a valid HTTP or HTTPS URL' },
+                           allow_blank: true
 
   # Password complexity validation
   # Note: Devise :validatable handles length (8-128), but we add complexity requirements

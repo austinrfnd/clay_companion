@@ -29,3 +29,11 @@
 
 en:
   hello: "Hello world"
+  
+  # Dashboard Settings
+  dashboard:
+    settings:
+      account:
+        updated: "Account updated successfully."
+      profile:
+        updated: "Profile updated successfully."

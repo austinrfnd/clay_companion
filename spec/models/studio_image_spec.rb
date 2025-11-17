@@ -23,27 +23,73 @@ RSpec.describe StudioImage, type: :model do
   describe 'validations' do
     subject { build(:studio_image) }
 
-    describe 'image_url' do
-      it { is_expected.to validate_presence_of(:image_url) }
-
-      it 'accepts valid image URLs' do
-        valid_urls = [
-          'https://example.com/studio.jpg',
-          'https://s3.amazonaws.com/bucket/studio_image.png',
-          'https://cdn.example.com/images/studio_123.webp',
-          'http://localhost:3000/test.jpg'
-        ]
-
-        valid_urls.each do |url|
-          image = build(:studio_image, image_url: url)
-          expect(image).to be_valid, "Expected '#{url}' to be valid"
-        end
+    describe 'image attachment' do
+      let(:artist) { create(:artist) }
+      
+      it 'allows studio_image without image attachment (during migration period)' do
+        image = build(:studio_image, artist: artist)
+        # Don't attach image for this test
+        image.image = nil
+        # During migration period, image may not be attached yet
+        expect(image).to be_valid
       end
 
-      it 'rejects empty image_url' do
-        image = build(:studio_image, image_url: '')
+      it 'accepts valid image attachments (JPG)' do
+        image = build(:studio_image, artist: artist)
+        image.image.attach(
+          io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
+          filename: 'test.jpg',
+          content_type: 'image/jpeg'
+        )
+        expect(image).to be_valid
+      end
+
+      it 'accepts valid image attachments (PNG)' do
+        # Create a minimal PNG file for testing
+        png_data = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D, 0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4, 0x89, 0x00, 0x00, 0x00, 0x0A, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9C, 0x63, 0x00, 0x01, 0x00, 0x00, 0x05, 0x00, 0x01, 0x0D, 0x0A, 0x2D, 0xB4, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82].pack('C*')
+        FileUtils.mkdir_p('spec/fixtures/files')
+        File.binwrite('spec/fixtures/files/test_image.png', png_data)
+        
+        image = build(:studio_image, artist: artist)
+        image.image.attach(
+          io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.png')),
+          filename: 'test.png',
+          content_type: 'image/png'
+        )
+        expect(image).to be_valid
+      end
+
+      it 'rejects invalid file types' do
+        # Create a text file
+        FileUtils.mkdir_p('spec/fixtures/files')
+        File.write('spec/fixtures/files/test.txt', 'not an image')
+        
+        image = build(:studio_image, artist: artist)
+        image.image.attach(
+          io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test.txt')),
+          filename: 'test.txt',
+          content_type: 'text/plain'
+        )
         expect(image).not_to be_valid
-        expect(image.errors[:image_url]).to be_present
+        expect(image.errors[:image]).to be_present
+      end
+
+      it 'rejects files exceeding 5MB' do
+        # Create a large file (6MB)
+        large_file = Tempfile.new(['large', '.jpg'])
+        large_file.write('x' * (6 * 1024 * 1024))
+        large_file.rewind
+        
+        image = build(:studio_image, artist: artist)
+        image.image.attach(
+          io: large_file,
+          filename: 'large.jpg',
+          content_type: 'image/jpeg'
+        )
+        expect(image).not_to be_valid
+        expect(image.errors[:image]).to be_present
+        large_file.close
+        large_file.unlink
       end
     end
 

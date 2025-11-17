@@ -66,7 +66,12 @@ RSpec.describe Artist, type: :model do
       end
 
       it 'destroys associated studio_images when artist is destroyed' do
-        create_list(:studio_image, 2, artist: artist)
+        # Create studio_images without attachments to avoid Active Storage issues in tests
+        studio_image1 = create(:studio_image, artist: artist)
+        studio_image1.image.purge if studio_image1.image.attached?
+        studio_image2 = create(:studio_image, artist: artist)
+        studio_image2.image.purge if studio_image2.image.attached?
+        
         expect { artist.destroy }.to change { StudioImage.count }.by(-2)
       end
 
@@ -236,6 +241,140 @@ RSpec.describe Artist, type: :model do
         artist = build(:artist, contact_phone: '1' * 21)
         expect(artist).not_to be_valid
         expect(artist.errors[:contact_phone]).to be_present
+      end
+    end
+
+    describe 'contact_email' do
+      it { is_expected.to allow_value(nil).for(:contact_email) }
+      it { is_expected.to allow_value('').for(:contact_email) }
+
+      it 'accepts valid email formats' do
+        valid_emails = [
+          'contact@example.com',
+          'user.name@example.com',
+          'user+tag@example.co.uk'
+        ]
+
+        valid_emails.each do |email|
+          artist = build(:artist, contact_email: email)
+          expect(artist).to be_valid, "Expected #{email} to be valid"
+        end
+      end
+
+      it 'rejects invalid email formats' do
+        invalid_emails = [
+          'invalid',
+          '@example.com',
+          'user@',
+          'user @example.com'
+        ]
+
+        invalid_emails.each do |email|
+          artist = build(:artist, contact_email: email)
+          expect(artist).not_to be_valid, "Expected #{email} to be invalid"
+          expect(artist.errors[:contact_email]).to be_present
+        end
+      end
+    end
+
+    describe 'website_url' do
+      it { is_expected.to allow_value(nil).for(:website_url) }
+      it { is_expected.to allow_value('').for(:website_url) }
+
+      it 'accepts valid HTTP/HTTPS URLs' do
+        valid_urls = [
+          'https://example.com',
+          'http://example.com',
+          'https://www.example.com',
+          'https://example.com/path',
+          'https://subdomain.example.com'
+        ]
+
+        valid_urls.each do |url|
+          artist = build(:artist, website_url: url)
+          expect(artist).to be_valid, "Expected #{url} to be valid"
+        end
+      end
+
+      it 'rejects invalid URL formats' do
+        invalid_urls = [
+          'not-a-url',
+          'example.com',
+          'ftp://example.com',
+          'javascript:alert(1)',
+          'http://',
+          'https://'
+        ]
+
+        invalid_urls.each do |url|
+          artist = build(:artist, website_url: url)
+          expect(artist).not_to be_valid, "Expected #{url} to be invalid"
+          expect(artist.errors[:website_url]).to be_present
+        end
+      end
+    end
+
+    describe 'instagram_url' do
+      it { is_expected.to allow_value(nil).for(:instagram_url) }
+      it { is_expected.to allow_value('').for(:instagram_url) }
+
+      it 'accepts valid HTTP/HTTPS URLs' do
+        valid_urls = [
+          'https://instagram.com/user',
+          'http://instagram.com/user',
+          'https://www.instagram.com/user'
+        ]
+
+        valid_urls.each do |url|
+          artist = build(:artist, instagram_url: url)
+          expect(artist).to be_valid, "Expected #{url} to be valid"
+        end
+      end
+
+      it 'rejects invalid URL formats' do
+        invalid_urls = [
+          'not-a-url',
+          'instagram.com/user',
+          'ftp://instagram.com/user'
+        ]
+
+        invalid_urls.each do |url|
+          artist = build(:artist, instagram_url: url)
+          expect(artist).not_to be_valid, "Expected #{url} to be invalid"
+          expect(artist.errors[:instagram_url]).to be_present
+        end
+      end
+    end
+
+    describe 'facebook_url' do
+      it { is_expected.to allow_value(nil).for(:facebook_url) }
+      it { is_expected.to allow_value('').for(:facebook_url) }
+
+      it 'accepts valid HTTP/HTTPS URLs' do
+        valid_urls = [
+          'https://facebook.com/user',
+          'http://facebook.com/user',
+          'https://www.facebook.com/user'
+        ]
+
+        valid_urls.each do |url|
+          artist = build(:artist, facebook_url: url)
+          expect(artist).to be_valid, "Expected #{url} to be valid"
+        end
+      end
+
+      it 'rejects invalid URL formats' do
+        invalid_urls = [
+          'not-a-url',
+          'facebook.com/user',
+          'ftp://facebook.com/user'
+        ]
+
+        invalid_urls.each do |url|
+          artist = build(:artist, facebook_url: url)
+          expect(artist).not_to be_valid, "Expected #{url} to be invalid"
+          expect(artist.errors[:facebook_url]).to be_present
+        end
       end
     end
   end
