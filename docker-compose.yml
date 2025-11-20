@@ -100,7 +100,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: bundle exec rspec
+    command: sh -c "bundle install && bundle exec rspec"
     volumes:
       # Mount application code
       - .:/app

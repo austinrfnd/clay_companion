@@ -79,4 +79,14 @@ Rails.application.routes.draw do
   get '/profile_setup', to: 'profile_setup#show', as: :profile_setup
   patch '/profile_setup', to: 'profile_setup#update'
   get '/email_verification_sent', to: 'email_verification#sent', as: :email_verification_sent
+
+  # Settings hub routes
+  namespace :dashboard do
+    namespace :settings do
+      root to: 'settings#index'
+      resource :account, only: [:show, :update], controller: 'account'
+      resource :profile, only: [:show, :update], controller: 'profile'
+      # Privacy, Studio, Work routes to be added in future phases
+    end
+  end
 end
