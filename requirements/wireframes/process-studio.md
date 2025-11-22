@@ -1,19 +1,23 @@
-# Process/Studio Page - Wireframe
+# Process/Studio Page - Wireframe (Public-Facing)
 
 **URL**: `claycompanion.com/artist-name/process` (or `/studio`)
 
-**Purpose**: Show behind-the-scenes content - workspace, tools, making process, and artist at work
+**Purpose**: Public-facing page that shows behind-the-scenes content - workspace, tools, making process, and artist at work
+
+**Note**: This wireframe describes the **public-facing page** that visitors see. For the **dashboard management interface** where artists upload and organize these photos, see [`requirements/wireframes/dashboard/studio-settings.md`](dashboard/studio-settings.md).
 
 ---
 
 ## Key Design Decisions
 
-1. **Layout Style**: Photo gallery with captions (simple, visual-first approach)
-2. **Content Type**: Mix of studio environment photos and process/making photos
-3. **Organization**: Single scrollable gallery with optional intro text
-4. **Image Display**: Responsive grid layout (3-col desktop, 2-col tablet, 1-col mobile)
-5. **Captions**: Short descriptions below each image (1-2 sentences)
-6. **Optional**: Video embeds for process demonstrations
+1. **Layout Style**: Dynamic masonry photo gallery with configurable grid sizing
+2. **Hero Section**: Full-width hero with background image, white overlay, centered title and intro
+3. **Content Type**: Mix of studio environment photos and process/making photos with category badges
+4. **Organization**: Single scrollable gallery with masonry layout - images can be 1/3 width (4-col) or 1/2 width (6-col)
+5. **Grid System**: 12-column grid allows flexible image sizing and natural wrapping around larger images
+6. **Captions**: Short descriptions below each image (1-2 sentences) + category badge (Studio/Process/Other)
+7. **Visual Effects**: Hover state with elevation (translateY -8px + shadow), parallax background attachment
+8. **Optional**: Video embeds for process demonstrations (post-MVP)
 
 ---
 
@@ -28,12 +32,18 @@
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                                                                               │
-│  STUDIO & PROCESS                                                             │
-│                                                                               │
+│  [Hero Section with Background Image - min-height: 500px]                   │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  Come behind the scenes and see where the work is made. My studio   │   │
-│  │  in Brooklyn is where I spend my days throwing, trimming, glazing,  │   │
-│  │  and firing each piece by hand.                                     │   │
+│  │                     [Background Studio Image]                       │   │
+│  │                     (White overlay 85% opacity)                     │   │
+│  │                                                                     │   │
+│  │                      STUDIO & PROCESS                              │   │
+│  │                      ───────────────────                            │   │
+│  │                                                                     │   │
+│  │  Come behind the scenes and see where the work is made. My studio  │   │
+│  │  in Brooklyn is where I spend my days throwing, trimming, glazing, │   │
+│  │  and firing each piece by hand.                                    │   │
+│  │                                                                     │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
 │  (Optional intro paragraph - 1-2 sentences, max 100 words)                   │
 │                                                                               │
@@ -41,39 +51,41 @@
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                                                                               │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐          │
-│  │                  │  │                  │  │                  │          │
-│  │                  │  │                  │  │                  │          │
-│  │   Studio Photo   │  │   Studio Photo   │  │   Studio Photo   │          │
-│  │                  │  │                  │  │                  │          │
-│  │                  │  │                  │  │                  │          │
-│  └──────────────────┘  └──────────────────┘  └──────────────────┘          │
-│  My studio workspace   The pottery wheel    Tools & materials              │
-│  in Red Hook, Brooklyn in action            I use daily                    │
+│  DYNAMIC MASONRY GRID LAYOUT (12-column)                                     │
 │                                                                               │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐          │
-│  │                  │  │                  │  │                  │          │
-│  │   Process Photo  │  │   Process Photo  │  │   Process Photo  │          │
-│  │                  │  │                  │  │                  │          │
-│  └──────────────────┘  └──────────────────┘  └──────────────────┘          │
-│  Centering clay on    Trimming the foot    Applying glaze by               │
-│  the wheel            of a bowl            hand                             │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              │
+│  │                 │  │                 │  │                 │              │
+│  │ Image 1 (4col)  │  │ Image 2 (4col)  │  │ Image 3 (4col)  │              │
+│  │                 │  │                 │  │                 │              │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘              │
+│  Studio                Studio                Studio                          │
 │                                                                               │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐          │
-│  │                  │  │                  │  │                  │          │
-│  │   Process Photo  │  │   Process Photo  │  │   Process Photo  │          │
-│  │                  │  │                  │  │                  │          │
-│  └──────────────────┘  └──────────────────┘  └──────────────────┘          │
-│  Loading the kiln     Pieces fresh from    Inspecting finished              │
-│  for firing           bisque firing        work                             │
+│  ┌────────────────────┐  ┌─────────────────┐                                │
+│  │                    │  │                 │                                │
+│  │ Image 4 (6col)     │  │ Image 5 (6col)  │                                │
+│  │ LARGE HERO IMAGE   │  │                 │                                │
+│  │ (2 rows)           │  │                 │                                │
+│  │                    │  └─────────────────┘                                │
+│  │                    │  ┌─────────────────┐                                │
+│  │                    │  │ Image 6 (6col)  │                                │
+│  │                    │  │                 │                                │
+│  └────────────────────┘  └─────────────────┘                                │
+│  Process                 Process            Process                          │
 │                                                                               │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐          │
-│  │   Studio Photo   │  │   Process Photo  │  │   Studio Photo   │          │
-│  └──────────────────┘  └──────────────────┘  └──────────────────┘          │
-│  Caption text here    Caption text here    Caption text here                │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              │
+│  │                 │  │                 │  │                 │              │
+│  │ Image 7 (4col)  │  │ Image 8 (4col)  │  │ Image 9 (4col)  │              │
+│  │                 │  │                 │  │                 │              │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘              │
+│  Process                Process                Process                       │
 │                                                                               │
-│  (Responsive grid: 3 columns desktop, 2 tablet, 1 mobile)                    │
-│  (Continues with more images...)                                             │
+│  Grid Layout Notes:                                                          │
+│  - 12-column base grid for flexible sizing                                   │
+│  - Images can be configured as 4-col (1/3 width) or 6-col (1/2 width)        │
+│  - Large images span 2 rows with smaller images wrapping beside              │
+│  - Gap: 3rem between images (2.5rem on tablet, 2rem on mobile)               │
+│  - Images have hover effect: translateY(-8px) + shadow elevation             │
+│  - Category badges in top-right corner (Studio/Process/Other)                │
 │                                                                               │
 └─────────────────────────────────────────────────────────────────────────────┘
 
@@ -409,7 +421,9 @@ ORDER BY display_order ASC, created_at DESC
 
 ## Dashboard: Edit Studio & Process Page
 
-### Form Structure (Dashboard Side)
+**Note**: This section provides a basic overview of the dashboard interface. For the **complete, detailed wireframe** of the dashboard studio settings page, see [`requirements/wireframes/dashboard/studio-settings.md`](dashboard/studio-settings.md).
+
+### Form Structure (Dashboard Side) - Basic Overview
 
 ```
 Edit Studio & Process Page
@@ -485,7 +499,39 @@ Edit Studio & Process Page
 
 ---
 
-## Database Schema (No Changes Needed!)
+## Post-MVP Features
+
+See [`requirements/POST_MVP_FEATURES.md`](../POST_MVP_FEATURES.md) for comprehensive post-MVP roadmap.
+
+### Process/Studio Page - Post-MVP Enhancements
+
+#### Phase 1: Configurable Grid Layout
+- **Description**: Allow artists to customize which images appear larger in the masonry grid
+- **Implementation**: Add `grid_size` column to `studio_images` table
+  - Enum values: `normal` (4-col), `large` (6-col), `hero` (6-col + 2-row span)
+- **Dashboard UX**: Size selector for each image with live preview
+- **Effort**: Small (1-2 hours)
+- **Priority**: Medium
+
+#### Phase 2: Process Videos Section
+- **Description**: Embed YouTube/Vimeo videos alongside photos
+- **Implementation**: Extend `studio_images` or create `process_videos` table
+- **Features**: Video URL input, captions, drag-to-reorder, responsive embeds
+- **Dashboard UX**: New "Process Videos" section in studio settings
+- **Effort**: Medium (2-3 hours)
+- **Priority**: Medium
+
+#### Phase 3: Gallery Filtering
+- **Description**: Allow visitors to filter by category
+- **UI**: Filter buttons: All | Studio | Process | Other
+- **Implementation**: JavaScript-based filtering using existing `category` field
+- **No database changes needed**
+- **Effort**: Small (1-2 hours)
+- **Priority**: Low
+
+---
+
+## Database Schema (No Changes Needed for MVP!)
 
 The existing schema already supports this design:
 
@@ -535,5 +581,6 @@ The existing schema already supports this design:
 
 ---
 
-**Status**: Finalized ✓
-**Date**: 2025-10-20
+**Status**: Finalized ✓ (MVP phase)
+**Date**: 2025-11-22
+**Last Updated**: Added hero section with background image, dynamic masonry grid layout, category badges, enhanced typography and interactions. Post-MVP features documented.

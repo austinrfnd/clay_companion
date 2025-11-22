@@ -54,6 +54,7 @@ temp/
 # Testing
 /coverage/
 /spec/examples.txt
+.playwright-mcp/
 
 # Docker
 /docker-compose.override.yml

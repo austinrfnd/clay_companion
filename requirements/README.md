@@ -102,13 +102,26 @@ This folder contains **all** the product planning and design decisions for Clay 
 
 ---
 
-### 7. [wireframes/](wireframes/)
+### 7. [POST_MVP_FEATURES.md](POST_MVP_FEATURES.md)
+**Post-MVP features and enhancement roadmap**
+
+- Phase 1, 2, 3 features across all feature areas
+- Grid layout configurability, process videos, gallery filtering
+- Bulk image organization, image optimization & CDN
+- Custom domains, analytics, social sharing, and more
+- Effort and priority estimates for each feature
+
+**When to use**: Planning post-launch features, prioritizing enhancements, understanding the future roadmap
+
+---
+
+### 8. [wireframes/](wireframes/)
 **UI mockups and layouts**
 
 - [artist-profile.md](wireframes/artist-profile.md) - Landing page
 - [gallery.md](wireframes/gallery.md) - Artwork gallery with filtering
 - [about.md](wireframes/about.md) - Artist bio and statement
-- [process-studio.md](wireframes/process-studio.md) - Behind-the-scenes photos
+- [process-studio.md](wireframes/process-studio.md) - Behind-the-scenes photos (✨ includes post-MVP features)
 - [exhibitions.md](wireframes/exhibitions.md) - Exhibition history
 - [press.md](wireframes/press.md) - Press mentions
 - [contact.md](wireframes/contact.md) - Contact page with Instagram
@@ -120,7 +133,7 @@ This folder contains **all** the product planning and design decisions for Clay 
 
 ---
 
-### 8. [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
+### 9. [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
 **Guide for starting fresh with a new tech stack**
 
 - Tech stack options (Django, Rails, Laravel, Go, Rust, Phoenix, etc.)
@@ -193,7 +206,7 @@ All requirements documents are **complete and ready to use**:
 - ✅ Wireframes for all pages
 - ✅ Migration guide with tech stack options
 
-**Total Pages**: 7 main docs + 10 wireframes + migration guide = **18 documents**
+**Total Pages**: 8 main docs + 10 wireframes + migration guide = **19 documents** (includes POST_MVP_FEATURES.md)
 
 ---
 
@@ -248,6 +261,6 @@ If you're unsure about something:
 
 ---
 
-**Version**: 1.0 (Tech-Agnostic)
-**Last Updated**: 2025-11-05
-**Status**: Complete and ready to use
+**Version**: 1.1 (Tech-Agnostic + Post-MVP Roadmap)
+**Last Updated**: 2025-11-22
+**Status**: Complete and ready to use (MVP + Post-MVP planning)
