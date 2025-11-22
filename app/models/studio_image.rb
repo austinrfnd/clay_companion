@@ -13,11 +13,15 @@ class StudioImage < ApplicationRecord
   # Active Storage attachments
   has_one_attached :image
 
+  # Enums
+  enum category: { studio: 'studio', process: 'process', other: 'other' }
+
   # Validations
   # Note: image_url validation removed - using Active Storage attachment instead
   # During migration period, image_url may still exist but is not required
   validates :alt_text, length: { maximum: 500 }, allow_blank: true
-  validates :caption, length: { maximum: 1000 }, allow_blank: true
+  validates :caption, length: { maximum: 150 }, allow_blank: true
+  validates :category, presence: true, inclusion: { in: categories.keys }
   validates :width, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
   validates :height, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
   validates :file_size, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
@@ -27,6 +31,8 @@ class StudioImage < ApplicationRecord
 
   # Scopes
   scope :ordered, -> { order(display_order: :asc, created_at: :asc) }
+  scope :by_artist, ->(artist_id) { where(artist_id: artist_id) }
+  scope :by_category, ->(category) { where(category: category) }
 
   private
 

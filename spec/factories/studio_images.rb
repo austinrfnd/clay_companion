@@ -23,6 +23,7 @@ FactoryBot.define do
     
     alt_text { "View of ceramic studio workspace" }
     caption { "Working on a new series of minimalist vessels in my Portland studio." }
+    category { 'studio' }
     width { 1920 }
     height { 1080 }
     file_size { 655_360 } # 640 KB
@@ -48,6 +49,16 @@ FactoryBot.define do
       width { 4000 }
       height { 3000 }
       file_size { 2_621_440 } # 2.5 MB
+    end
+
+    trait :process_category do
+      category { 'process' }
+      caption { "Throwing clay on the wheel - a meditative process." }
+    end
+
+    trait :other_category do
+      category { 'other' }
+      caption { "Miscellaneous studio moment." }
     end
   end
 end

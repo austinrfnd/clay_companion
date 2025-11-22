@@ -104,6 +104,45 @@ This page uses the same **Design System Colors**, **Typography**, **Spacing**, *
 
 ## Form Field Specifications
 
+### Hero Image Selection
+
+**Hero Image (Background for Public Page)**:
+- **Purpose**: Allow artist to select which uploaded photo appears as the background of the hero section
+- **Display**: Large preview box showing currently selected hero image (300px height)
+- **Selection Method**: Radio buttons with thumbnail previews for each image
+- **Thumbnails**: 120px height, 200px wide cards arranged in grid
+- **Selected State**: Green border (#6E9180) + subtle shadow highlight
+- **Options**:
+  - Radio button for each uploaded studio image (caption as label)
+  - Checkbox to "Use default background" (no custom image)
+- **Helper Text**: "Choose from your uploaded photos below, or upload a new one. Images work best when they are landscape-oriented." - 14px, Slate
+- **Auto-save**: Selection updates immediately without manual save
+
+**Layout**:
+```
+┌─────────────────────────────────────────────┐
+│ Current Hero Image Preview:                 │
+│ ┌─────────────────────────────────────────┐ │
+│ │                                         │ │
+│ │     [Selected hero image preview]       │ │
+│ │                                         │ │
+│ └─────────────────────────────────────────┘ │
+│                                             │
+│ Select an image as hero background:         │
+│                                             │
+│ ☐ [IMG Thumbnail 1]  ☑ [IMG Thumbnail 2]   │
+│    Caption 1            Caption 2 (Selected)│
+│                                             │
+│ ☐ [IMG Thumbnail 3]                        │
+│    Caption 3                                │
+│                                             │
+│ ☐ Use default background (no custom image) │
+│                                             │
+└─────────────────────────────────────────────┘
+```
+
+---
+
 ### Introduction Text Area
 
 **Studio Introduction (Optional)**:

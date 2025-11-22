@@ -306,5 +306,122 @@ RSpec.describe StudioImage, type: :model do
       expect(image.height).to eq(3000)
       expect(image.file_size).to be > 1_000_000
     end
+
+    it 'creates studio_image with process category' do
+      image = build(:studio_image, :process_category)
+      expect(image).to be_valid
+      expect(image.category).to eq('process')
+    end
+
+    it 'creates studio_image with other category' do
+      image = build(:studio_image, :other_category)
+      expect(image).to be_valid
+      expect(image.category).to eq('other')
+    end
+  end
+
+  describe 'category enum and validations' do
+    subject { build(:studio_image) }
+
+    describe 'enum' do
+      it 'defines studio category' do
+        image = build(:studio_image, category: 'studio')
+        expect(image.category).to eq('studio')
+      end
+
+      it 'defines process category' do
+        image = build(:studio_image, category: 'process')
+        expect(image.category).to eq('process')
+      end
+
+      it 'defines other category' do
+        image = build(:studio_image, category: 'other')
+        expect(image.category).to eq('other')
+      end
+    end
+
+    describe 'category validation' do
+      it { is_expected.to validate_presence_of(:category) }
+
+      it 'accepts valid categories' do
+        valid_categories = ['studio', 'process', 'other']
+
+        valid_categories.each do |category|
+          image = build(:studio_image, category: category)
+          expect(image).to be_valid, "Expected category '#{category}' to be valid"
+        end
+      end
+
+      it 'rejects invalid categories' do
+        image = build(:studio_image, category: 'invalid_category')
+        expect(image).not_to be_valid
+        expect(image.errors[:category]).to be_present
+      end
+
+      it 'defaults to other category if not specified' do
+        image = build(:studio_image)
+        image.category = nil
+        expect(image).not_to be_valid
+      end
+    end
+  end
+
+  describe 'scopes' do
+    let(:artist) { create(:artist) }
+
+    before do
+      create_list(:studio_image, 2, artist: artist, category: 'studio')
+      create_list(:studio_image, 3, artist: artist, :process_category)
+      create_list(:studio_image, 1, artist: artist, :other_category)
+    end
+
+    describe 'ordered scope' do
+      it 'returns images ordered by display_order then created_at' do
+        images = StudioImage.ordered
+        expect(images.pluck(:display_order)).to eq(images.pluck(:display_order).sort)
+      end
+    end
+
+    describe 'by_artist scope' do
+      it 'returns only images for specified artist' do
+        other_artist = create(:artist)
+        create(:studio_image, artist: other_artist)
+
+        artist_images = StudioImage.by_artist(artist.id)
+        expect(artist_images.count).to eq(6)
+        expect(artist_images.all? { |img| img.artist_id == artist.id }).to be true
+      end
+    end
+
+    describe 'by_category scope' do
+      it 'returns only images in specified category' do
+        studio_images = StudioImage.by_category('studio')
+        expect(studio_images.count).to eq(2)
+        expect(studio_images.all? { |img| img.category == 'studio' }).to be true
+      end
+
+      it 'returns process category images' do
+        process_images = StudioImage.by_category('process')
+        expect(process_images.count).to eq(3)
+        expect(process_images.all? { |img| img.category == 'process' }).to be true
+      end
+
+      it 'returns other category images' do
+        other_images = StudioImage.by_category('other')
+        expect(other_images.count).to eq(1)
+        expect(other_images.all? { |img| img.category == 'other' }).to be true
+      end
+    end
+
+    describe 'chaining scopes' do
+      it 'filters by artist and category' do
+        other_artist = create(:artist)
+        create(:studio_image, artist: other_artist, :process_category)
+
+        filtered = StudioImage.by_artist(artist.id).by_category('process')
+        expect(filtered.count).to eq(3)
+        expect(filtered.all? { |img| img.artist_id == artist.id && img.category == 'process' }).to be true
+      end
+    end
   end
 end

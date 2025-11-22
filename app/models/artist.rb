@@ -34,6 +34,8 @@ class Artist < ApplicationRecord
   has_many :exhibitions, dependent: :destroy
   has_many :press_mentions, dependent: :destroy
   has_many :studio_images, dependent: :destroy
+  belongs_to :studio_hero_image, class_name: 'StudioImage', optional: true,
+    foreign_key: 'studio_hero_image_id'
 
   # Active Storage attachments
   has_one_attached :profile_photo
@@ -48,6 +50,7 @@ class Artist < ApplicationRecord
   validates :artist_statement, length: { maximum: 2000 }, allow_blank: true
   validates :location, length: { maximum: 100 }, allow_blank: true
   validates :contact_phone, length: { maximum: 20 }, allow_blank: true
+  validates :studio_intro_text, length: { maximum: 600 }, allow_blank: true
   
   # Contact email validation (optional, but must be valid format if provided)
   validates :contact_email, format: { with: /\A[^@\s]+@[^@\s]+\.[^@\s]+\z/, message: 'must be a valid email address' },
