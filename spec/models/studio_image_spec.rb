@@ -371,8 +371,10 @@ RSpec.describe StudioImage, type: :model do
 
     before do
       create_list(:studio_image, 2, artist: artist, category: 'studio')
-      create_list(:studio_image, 3, artist: artist, :process_category)
-      create_list(:studio_image, 1, artist: artist, :other_category)
+      create(:studio_image, :process_category, artist: artist)
+      create(:studio_image, :process_category, artist: artist)
+      create(:studio_image, :process_category, artist: artist)
+      create(:studio_image, :other_category, artist: artist)
     end
 
     describe 'ordered scope' do
@@ -416,7 +418,7 @@ RSpec.describe StudioImage, type: :model do
     describe 'chaining scopes' do
       it 'filters by artist and category' do
         other_artist = create(:artist)
-        create(:studio_image, artist: other_artist, :process_category)
+        create(:studio_image, :process_category, artist: other_artist)
 
         filtered = StudioImage.by_artist(artist.id).by_category('process')
         expect(filtered.count).to eq(3)
