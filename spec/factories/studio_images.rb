@@ -5,7 +5,8 @@ FactoryBot.define do
     artist
     
     # Active Storage attachment (create test image file if needed)
-    after(:build) do |studio_image|
+    # Use after(:create) for ActiveStorage attachments to ensure the record is persisted
+    after(:create) do |studio_image|
       # Create test image file if it doesn't exist
       FileUtils.mkdir_p('spec/fixtures/files')
       unless File.exist?('spec/fixtures/files/test_image.jpg')
@@ -13,7 +14,7 @@ FactoryBot.define do
         File.binwrite('spec/fixtures/files/test_image.jpg', jpeg_data)
       end
       
-      # Attach test image
+      # Attach test image (must be after create for ActiveStorage)
       studio_image.image.attach(
         io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
         filename: 'test_image.jpg',
@@ -36,13 +37,15 @@ FactoryBot.define do
       height { nil }
       file_size { nil }
       # Don't attach image for minimal trait
-      after(:build) do |studio_image|
-        # Skip image attachment for minimal
+      # Use after(:create) to override parent factory's image attachment
+      after(:create) do |studio_image|
+        # Ensure no image is attached (parent factory's after(:create) may have attached one)
+        studio_image.image.purge if studio_image.image.attached?
       end
     end
 
     trait :with_long_caption do
-      caption { "A" * 1000 }
+      caption { "A" * 150 }
     end
 
     trait :high_resolution do

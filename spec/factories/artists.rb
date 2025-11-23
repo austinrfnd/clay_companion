@@ -12,6 +12,7 @@ FactoryBot.define do
     password { "Password123!" }
     password_confirmation { "Password123!" }
     full_name { "Jane Doe" }
+    confirmed_at { Time.current }
     
     # Skip confirmation email sending in tests (use skip_confirmation! if needed)
     # Confirmation emails are tested separately
@@ -78,6 +79,13 @@ FactoryBot.define do
       instagram_url { nil }
       facebook_url { nil }
       other_links { [] }
+      studio_intro_text { nil }
+      confirmed_at { Time.current }
+      
+      # Skip confirmation notification to prevent ActionText rendering issues
+      after(:build) do |artist|
+        artist.skip_confirmation_notification! if artist.respond_to?(:skip_confirmation_notification!)
+      end
     end
 
     trait :with_long_text do
@@ -88,15 +96,17 @@ FactoryBot.define do
     trait :with_studio_images do
       after(:create) do |artist|
         # Create 5 studio images with mixed categories
-        create(:studio_image, artist: artist, category: 'studio')
-        create(:studio_image, artist: artist, :process_category)
-        create(:studio_image, artist: artist, :studio)
-        create(:studio_image, artist: artist, :other_category)
-        create(:studio_image, artist: artist, :process_category)
+        # Use minimal trait to avoid ActiveStorage attachment issues in model specs
+        create(:studio_image, :minimal, artist: artist, category: 'studio')
+        create(:studio_image, :minimal, :process_category, artist: artist)
+        create(:studio_image, :minimal, artist: artist, category: 'studio')
+        create(:studio_image, :minimal, :other_category, artist: artist)
+        create(:studio_image, :minimal, :process_category, artist: artist)
       end
     end
 
     trait :with_hero_image do
+      confirmed_at { Time.current }
       after(:create) do |artist|
         # Create a studio image and set it as hero
         hero_image = create(:studio_image, artist: artist)

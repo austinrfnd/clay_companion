@@ -14,7 +14,7 @@ class StudioImage < ApplicationRecord
   has_one_attached :image
 
   # Enums
-  enum category: { studio: 'studio', process: 'process', other: 'other' }
+  enum :category, { studio: 'studio', process: 'process', other: 'other' }
 
   # Validations
   # Note: image_url validation removed - using Active Storage attachment instead

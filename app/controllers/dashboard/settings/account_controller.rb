@@ -69,3 +69,4 @@ class Dashboard::Settings::AccountController < ApplicationController
   end
 end
 
+

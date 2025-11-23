@@ -593,7 +593,7 @@ RSpec.describe Artist, type: :model do
     end
 
     it 'tracks confirmation_sent_at timestamp' do
-      artist = build(:artist)
+      artist = build(:artist, confirmed_at: nil)
       artist.save!
       expect(artist.confirmation_sent_at).to be_present
     end
@@ -697,11 +697,18 @@ RSpec.describe Artist, type: :model do
       end
 
       context 'when hero image is deleted' do
-        let(:artist) { create(:artist, :with_hero_image) }
+        let(:artist) do
+          a = create(:artist, :with_hero_image)
+          a.update_column(:confirmed_at, Time.current) unless a.confirmed?
+          a
+        end
 
         it 'sets studio_hero_image_id to nil via foreign key constraint' do
           hero_image_id = artist.studio_hero_image_id
           hero_image = artist.studio_hero_image
+          
+          # Purge the image attachment before destroying to avoid ActiveStorage issues
+          hero_image.image.purge if hero_image.image.attached?
           hero_image.destroy
 
           artist.reload

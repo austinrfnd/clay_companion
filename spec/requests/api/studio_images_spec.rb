@@ -3,6 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::StudioImages', type: :request do
+  include Devise::Test::IntegrationHelpers
+  include Warden::Test::Helpers
+  
+  # Set default host for request specs
+  before do
+    host! 'www.example.com'
+    Warden.test_mode!
+  end
+  
+  after do
+    Warden.test_reset!
+  end
+  
   ##
   # Test Overview
   # This spec tests the API endpoints for studio images management.
@@ -16,8 +29,8 @@ RSpec.describe 'Api::StudioImages', type: :request do
   # - Validation error handling
   ##
 
-  let(:artist) { create(:artist) }
-  let(:other_artist) { create(:artist) }
+  let(:artist) { create(:artist, confirmed_at: Time.current) }
+  let(:other_artist) { create(:artist, confirmed_at: Time.current) }
   let(:studio_image) { create(:studio_image, artist: artist) }
 
   describe 'GET /api/artists/:artist_id/studio-images' do
@@ -52,6 +65,12 @@ RSpec.describe 'Api::StudioImages', type: :request do
       end
 
       it 'returns images in display order' do
+        # Clear existing images first (purge attachments before destroying)
+        artist.studio_images.find_each do |img|
+          img.image.purge if img.image.attached?
+          img.destroy
+        end
+        
         image1 = create(:studio_image, artist: artist, display_order: 2)
         image2 = create(:studio_image, artist: artist, display_order: 1)
         image3 = create(:studio_image, artist: artist, display_order: 3)
@@ -110,7 +129,7 @@ RSpec.describe 'Api::StudioImages', type: :request do
 
     context 'when authenticated as the artist' do
       before do
-        sign_in artist
+        login_as(artist, scope: :artist)
       end
 
       it 'creates a new studio image' do
@@ -183,7 +202,11 @@ RSpec.describe 'Api::StudioImages', type: :request do
     end
 
     context 'when authenticated as the artist' do
-      before { sign_in artist }
+      before do
+        artist.skip_confirmation!
+        artist.save!
+        login_as(artist, scope: :artist)
+      end
 
       it 'updates the studio image' do
         patch "/api/artists/#{artist.id}/studio-images/#{studio_image.id}", params: update_params
@@ -217,7 +240,7 @@ RSpec.describe 'Api::StudioImages', type: :request do
     end
 
     context 'when authenticated as a different artist' do
-      before { sign_in other_artist }
+      before { login_as(other_artist, scope: :artist) }
 
       it 'returns not found' do
         patch "/api/artists/#{artist.id}/studio-images/#{studio_image.id}", params: update_params
@@ -237,7 +260,9 @@ RSpec.describe 'Api::StudioImages', type: :request do
 
   describe 'DELETE /api/artists/:artist_id/studio-images/:id' do
     context 'when authenticated as the artist' do
-      before { sign_in artist }
+      before do
+        login_as(artist, scope: :artist)
+      end
 
       it 'deletes the studio image' do
         image = create(:studio_image, artist: artist)
@@ -271,7 +296,7 @@ RSpec.describe 'Api::StudioImages', type: :request do
     end
 
     context 'when authenticated as a different artist' do
-      before { sign_in other_artist }
+      before { login_as(other_artist, scope: :artist) }
 
       it 'returns not found' do
         delete "/api/artists/#{artist.id}/studio-images/#{studio_image.id}"

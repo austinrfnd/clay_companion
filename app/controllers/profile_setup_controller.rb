@@ -30,11 +30,11 @@ class ProfileSetupController < ApplicationController
   #
   # @return [void]
   def update
-    # Reload artist to ensure we have the latest state (especially for attachments)
-    @artist.reload
-    
     # Check if profile photo is required (not already attached)
-    if !@artist.profile_photo.attached? && profile_setup_params[:profile_photo].blank?
+    # Use exists? to check if attachment exists without loading the blob
+    profile_photo_attached = @artist.profile_photo.attached?
+    
+    if !profile_photo_attached && profile_setup_params[:profile_photo].blank?
       @artist.errors.add(:profile_photo, 'is required')
       render :show, status: :unprocessable_entity
       return

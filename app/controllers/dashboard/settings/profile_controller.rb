@@ -78,3 +78,4 @@ class Dashboard::Settings::ProfileController < ApplicationController
   end
 end
 
+

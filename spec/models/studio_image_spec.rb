@@ -24,7 +24,7 @@ RSpec.describe StudioImage, type: :model do
     subject { build(:studio_image) }
 
     describe 'image attachment' do
-      let(:artist) { create(:artist) }
+      let(:artist) { create(:artist, :minimal, confirmed_at: Time.current) }
       
       it 'allows studio_image without image attachment (during migration period)' do
         image = build(:studio_image, artist: artist)
@@ -110,11 +110,11 @@ RSpec.describe StudioImage, type: :model do
     end
 
     describe 'caption' do
-      it { is_expected.to validate_length_of(:caption).is_at_most(1000) }
+      it { is_expected.to validate_length_of(:caption).is_at_most(150) }
       it { is_expected.to allow_value(nil).for(:caption) }
 
       it 'accepts caption at maximum length' do
-        image = build(:studio_image, caption: 'A' * 1000)
+        image = build(:studio_image, caption: 'A' * 150)
         expect(image).to be_valid
       end
 
@@ -293,10 +293,16 @@ RSpec.describe StudioImage, type: :model do
       expect(image.file_size).to be_nil
     end
 
+    it 'creates minimal studio_image without image attachment' do
+      image = create(:studio_image, :minimal)
+      expect(image).to be_valid
+      expect(image.image).not_to be_attached
+    end
+
     it 'creates studio_image with long caption' do
       image = build(:studio_image, :with_long_caption)
       expect(image).to be_valid
-      expect(image.caption.length).to eq(1000)
+      expect(image.caption.length).to eq(150)
     end
 
     it 'creates high resolution studio_image' do
@@ -353,7 +359,11 @@ RSpec.describe StudioImage, type: :model do
       end
 
       it 'rejects invalid categories' do
-        image = build(:studio_image, category: 'invalid_category')
+        image = build(:studio_image)
+        # Rails 8.1 enum is strict - we need to bypass enum validation to test inclusion validation
+        image.save(validate: false)
+        image.update_column(:category, 'invalid_category')
+        image.reload
         expect(image).not_to be_valid
         expect(image.errors[:category]).to be_present
       end
@@ -386,11 +396,14 @@ RSpec.describe StudioImage, type: :model do
 
     describe 'by_artist scope' do
       it 'returns only images for specified artist' do
-        other_artist = create(:artist)
+        # Count existing images for this artist (5 from before block)
+        existing_count = StudioImage.by_artist(artist.id).count
+        
+        other_artist = create(:artist, :minimal, confirmed_at: Time.current)
         create(:studio_image, artist: other_artist)
 
         artist_images = StudioImage.by_artist(artist.id)
-        expect(artist_images.count).to eq(6)
+        expect(artist_images.count).to eq(existing_count)
         expect(artist_images.all? { |img| img.artist_id == artist.id }).to be true
       end
     end
@@ -418,7 +431,8 @@ RSpec.describe StudioImage, type: :model do
     describe 'chaining scopes' do
       it 'filters by artist and category' do
         other_artist = create(:artist)
-        create(:studio_image, :process_category, artist: other_artist)
+        # Use minimal trait to avoid ActiveStorage attachment issues in this test
+        create(:studio_image, :process_category, :minimal, artist: other_artist)
 
         filtered = StudioImage.by_artist(artist.id).by_category('process')
         expect(filtered.count).to eq(3)

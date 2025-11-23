@@ -89,4 +89,12 @@ Rails.application.routes.draw do
       # Privacy, Studio, Work routes to be added in future phases
     end
   end
+
+  # API routes for studio feature
+  namespace :api do
+    scope '/artists/:artist_id' do
+      resources :studio_images, only: [:index, :show, :create, :update, :destroy], path: 'studio-images'
+      resource :studio_page, only: [:show, :update], path: 'studio-page', controller: 'studio_page'
+    end
+  end
 end
