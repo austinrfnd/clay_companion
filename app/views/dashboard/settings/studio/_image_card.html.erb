@@ -1,0 +1,91 @@
+<%#
+  Image Card Partial
+  Individual image card with thumbnail, caption, category, and actions
+%>
+
+<div
+  class="flex gap-4 p-4 border border-pale-celadon rounded-lg bg-white transition-all"
+  data-studio-reorder-target="item"
+  data-image-id="<%= image.id %>"
+>
+  <!-- Thumbnail -->
+  <div class="w-24 h-24 rounded-lg overflow-hidden border border-pale-celadon flex-shrink-0">
+    <% if image.image.attached? %>
+      <%= image_tag image.image, alt: image.caption || "Studio photo", class: "w-full h-full object-cover" %>
+    <% else %>
+      <div class="w-full h-full bg-slate-200 flex items-center justify-center">
+        <span class="text-xs text-slate">No image</span>
+      </div>
+    <% end %>
+  </div>
+  
+  <!-- Image Details -->
+  <div class="flex-1 space-y-3">
+    <!-- Caption -->
+    <div>
+      <label for="caption_<%= image.id %>" class="block text-xs font-medium text-charcoal mb-1">
+        Caption
+      </label>
+      <input
+        type="text"
+        id="caption_<%= image.id %>"
+        class="w-full px-3 py-2 text-sm border border-pale-celadon rounded-lg focus:outline-none focus:ring-2 focus:ring-celadon focus:border-transparent"
+        value="<%= image.caption %>"
+        maxlength="150"
+        placeholder="Describe this photo..."
+        data-controller="auto-save"
+        data-auto-save-artist-id-value="<%= @artist.id %>"
+        data-auto-save-image-id-value="<%= image.id %>"
+        data-auto-save-field-value="caption"
+        data-action="input->auto-save#updateCounter blur->auto-save#save"
+      >
+      <div class="text-xs text-slate mt-1">
+        <span data-auto-save-target="charCount"><%= image.caption&.length || 0 %></span>/150
+      </div>
+    </div>
+    
+    <!-- Category -->
+    <div>
+      <label for="category_<%= image.id %>" class="block text-xs font-medium text-charcoal mb-1">
+        Category
+      </label>
+      <select
+        id="category_<%= image.id %>"
+        class="w-full px-3 py-2 text-sm border border-pale-celadon rounded-lg focus:outline-none focus:ring-2 focus:ring-celadon focus:border-transparent"
+        data-controller="auto-save"
+        data-auto-save-artist-id-value="<%= @artist.id %>"
+        data-auto-save-image-id-value="<%= image.id %>"
+        data-auto-save-field-value="category"
+        data-action="change->auto-save#save"
+      >
+        <option value="studio" <%= 'selected' if image.category == 'studio' %>>Studio</option>
+        <option value="process" <%= 'selected' if image.category == 'process' %>>Process</option>
+        <option value="other" <%= 'selected' if image.category == 'other' %>>Other</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- Actions -->
+  <div class="flex flex-col items-end gap-2">
+    <button
+      type="button"
+      class="px-4 py-2 text-sm text-error hover:text-error/80 transition-colors"
+      data-controller="studio-reorder"
+      data-action="click->studio-reorder#deleteImage"
+      data-image-id="<%= image.id %>"
+      data-artist-id="<%= @artist.id %>"
+    >
+      Delete
+    </button>
+    <div
+      class="cursor-move text-slate hover:text-charcoal"
+      data-studio-reorder-target="handle"
+      title="Drag to reorder"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+

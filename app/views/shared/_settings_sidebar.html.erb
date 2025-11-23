@@ -64,7 +64,7 @@
     
     <!-- My Studio -->
     <% is_studio = current_page == :studio || current_page == 'studio' %>
-    <%= link_to "#", 
+    <%= link_to dashboard_settings_studio_path, 
         class: "flex items-center gap-3 h-11 px-6 my-0.5 #{'bg-mist border-l-4 border-celadon text-charcoal font-semibold' if is_studio} #{'text-slate hover:bg-mist/70 font-medium' unless is_studio} text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-celadon focus:ring-offset-2",
         aria: { current: (is_studio ? 'page' : nil) } do %>
       <svg class="w-5 h-5 <%= is_studio ? 'text-celadon' : '' %> flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

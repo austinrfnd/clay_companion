@@ -1,0 +1,32 @@
+<%#
+  Studio Settings View
+  Allows artists to manage their studio and process page content:
+  - Hero image selection (background for public page)
+  - Introduction text (optional, max 100 words)
+  - Studio & Process photos (upload, caption, categorize, reorder)
+%>
+
+<div class="flex min-h-screen bg-mist">
+  <!-- Persistent Sidebar -->
+  <%= render 'shared/settings_sidebar', current_page: :studio %>
+  
+  <!-- Main Content Area -->
+  <div class="flex-1 p-8">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl font-bold text-charcoal mb-2">Studio Settings</h1>
+      <p class="text-lg text-slate mb-8">
+        Manage your studio and process page: upload photos, add captions, and organize your behind-the-scenes content.
+      </p>
+      
+      <!-- Hero Image Section (FIRST - Displayed at Top) -->
+      <%= render 'hero_image_section' %>
+      
+      <!-- Introduction Text Section -->
+      <%= render 'intro_text_section' %>
+      
+      <!-- Studio & Process Photos Section -->
+      <%= render 'photos_section' %>
+    </div>
+  </div>
+</div>
+

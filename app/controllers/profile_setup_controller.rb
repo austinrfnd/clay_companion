@@ -31,7 +31,8 @@ class ProfileSetupController < ApplicationController
   # @return [void]
   def update
     # Check if profile photo is required (not already attached)
-    # Use exists? to check if attachment exists without loading the blob
+    # Reload to ensure we have the latest attachment state
+    @artist.reload
     profile_photo_attached = @artist.profile_photo.attached?
     
     if !profile_photo_attached && profile_setup_params[:profile_photo].blank?

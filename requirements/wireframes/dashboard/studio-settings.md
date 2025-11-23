@@ -47,19 +47,46 @@ This page uses the same **Design System Colors**, **Typography**, **Spacing**, *
 │  │  └────────────┘  │  │  (Body Large, 18px/1.125rem, Slate #5C6C62)  │  │
 │  │                  │  │                                                 │  │
 │  │  ┌────────────┐  │  │  ┌──────────────────────────────────────┐    │  │
-│  │  │ 🔒 Privacy │  │  │  │ Introduction Text                     │    │  │
+│  │  │ 🔒 Privacy │  │  │  │ Hero Image (Background)                │    │  │
 │  │  └────────────┘  │  │  │ (H2, 36px/2.25rem, Bold 700)         │    │  │
 │  │                  │  │  │                                      │    │  │
-│  │  ┌────────────┐  │  │  │  Studio Introduction (Optional)      │    │  │
-│  │  │ 📝 Profile │  │  │  │  [Textarea - 80px min-height]        │    │  │
-│  │  └────────────┘  │  │  │  Brief intro about your workspace    │    │  │
-│  │                  │  │  │  or process (max 100 words)          │    │  │
-│  │  ┌────────────┐  │  │  │  Word counter: X / 100               │    │  │
-│  │  │ 🏠 Studio  │  │  │  └──────────────────────────────────────┘    │  │
-│  │  │    (Active)│  │  │                                                 │  │
-│  │  └────────────┘  │  │  ┌──────────────────────────────────────┐    │  │
-│  │                  │  │  │ Studio & Process Photos               │    │  │
-│  │  ┌────────────┐  │  │  │ (H2, 36px/2.25rem, Bold 700)         │    │  │
+│  │  ┌────────────┐  │  │  │  Current Hero Image Preview:          │    │  │
+│  │  │ 📝 Profile │  │  │  │  ┌──────────────────────────────────┐ │    │  │
+│  │  └────────────┘  │  │  │  │                                  │ │    │  │
+│  │                  │  │  │  │  [Selected hero image preview]   │ │    │  │
+│  │  ┌────────────┐  │  │  │  │  (300px height)                 │ │    │  │
+│  │  │ 🏠 Studio  │  │  │  │  │                                  │ │    │  │
+│  │  │    (Active)│  │  │  │  └──────────────────────────────────┘ │    │  │
+│  │  └────────────┘  │  │  │                                      │    │  │
+│  │                  │  │  │  Select an image as hero background: │    │  │
+│  │  ┌────────────┐  │  │  │                                      │    │  │
+│  │  │ 🎨 My Work │  │  │  │  ☐ [IMG Thumbnail 1]  ☑ [IMG 2]    │    │  │
+│  │  └────────────┘  │  │  │     Caption 1          Caption 2    │    │  │
+│  │                  │  │  │                                      │    │  │
+│  │  (240px width)   │  │  │  ☐ [IMG Thumbnail 3]                │    │  │
+│  │  └──────────────────┘  │     Caption 3                        │    │  │
+│  │                        │                                      │    │  │
+│  │                        │  ☐ Use default background            │    │  │
+│  │                        │                                      │    │  │
+│  │                        │  Helper: Choose from uploaded photos │    │  │
+│  │                        │  or upload a new one. Landscape      │    │  │
+│  │                        │  images work best.                    │    │  │
+│  │                        │  └──────────────────────────────────────┘    │  │
+│  │                        │                                                 │  │
+│  │                        │  ┌──────────────────────────────────────┐    │  │
+│  │                        │  │ Introduction Text                     │    │  │
+│  │                        │  │ (H2, 36px/2.25rem, Bold 700)         │    │  │
+│  │                        │  │                                      │    │  │
+│  │                        │  │  Studio Introduction (Optional)      │    │  │
+│  │                        │  │  [Textarea - 80px min-height]        │    │  │
+│  │                        │  │  Brief intro about your workspace    │    │  │
+│  │                        │  │  or process (max 100 words)          │    │  │
+│  │                        │  │  Word counter: X / 100               │    │  │
+│  │                        │  └──────────────────────────────────────┘    │  │
+│  │                        │                                                 │  │
+│  │                        │  ┌──────────────────────────────────────┐    │  │
+│  │                        │  │ Studio & Process Photos               │    │  │
+│  │                        │  │ (H2, 36px/2.25rem, Bold 700)         │    │  │
 │  │  │ 🎨 My Work │  │  │  │                                      │    │  │
 │  │  └────────────┘  │  │  │  ┌────────────────────────────────┐  │    │  │
 │  │                  │  │  │  │ [📷 Drag & Drop Upload Area]   │  │    │  │
@@ -104,27 +131,33 @@ This page uses the same **Design System Colors**, **Typography**, **Spacing**, *
 
 ## Form Field Specifications
 
-### Hero Image Selection
+### 1. Hero Image Selection (FIRST - Displayed at Top)
 
 **Hero Image (Background for Public Page)**:
-- **Purpose**: Allow artist to select which uploaded photo appears as the background of the hero section
-- **Display**: Large preview box showing currently selected hero image (300px height)
-- **Selection Method**: Radio buttons with thumbnail previews for each image
-- **Thumbnails**: 120px height, 200px wide cards arranged in grid
+- **Purpose**: Allow artist to select which uploaded photo appears as the background of the hero section on the public Studio & Process page
+- **Priority**: This section appears FIRST, before intro text and photo uploads, so users can immediately set their hero image
+- **Display**: Large preview box showing currently selected hero image (300px height, full width)
+- **Selection Method**: Radio buttons with thumbnail previews for each uploaded image
+- **Thumbnails**: 120px height, 200px wide cards arranged in responsive grid
 - **Selected State**: Green border (#6E9180) + subtle shadow highlight
 - **Options**:
   - Radio button for each uploaded studio image (caption as label)
-  - Checkbox to "Use default background" (no custom image)
-- **Helper Text**: "Choose from your uploaded photos below, or upload a new one. Images work best when they are landscape-oriented." - 14px, Slate
-- **Auto-save**: Selection updates immediately without manual save
+  - Checkbox to "Use default background" (no custom image, uses gradient)
+- **Helper Text**: "Choose from your uploaded photos below, or upload a new one. Images work best when they are landscape-oriented." - 14px, Slate (#5C6C62)
+- **Auto-save**: Selection updates immediately via API without manual save
+- **Empty State**: If no images uploaded yet, show message: "Upload photos below to select a hero image"
 
 **Layout**:
 ```
 ┌─────────────────────────────────────────────┐
+│ Hero Image (Background)                     │
+│ (H2, 36px/2.25rem, Bold 700)                │
+│                                             │
 │ Current Hero Image Preview:                 │
 │ ┌─────────────────────────────────────────┐ │
 │ │                                         │ │
 │ │     [Selected hero image preview]       │ │
+│ │     (300px height, full width)          │ │
 │ │                                         │ │
 │ └─────────────────────────────────────────┘ │
 │                                             │
@@ -138,12 +171,16 @@ This page uses the same **Design System Colors**, **Typography**, **Spacing**, *
 │                                             │
 │ ☐ Use default background (no custom image) │
 │                                             │
+│ Helper: Choose from your uploaded photos   │
+│ below, or upload a new one. Images work    │
+│ best when they are landscape-oriented.      │
+│                                             │
 └─────────────────────────────────────────────┘
 ```
 
 ---
 
-### Introduction Text Area
+### 2. Introduction Text Area
 
 **Studio Introduction (Optional)**:
 - **Label**: "Studio Introduction (Optional)" - 16px, Medium 500, Charcoal
@@ -166,7 +203,7 @@ This page uses the same **Design System Colors**, **Typography**, **Spacing**, *
 
 ---
 
-### Photo Upload Area
+### 3. Photo Upload Area
 
 **Drag & Drop Zone**:
 - **Width**: Full width of content area (max 800px)
@@ -193,7 +230,7 @@ This page uses the same **Design System Colors**, **Typography**, **Spacing**, *
 
 ---
 
-### Image List Items
+### 4. Image List Items
 
 **Image Card Container**:
 - **Layout**: Horizontal (thumbnail + fields + actions)

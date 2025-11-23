@@ -330,6 +330,142 @@
             color: #C73030;
         }
 
+        /* Hero Image Section */
+        .hero-preview {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #F8FAF9;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(168, 196, 181, 0.3);
+        }
+
+        .preview-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #5C6C62;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .preview-container {
+            width: 100%;
+            height: 300px;
+            background: #E5E7EB;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9CA3AF;
+            font-size: 0.875rem;
+        }
+
+        .preview-container.empty {
+            background: #D1D5DB;
+            color: #6B7280;
+        }
+
+        .preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-selector {
+            margin-top: 2rem;
+        }
+
+        .hero-selector label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1F2421;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-selector .helper-text {
+            font-size: 0.875rem;
+            color: #5C6C62;
+            margin-bottom: 1rem;
+        }
+
+        .image-radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .radio-item {
+            position: relative;
+        }
+
+        .radio-with-preview {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 0.75rem;
+        }
+
+        .radio-with-preview input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+
+        .radio-label-text {
+            font-weight: 500;
+            color: #1F2421;
+            font-size: 0.875rem;
+        }
+
+        .thumbnail-preview {
+            width: 100%;
+            height: 120px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 200ms;
+            background: #E5E7EB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9CA3AF;
+            font-size: 0.75rem;
+        }
+
+        .thumbnail-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .radio-item input[type="radio"]:checked ~ .thumbnail-preview {
+            border-color: #6E9180;
+            box-shadow: 0 0 0 4px rgba(110, 145, 128, 0.1);
+        }
+
+        .default-background-option {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(168, 196, 181, 0.3);
+        }
+
+        .default-background-option label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .default-background-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
         /* Empty State */
         .empty-state {
             text-align: center;
@@ -430,6 +566,18 @@
                 width: 100%;
                 height: 200px;
             }
+
+            .preview-container {
+                height: 200px;
+            }
+
+            .image-radio-group {
+                grid-template-columns: 1fr;
+            }
+
+            .thumbnail-preview {
+                height: 150px;
+            }
         }
     </style>
 </head>
@@ -499,6 +647,74 @@
         <main class="main-content">
             <h1>Studio Settings</h1>
             <p class="page-description">Manage your studio and process page: upload photos, add captions, and organize your behind-the-scenes content.</p>
+
+            <!-- Hero Image Section (FIRST) -->
+            <section class="form-section">
+                <h2>Hero Image (Background)</h2>
+                
+                <!-- Current Hero Image Preview -->
+                <div class="hero-preview">
+                    <div class="preview-label">Current Hero Image Preview:</div>
+                    <div class="preview-container">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='300'%3E%3Crect fill='%23A8C4B5' width='800' height='300'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%235C6C62' font-family='sans-serif' font-size='18'%3EStudio Hero Image Preview%3C/text%3E%3C/svg%3E" alt="Hero image preview">
+                    </div>
+                </div>
+
+                <!-- Hero Image Selection -->
+                <div class="hero-selector">
+                    <label>Select an image as hero background:</label>
+                    <div class="helper-text">Choose from your uploaded photos below, or upload a new one. Images work best when they are landscape-oriented.</div>
+                    
+                    <div class="image-radio-group">
+                        <!-- Radio Option 1 -->
+                        <div class="radio-item">
+                            <label class="radio-with-preview">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" name="hero_image" value="1">
+                                    <span class="radio-label-text">My studio workspace in Red Hook, Brooklyn</span>
+                                </div>
+                                <div class="thumbnail-preview">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%23A8C4B5' width='200' height='120'/%3E%3C/svg%3E" alt="Thumbnail">
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Radio Option 2 (Selected) -->
+                        <div class="radio-item">
+                            <label class="radio-with-preview">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" name="hero_image" value="2" checked>
+                                    <span class="radio-label-text">Centering clay on the wheel</span>
+                                </div>
+                                <div class="thumbnail-preview">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%236E9180' width='200' height='120'/%3E%3C/svg%3E" alt="Thumbnail">
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Radio Option 3 -->
+                        <div class="radio-item">
+                            <label class="radio-with-preview">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" name="hero_image" value="3">
+                                    <span class="radio-label-text">Trimming the foot of a bowl</span>
+                                </div>
+                                <div class="thumbnail-preview">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%23A8C4B5' width='200' height='120'/%3E%3C/svg%3E" alt="Thumbnail">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Default Background Option -->
+                    <div class="default-background-option">
+                        <label>
+                            <input type="checkbox" name="use_default_background">
+                            <span>Use default background (no custom image)</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
 
             <!-- Introduction Text Section -->
             <section class="form-section">

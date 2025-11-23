@@ -225,7 +225,8 @@ RSpec.describe ProfileSetupController, type: :controller do
           # Use a fresh artist instance with photo attached
           sign_in artist_with_photo
           # Attach a profile photo first
-          artist_with_photo.profile_photo.attach(io: File.open('spec/fixtures/files/test_image.jpg'), filename: 'test.jpg', content_type: 'image/jpeg')
+          file_path = Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')
+          artist_with_photo.profile_photo.attach(io: File.open(file_path), filename: 'test.jpg', content_type: 'image/jpeg')
           artist_with_photo.save! # Ensure attachment is persisted
           # Reload to ensure attachment is properly loaded
           artist_with_photo.reload

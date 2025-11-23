@@ -1,0 +1,57 @@
+<%#
+  Studio & Process Photos Section Partial
+  Upload zone and image list
+%>
+
+<div class="bg-white border border-pale-celadon rounded-lg p-8">
+  <h2 class="text-2xl font-bold text-charcoal mb-6">Studio & Process Photos</h2>
+  
+  <!-- Upload Zone -->
+  <div
+    class="border-2 border-dashed border-pale-celadon rounded-lg p-12 text-center bg-mist mb-8 cursor-pointer hover:border-celadon transition-colors"
+    data-controller="studio-upload"
+    data-studio-upload-artist-id-value="<%= @artist.id %>"
+    data-action="click->studio-upload#openFileDialog dragover->studio-upload#handleDragOver dragleave->studio-upload#handleDragLeave drop->studio-upload#handleDrop"
+  >
+    <svg class="w-12 h-12 mx-auto mb-4 text-slate" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+    </svg>
+    <h3 class="text-lg font-semibold text-charcoal mb-2">Click or drag photos here</h3>
+    <p class="text-sm text-slate">
+      Supports: JPG, PNG, HEIC • Max 10MB per file
+    </p>
+    <input
+      type="file"
+      multiple
+      accept="image/jpeg,image/png,image/heic"
+      data-studio-upload-target="fileInput"
+      data-action="change->studio-upload#handleFileSelect"
+      class="hidden"
+    >
+  </div>
+  
+  <!-- Image List -->
+  <div data-controller="studio-reorder" data-studio-reorder-artist-id-value="<%= @artist.id %>">
+    <% if @studio_images.any? %>
+      <h3 class="text-lg font-semibold text-charcoal mb-4">
+        Your Photos (<%= @studio_images.count %>)
+      </h3>
+      <div class="space-y-4">
+        <% @studio_images.each do |image| %>
+          <%= render 'image_card', image: image %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-12 border-2 border-dashed border-pale-celadon rounded-lg bg-mist">
+        <svg class="w-12 h-12 mx-auto mb-4 text-slate" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+        <h3 class="text-lg font-semibold text-charcoal mb-2">No studio photos yet</h3>
+        <p class="text-sm text-slate">Upload photos of your workspace, tools, and making process to share with visitors.</p>
+      </div>
+    <% end %>
+  </div>
+</div>
+

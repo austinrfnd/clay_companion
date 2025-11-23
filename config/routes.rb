@@ -86,7 +86,8 @@ Rails.application.routes.draw do
       root to: 'settings#index'
       resource :account, only: [:show, :update], controller: 'account'
       resource :profile, only: [:show, :update], controller: 'profile'
-      # Privacy, Studio, Work routes to be added in future phases
+      resource :studio, only: [:show], controller: 'studio'
+      # Privacy, Work routes to be added in future phases
     end
   end
 
