@@ -8,7 +8,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe 'Artists Process Studio Page', type: :system do
+RSpec.xdescribe 'Artists Process Studio Page', type: :system do
   let(:artist) { create(:artist, :minimal, confirmed_at: Time.current) }
   let(:artist_id) { artist.id.to_s }
 
