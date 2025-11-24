@@ -1,0 +1,33 @@
+<%#
+  Introduction Text Section Partial
+  Textarea for studio intro text with word counter
+%>
+
+<div class="bg-white border border-pale-celadon rounded-lg p-8 mb-8">
+  <h2 class="text-2xl font-bold text-charcoal mb-6">Introduction Text (Optional)</h2>
+  
+  <div>
+    <label for="studio_intro_text" class="block text-sm font-medium text-charcoal mb-2">
+      Studio Introduction
+    </label>
+    <textarea
+      id="studio_intro_text"
+      name="studio_intro_text"
+      class="w-full min-h-[80px] px-4 py-3 border border-pale-celadon rounded-lg focus:outline-none focus:ring-2 focus:ring-celadon focus:border-transparent resize-y"
+      placeholder="Brief intro about your workspace or process (max 100 words)"
+      maxlength="600"
+      data-controller="word-counter auto-save"
+      data-word-counter-target="textarea"
+      data-auto-save-artist-id-value="<%= @artist.id %>"
+      data-auto-save-field-value="studio_intro_text"
+      data-action="input->word-counter#count blur->auto-save#save"
+    ><%= @artist.studio_intro_text %></textarea>
+    <p class="text-xs text-slate mt-1">
+      Brief intro about your workspace or process (max 100 words)
+    </p>
+    <div class="mt-2 text-sm text-slate" data-word-counter-target="counter">
+      <span data-word-counter-target="count">0</span> / 100 words
+    </div>
+  </div>
+</div>
+

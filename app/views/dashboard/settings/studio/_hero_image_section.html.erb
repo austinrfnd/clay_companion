@@ -1,0 +1,92 @@
+<%#
+  Hero Image Section Partial
+  Displays hero image selection UI with preview and thumbnail options
+%>
+
+<div class="bg-white border border-pale-celadon rounded-lg p-8 mb-8">
+  <h2 class="text-2xl font-bold text-charcoal mb-6">Hero Image (Background)</h2>
+  
+  <!-- Current Hero Image Preview -->
+  <div class="mb-6">
+    <div class="text-sm font-semibold text-slate uppercase tracking-wide mb-3">
+      Current Hero Image Preview:
+    </div>
+    <div class="w-full h-[300px] bg-slate-100 rounded-lg overflow-hidden border border-pale-celadon flex items-center justify-center" data-hero-preview>
+      <% if @hero_image&.image&.attached? %>
+        <%= image_tag @hero_image.image, alt: "Hero image preview", class: "w-full h-full object-cover" %>
+      <% else %>
+        <div class="text-center text-slate">
+          <p class="text-sm">No hero image selected</p>
+          <p class="text-xs mt-1">Default gradient background will be used</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
+  <!-- Image Selection -->
+  <div class="mb-6">
+    <label class="block text-sm font-medium text-charcoal mb-2">
+      Select an image as hero background:
+    </label>
+    <p class="text-xs text-slate mb-4">
+      Choose from your uploaded photos below, or upload a new one. Images work best when they are landscape-oriented.
+    </p>
+    
+    <% if @studio_images.any? %>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
+        <% @studio_images.each do |image| %>
+          <div class="relative">
+            <label class="flex flex-col cursor-pointer group">
+              <input
+                type="radio"
+                name="studio_hero_image_id"
+                value="<%= image.id %>"
+                <%= 'checked' if @hero_image&.id == image.id %>
+                class="sr-only peer"
+                data-controller="hero-image-selector"
+                data-action="change->hero-image-selector#select"
+                data-hero-image-selector-artist-id-value="<%= @artist.id %>"
+                data-hero-image-selector-image-id-value="<%= image.id %>"
+              >
+              <div class="w-full h-24 rounded-lg overflow-hidden border-2 border-transparent peer-checked:border-celadon-dark peer-checked:ring-4 peer-checked:ring-celadon/20 transition-all">
+                <% if image.image.attached? %>
+                  <%= image_tag image.image, alt: image.caption || "Studio photo", class: "w-full h-full object-cover" %>
+                <% else %>
+                  <div class="w-full h-full bg-slate-200 flex items-center justify-center">
+                    <span class="text-xs text-slate">No image</span>
+                  </div>
+                <% end %>
+              </div>
+              <span class="text-xs text-slate mt-1 text-center truncate">
+                <%= image.caption.presence || "Untitled" %>
+              </span>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-6 border-2 border-dashed border-pale-celadon rounded-lg bg-mist">
+        <p class="text-sm text-slate">No photos uploaded yet</p>
+        <p class="text-xs text-slate mt-1">Upload photos below to select one as your hero image</p>
+      </div>
+    <% end %>
+  </div>
+  
+  <!-- Default Background Option -->
+  <div class="flex items-center gap-3">
+    <input
+      type="checkbox"
+      id="use_default_background"
+      name="use_default_background"
+      <%= 'checked' if @hero_image.nil? %>
+      class="w-5 h-5 text-celadon-dark border-pale-celadon rounded focus:ring-celadon"
+      data-controller="hero-image-selector"
+      data-action="change->hero-image-selector#clear"
+      data-hero-image-selector-artist-id-value="<%= @artist.id %>"
+    >
+    <label for="use_default_background" class="text-sm font-medium text-charcoal cursor-pointer">
+      Use default background (no custom image)
+    </label>
+  </div>
+</div>
+

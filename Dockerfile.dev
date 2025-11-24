@@ -10,7 +10,7 @@
 #   docker-compose build
 #   docker-compose up
 
-FROM ruby:3.3.0-alpine
+FROM ruby:3.4-alpine
 
 # Set Rails environment
 ENV RAILS_ENV=development \
@@ -26,6 +26,7 @@ ENV RAILS_ENV=development \
 # - imagemagick: Image processing for Active Storage
 # - vips, vips-dev: Fast image processing library
 # - tzdata: Timezone data
+# - libyaml-dev: Required for psych gem (YAML parser)
 RUN apk add --no-cache \
     build-base \
     postgresql-dev \
@@ -36,7 +37,8 @@ RUN apk add --no-cache \
     imagemagick \
     vips \
     vips-dev \
-    tzdata
+    tzdata \
+    yaml-dev
 
 # Create application directory
 WORKDIR /app

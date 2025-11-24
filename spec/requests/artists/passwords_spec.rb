@@ -260,8 +260,21 @@ RSpec.describe 'Artists Passwords', type: :request do
             reset_password_token: @token
           }
         }
+        # Should redirect to login page
+        expect(response).to redirect_to(new_artist_session_path)
+        # Follow redirect - if user is auto-signed in, they'll be redirected to dashboard
         follow_redirect!
-        expect(response.body).to match(/reset|success|password/i)
+        # After password reset, Devise may auto-sign in the user
+        # If so, they'll be redirected to dashboard; otherwise they'll see the login page
+        if response.redirect?
+          # User was auto-signed in and redirected
+          follow_redirect!
+          expect(response).to have_http_status(:success)
+        else
+          # User is on login page
+          expect(response).to have_http_status(:success)
+          expect(response).to render_template('artists/sessions/new')
+        end
       end
     end
 

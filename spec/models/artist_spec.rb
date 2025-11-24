@@ -593,7 +593,7 @@ RSpec.describe Artist, type: :model do
     end
 
     it 'tracks confirmation_sent_at timestamp' do
-      artist = build(:artist)
+      artist = build(:artist, confirmed_at: nil)
       artist.save!
       expect(artist.confirmation_sent_at).to be_present
     end
@@ -643,6 +643,100 @@ RSpec.describe Artist, type: :model do
       # After successful reset, token is cleared
       artist.reload
       expect(artist.reset_password_token).to be_nil
+    end
+  end
+
+  describe 'studio fields' do
+    describe 'studio_intro_text' do
+      it { is_expected.to validate_length_of(:studio_intro_text).is_at_most(600) }
+      it { is_expected.to allow_value(nil).for(:studio_intro_text) }
+
+      it 'accepts studio_intro_text at maximum length' do
+        artist = build(:artist, studio_intro_text: 'A' * 600)
+        expect(artist).to be_valid
+      end
+
+      it 'rejects studio_intro_text exceeding 600 characters' do
+        artist = build(:artist, studio_intro_text: 'A' * 601)
+        expect(artist).not_to be_valid
+        expect(artist.errors[:studio_intro_text]).to be_present
+      end
+
+      it 'allows blank studio_intro_text' do
+        artist = build(:artist, studio_intro_text: '')
+        expect(artist).to be_valid
+      end
+    end
+
+    describe 'studio_hero_image_id' do
+      it { is_expected.to belong_to(:studio_hero_image).class_name('StudioImage').optional }
+
+      context 'when hero image is set' do
+        let(:artist) { create(:artist, :with_hero_image) }
+
+        it 'stores the hero image ID' do
+          expect(artist.studio_hero_image_id).to be_present
+        end
+
+        it 'can retrieve the associated hero image' do
+          expect(artist.studio_hero_image).to be_a(StudioImage)
+          expect(artist.studio_hero_image.artist_id).to eq(artist.id)
+        end
+      end
+
+      context 'when hero image is not set' do
+        let(:artist) { create(:artist) }
+
+        it 'allows nil studio_hero_image_id' do
+          expect(artist.studio_hero_image_id).to be_nil
+        end
+
+        it 'studio_hero_image returns nil' do
+          expect(artist.studio_hero_image).to be_nil
+        end
+      end
+
+      context 'when hero image is deleted' do
+        let(:artist) do
+          a = create(:artist, :with_hero_image)
+          a.update_column(:confirmed_at, Time.current) unless a.confirmed?
+          a
+        end
+
+        it 'sets studio_hero_image_id to nil via foreign key constraint' do
+          hero_image_id = artist.studio_hero_image_id
+          hero_image = artist.studio_hero_image
+          
+          # Purge the image attachment before destroying to avoid ActiveStorage issues
+          hero_image.image.purge if hero_image.image.attached?
+          hero_image.destroy
+
+          artist.reload
+          expect(artist.studio_hero_image_id).to be_nil
+          expect(artist.studio_hero_image).to be_nil
+        end
+      end
+    end
+
+    describe 'associations with studio_images' do
+      let(:artist) { create(:artist, :with_studio_images) }
+
+      it 'has many studio images' do
+        expect(artist.studio_images.count).to eq(5)
+      end
+
+      it 'can set hero image to one of its own studio images' do
+        first_image = artist.studio_images.first
+        artist.update(studio_hero_image_id: first_image.id)
+
+        expect(artist.studio_hero_image_id).to eq(first_image.id)
+        expect(artist.studio_hero_image).to eq(first_image)
+      end
+
+      it 'maintains studio images when hero image is cleared' do
+        artist.update(studio_hero_image_id: nil)
+        expect(artist.studio_images.count).to eq(5)
+      end
     end
   end
 

@@ -1,0 +1,129 @@
+# Clay Companion - Cursor AI Context
+
+## Project Overview
+Clay Companion is a Rails 8.1 monolith portfolio platform for ceramic artists. Built with Hotwire (Turbo + Stimulus), Tailwind CSS, PostgreSQL, and Active Storage. Uses Docker-first development and strict TDD approach.
+
+## Tech Stack
+- **Backend**: Rails 8.1, Ruby 3.4, PostgreSQL 15+
+- **Frontend**: Hotwire (Turbo + Stimulus), Tailwind CSS, ERB templates
+- **Auth**: Devise (email/password, email confirmation, password reset)
+- **Storage**: Active Storage (local dev, GCS production)
+- **Testing**: RSpec, Factory Bot, Shoulda Matchers, SimpleCov
+- **Infrastructure**: Docker Compose for development (app and tests run in Docker)
+
+## Key Conventions & Standards
+
+### Code Quality (MANDATORY)
+- **Documentation**: Every file needs header comment, every public method needs YARD docs
+- **i18n**: NO hardcoded strings - all user-facing text in `config/locales/*.yml`
+- **Test Attributes**: ALL interactive HTML elements must have `data-test-id` attributes
+- **TDD**: Write tests first (Red-Green-Refactor), 90%+ coverage goal
+- **Style**: Follow Ruby Style Guide, use RuboCop
+
+### Rails Patterns
+- Keep controllers thin - business logic in services/models
+- Use strong parameters always
+- Validate at model level
+- Use scopes for common queries
+- Avoid N+1 queries (use `includes`, `eager_load`)
+- Use database constraints for data integrity
+
+### File Organization
+- Controllers: `app/controllers/` (web) and `app/controllers/api/` (API)
+- Models: `app/models/` with concerns in `app/models/concerns/`
+- Services: `app/services/` for complex business logic
+- Views: `app/views/` with partials in `app/views/shared/`
+- Tests: `spec/` mirroring `app/` structure
+
+## Current Implementation Status
+
+### ✅ Completed
+- Foundation setup (Docker, Rails, RSpec, Tailwind)
+- Artist authentication (Devise with custom routes)
+- Email confirmation and password reset
+- Profile setup flow
+- Studio feature (studio images, hero image, intro text)
+- API endpoints for studio page and studio images
+
+### 🚧 In Progress
+- Studio dashboard settings page
+- Studio image management UI
+
+### 📋 Planned (Post-MVP)
+- Artwork CRUD operations
+- Series management
+- Public portfolio pages
+- Platform homepage
+
+## Docker Development
+- **All commands run in Docker**: The app, database, and tests all run inside Docker containers
+- **Development server**: `docker-compose up` or `docker-compose exec web bin/rails server`
+- **Run tests**: `docker-compose run --rm test bundle exec rspec` (or `docker-compose exec web bundle exec rspec`)
+- **Database commands**: `docker-compose exec web bundle exec rails db:migrate`
+- **Rails console**: `docker-compose exec web bundle exec rails console`
+- **No local Ruby needed**: Everything runs in Docker containers via `docker-compose.yml`
+
+## Testing Approach
+- **TDD First**: Write failing tests, implement, refactor
+- **Test Structure**: `spec/models/`, `spec/requests/`, `spec/system/`
+- **Factories**: Use Factory Bot with traits (e.g., `:minimal`, `:with_studio_images`)
+- **Coverage**: Aim for 90%+ overall, 100% for models/services
+- **Test IDs**: Use `data-test-id` for all interactive elements
+- **Run tests in Docker**: Always use `docker-compose run --rm test` or `docker-compose exec web` for test commands
+
+## Important Patterns
+
+### Authentication
+- Custom Devise routes: `/login`, `/signup`, `/logout`, `/password/reset`, `/email/verify/:token`
+- Profile setup required after email verification
+- Use `artist_signed_in?` and `current_artist` helpers
+- API auth: `authenticate_artist_for_api!` returns JSON errors
+
+### Active Storage
+- Use `has_one_attached` or `has_many_attached` in models
+- Attach files: `image.attach(io: file, filename: 'name.jpg')`
+- Check attachment: `image.attached?`
+- Get URL: `rails_blob_url(image)` or `url_for(image)`
+- Purge: `image.purge` (in tests, purge before destroy to avoid issues)
+
+### API Controllers
+- Namespace: `Api::` module
+- Base: `ApplicationController` (not `ActionController::API`)
+- Auth: `authenticate_artist_for_api!` for protected endpoints
+- JSON responses: Use `render json: { ... }` with proper status codes
+- Public endpoints: No auth required (e.g., `show` actions for public portfolios)
+
+### Studio Feature
+- Models: `StudioImage` (belongs to `Artist`), `Artist` has `studio_hero_image_id`
+- Categories: `studio`, `process`, `other` (enum on `StudioImage`)
+- API: `/api/artists/:artist_id/studio-images` and `/api/artists/:artist_id/studio-page`
+- Settings: `/dashboard/settings/studio` (show action implemented)
+
+## Common Gotchas
+- **ActiveStorage in tests**: Use `after(:create)` not `after(:build)` for attachments
+- **Devise mappings**: May need explicit setup in test support files
+- **ActionText issues**: Skip confirmation notifications in tests to avoid rendering errors
+- **N+1 queries**: Always check with `includes` when loading associations
+- **i18n keys**: Use lazy lookup with `.` prefix (e.g., `t('.success')`)
+
+## Design System
+- **Colors**: Celadon Green `#6E9180`, Celadon Dark `#527563`, Charcoal `#1F2421`
+- **Font**: Inter (Google Fonts), weights 400/500/600/700
+- **Spacing**: 4px base unit, 40px gallery gaps
+- **Philosophy**: Artwork-first, gallery-like minimalism
+
+## Documentation
+- Requirements: `requirements/` folder (tech-agnostic product docs)
+- Technical docs: `docs/` folder (architecture, development, code quality)
+- Wireframes: `requirements/wireframes/` (UI mockups)
+
+## When Writing Code
+1. Read relevant requirements/docs first
+2. Write tests first (TDD)
+3. Follow code quality standards strictly
+4. Use i18n for all user-facing text
+5. Add `data-test-id` to interactive elements
+6. Document with YARD format
+7. Check for N+1 queries
+8. Run tests in Docker before committing: `docker-compose run --rm test bundle exec rspec`
+

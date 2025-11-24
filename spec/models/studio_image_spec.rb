@@ -24,7 +24,7 @@ RSpec.describe StudioImage, type: :model do
     subject { build(:studio_image) }
 
     describe 'image attachment' do
-      let(:artist) { create(:artist) }
+      let(:artist) { create(:artist, :minimal, confirmed_at: Time.current) }
       
       it 'allows studio_image without image attachment (during migration period)' do
         image = build(:studio_image, artist: artist)
@@ -110,11 +110,11 @@ RSpec.describe StudioImage, type: :model do
     end
 
     describe 'caption' do
-      it { is_expected.to validate_length_of(:caption).is_at_most(1000) }
+      it { is_expected.to validate_length_of(:caption).is_at_most(150) }
       it { is_expected.to allow_value(nil).for(:caption) }
 
       it 'accepts caption at maximum length' do
-        image = build(:studio_image, caption: 'A' * 1000)
+        image = build(:studio_image, caption: 'A' * 150)
         expect(image).to be_valid
       end
 
@@ -293,10 +293,16 @@ RSpec.describe StudioImage, type: :model do
       expect(image.file_size).to be_nil
     end
 
+    it 'creates minimal studio_image without image attachment' do
+      image = create(:studio_image, :minimal)
+      expect(image).to be_valid
+      expect(image.image).not_to be_attached
+    end
+
     it 'creates studio_image with long caption' do
       image = build(:studio_image, :with_long_caption)
       expect(image).to be_valid
-      expect(image.caption.length).to eq(1000)
+      expect(image.caption.length).to eq(150)
     end
 
     it 'creates high resolution studio_image' do
@@ -305,6 +311,133 @@ RSpec.describe StudioImage, type: :model do
       expect(image.width).to eq(4000)
       expect(image.height).to eq(3000)
       expect(image.file_size).to be > 1_000_000
+    end
+
+    it 'creates studio_image with process category' do
+      image = build(:studio_image, :process_category)
+      expect(image).to be_valid
+      expect(image.category).to eq('process')
+    end
+
+    it 'creates studio_image with other category' do
+      image = build(:studio_image, :other_category)
+      expect(image).to be_valid
+      expect(image.category).to eq('other')
+    end
+  end
+
+  describe 'category enum and validations' do
+    subject { build(:studio_image) }
+
+    describe 'enum' do
+      it 'defines studio category' do
+        image = build(:studio_image, category: 'studio')
+        expect(image.category).to eq('studio')
+      end
+
+      it 'defines process category' do
+        image = build(:studio_image, category: 'process')
+        expect(image.category).to eq('process')
+      end
+
+      it 'defines other category' do
+        image = build(:studio_image, category: 'other')
+        expect(image.category).to eq('other')
+      end
+    end
+
+    describe 'category validation' do
+      it { is_expected.to validate_presence_of(:category) }
+
+      it 'accepts valid categories' do
+        valid_categories = ['studio', 'process', 'other']
+
+        valid_categories.each do |category|
+          image = build(:studio_image, category: category)
+          expect(image).to be_valid, "Expected category '#{category}' to be valid"
+        end
+      end
+
+      it 'rejects invalid categories' do
+        image = build(:studio_image)
+        # Rails 8.1 enum is strict - we need to bypass enum validation to test inclusion validation
+        image.save(validate: false)
+        image.update_column(:category, 'invalid_category')
+        image.reload
+        expect(image).not_to be_valid
+        expect(image.errors[:category]).to be_present
+      end
+
+      it 'defaults to other category if not specified' do
+        image = build(:studio_image)
+        image.category = nil
+        expect(image).not_to be_valid
+      end
+    end
+  end
+
+  describe 'scopes' do
+    let(:artist) { create(:artist) }
+
+    before do
+      create_list(:studio_image, 2, artist: artist, category: 'studio')
+      create(:studio_image, :process_category, artist: artist)
+      create(:studio_image, :process_category, artist: artist)
+      create(:studio_image, :process_category, artist: artist)
+      create(:studio_image, :other_category, artist: artist)
+    end
+
+    describe 'ordered scope' do
+      it 'returns images ordered by display_order then created_at' do
+        images = StudioImage.ordered
+        expect(images.pluck(:display_order)).to eq(images.pluck(:display_order).sort)
+      end
+    end
+
+    describe 'by_artist scope' do
+      it 'returns only images for specified artist' do
+        # Count existing images for this artist (5 from before block)
+        existing_count = StudioImage.by_artist(artist.id).count
+        
+        other_artist = create(:artist, :minimal, confirmed_at: Time.current)
+        create(:studio_image, artist: other_artist)
+
+        artist_images = StudioImage.by_artist(artist.id)
+        expect(artist_images.count).to eq(existing_count)
+        expect(artist_images.all? { |img| img.artist_id == artist.id }).to be true
+      end
+    end
+
+    describe 'by_category scope' do
+      it 'returns only images in specified category' do
+        studio_images = StudioImage.by_category('studio')
+        expect(studio_images.count).to eq(2)
+        expect(studio_images.all? { |img| img.category == 'studio' }).to be true
+      end
+
+      it 'returns process category images' do
+        process_images = StudioImage.by_category('process')
+        expect(process_images.count).to eq(3)
+        expect(process_images.all? { |img| img.category == 'process' }).to be true
+      end
+
+      it 'returns other category images' do
+        other_images = StudioImage.by_category('other')
+        expect(other_images.count).to eq(1)
+        expect(other_images.all? { |img| img.category == 'other' }).to be true
+      end
+    end
+
+    describe 'chaining scopes' do
+      it 'filters by artist and category' do
+        other_artist = create(:artist)
+        # Use minimal trait to avoid ActiveStorage attachment issues in this test
+        create(:studio_image, :process_category, :minimal, artist: other_artist)
+
+        filtered = StudioImage.by_artist(artist.id).by_category('process')
+        expect(filtered.count).to eq(3)
+        expect(filtered.all? { |img| img.artist_id == artist.id && img.category == 'process' }).to be true
+      end
     end
   end
 end

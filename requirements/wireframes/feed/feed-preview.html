@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed - Clay Companion Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #F5F7F6; /* Mist */
+            color: #1F2421; /* Charcoal */
+            line-height: 1.6;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background: #FFFFFF;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(168, 196, 181, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-header .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1F2421;
+        }
+
+        .dashboard-header nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .dashboard-header a {
+            color: #6B7280; /* Slate */
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+        }
+
+        .dashboard-header a:hover {
+            color: #6E9180; /* Celadon Green */
+        }
+
+        /* Main Layout */
+        .feed-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        /* Feed Column */
+        .feed-column {
+            flex: 1;
+            max-width: 800px;
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .feed-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1F2421;
+        }
+
+        .refresh-btn {
+            background: transparent;
+            border: 1px solid #A8C4B5;
+            color: #5C6C62;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 150ms;
+        }
+
+        .refresh-btn:hover {
+            background: #F5F7F6;
+            border-color: #6E9180;
+            color: #6E9180;
+        }
+
+        .refresh-btn svg {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        /* Feed Items */
+        .feed-items {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem; /* 40px spacing */
+        }
+
+        /* Feed Card */
+        .feed-card {
+            background: #FFFFFF;
+            border: 1px solid #E8EDEA; /* Pale Celadon */
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            transition: box-shadow 150ms;
+        }
+
+        .feed-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .artist-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .artist-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #E8EDEA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6B7280;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .artist-details {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .artist-name-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .artist-name {
+            font-weight: 600;
+            color: #1F2421;
+            font-size: 0.9375rem;
+            text-decoration: none;
+        }
+
+        .artist-name:hover {
+            color: #6E9180;
+        }
+
+        .timestamp {
+            font-size: 0.8125rem;
+            color: #6B7280;
+            margin-top: 0.125rem;
+        }
+
+        .recommended-badge {
+            background: #F5F7F6;
+            color: #6E9180;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 0.5rem;
+        }
+
+        .follow-btn {
+            background: #527563; /* Celadon Dark */
+            color: #FFFFFF;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 150ms;
+        }
+
+        .follow-btn:hover {
+            background: #3E5A4A;
+        }
+
+        .follow-btn.following {
+            background: transparent;
+            color: #5C6C62;
+            border: 1px solid #A8C4B5;
+        }
+
+        .follow-btn.following:hover {
+            background: #F5F7F6;
+        }
+
+        /* Card Content */
+        .card-content {
+            margin-bottom: 1rem;
+        }
+
+        .artwork-image {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #E8EDEA;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6B7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .artwork-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .studio-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background: #E8EDEA;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6B7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(31, 36, 33, 0.8);
+            color: #FFFFFF;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            text-transform: uppercase;
+        }
+
+        .exhibition-card {
+            background: #F5F7F6;
+            border: 1px solid #E8EDEA;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .exhibition-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1F2421;
+            margin-bottom: 0.5rem;
+        }
+
+        .exhibition-details {
+            font-size: 0.9375rem;
+            color: #5C6C62;
+            margin-bottom: 0.5rem;
+        }
+
+        .exhibition-date {
+            font-size: 0.875rem;
+            color: #6B7280;
+            margin-bottom: 0.75rem;
+        }
+
+        .exhibition-type-badge {
+            display: inline-block;
+            background: #E8EDEA;
+            color: #527563;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .exhibition-thumbnail {
+            width: 100%;
+            height: 150px;
+            background: #E8EDEA;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6B7280;
+            font-size: 0.75rem;
+        }
+
+        .press-card {
+            background: #F5F7F6;
+            border: 1px solid #E8EDEA;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .press-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1F2421;
+            margin-bottom: 0.5rem;
+        }
+
+        .press-publication {
+            font-size: 0.9375rem;
+            color: #5C6C62;
+            margin-bottom: 0.5rem;
+        }
+
+        .press-date {
+            font-size: 0.875rem;
+            color: #6B7280;
+            margin-bottom: 0.75rem;
+        }
+
+        .press-excerpt {
+            font-size: 0.9375rem;
+            color: #5C6C62;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .caption {
+            font-size: 0.9375rem;
+            color: #5C6C62;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Card Footer */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .content-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1F2421;
+        }
+
+        .content-details {
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+
+        .view-btn {
+            background: transparent;
+            color: #6E9180;
+            border: 1px solid #6E9180;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 150ms;
+        }
+
+        .view-btn:hover {
+            background: #6E9180;
+            color: #FFFFFF;
+        }
+
+        /* Sidebar */
+        .feed-sidebar {
+            width: 320px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-section {
+            background: #FFFFFF;
+            border: 1px solid #E8EDEA;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-section h2 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1F2421;
+            margin-bottom: 1rem;
+        }
+
+        .suggested-artist {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #E8EDEA;
+        }
+
+        .suggested-artist:last-child {
+            border-bottom: none;
+        }
+
+        .suggested-artist .artist-avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 0.75rem;
+        }
+
+        .suggested-artist-info {
+            flex: 1;
+        }
+
+        .suggested-artist-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #1F2421;
+            text-decoration: none;
+        }
+
+        .suggested-artist-name:hover {
+            color: #6E9180;
+        }
+
+        .suggested-artist-location {
+            font-size: 0.75rem;
+            color: #6B7280;
+            margin-top: 0.125rem;
+        }
+
+        .suggested-artist .follow-btn {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.8125rem;
+        }
+
+        .stats-list {
+            list-style: none;
+        }
+
+        .stats-list li {
+            padding: 0.5rem 0;
+            font-size: 0.9375rem;
+            color: #5C6C62;
+            border-bottom: 1px solid #E8EDEA;
+        }
+
+        .stats-list li:last-child {
+            border-bottom: none;
+        }
+
+        .stats-list .stat-value {
+            font-weight: 600;
+            color: #1F2421;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            margin: 2.5rem 0;
+            border: none;
+            border-top: 1px solid #E8EDEA;
+        }
+
+        .section-header {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        /* Load More */
+        .load-more {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .load-more-btn {
+            background: transparent;
+            border: 1px solid #A8C4B5;
+            color: #5C6C62;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 150ms;
+        }
+
+        .load-more-btn:hover {
+            background: #F5F7F6;
+            border-color: #6E9180;
+            color: #6E9180;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: #FFFFFF;
+            border: 2px dashed #E8EDEA;
+            border-radius: 0.5rem;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1F2421;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            color: #5C6C62;
+            margin-bottom: 2rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .empty-state .btn {
+            background: #527563;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 150ms;
+        }
+
+        .empty-state .btn:hover {
+            background: #3E5A4A;
+        }
+
+        /* Hamburger Menu */
+        .hamburger-btn {
+            display: none;
+            background: transparent;
+            border: 1px solid #E8EDEA;
+            border-radius: 0.5rem;
+            color: #1F2421;
+            cursor: pointer;
+            padding: 0.625rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            align-items: center;
+            justify-content: center;
+            transition: all 150ms;
+            flex-shrink: 0;
+        }
+
+        .hamburger-btn:hover {
+            background: #F5F7F6;
+            border-color: #6E9180;
+            color: #6E9180;
+        }
+
+        .hamburger-btn svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke-width: 2;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .feed-sidebar.mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            max-width: 100%;
+            height: 100vh;
+            z-index: 999;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            background: #FFFFFF;
+            padding: 0;
+        }
+
+        .feed-sidebar.mobile-sidebar.active {
+            transform: translateY(0);
+        }
+
+        .mobile-sidebar-header {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #E8EDEA;
+            background: #FFFFFF;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .mobile-sidebar-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1F2421;
+            margin: 0;
+        }
+
+        .close-sidebar-btn {
+            background: transparent;
+            border: none;
+            color: #5C6C62;
+            cursor: pointer;
+            padding: 0.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            transition: all 150ms;
+            flex-shrink: 0;
+        }
+
+        .close-sidebar-btn:hover {
+            background: #F5F7F6;
+            color: #1F2421;
+        }
+
+        .close-sidebar-btn:active {
+            background: #E8EDEA;
+        }
+
+        .close-sidebar-btn svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke-width: 2;
+        }
+
+        .feed-sidebar.mobile-sidebar .sidebar-section {
+            margin: 0;
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid #E8EDEA;
+        }
+
+        .feed-sidebar.mobile-sidebar .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .feed-container {
+                flex-direction: column;
+            }
+
+            .feed-sidebar {
+                width: 100%;
+            }
+
+            .hamburger-btn {
+                display: flex;
+            }
+
+            .feed-sidebar:not(.mobile-sidebar) {
+                display: none;
+            }
+
+            .mobile-sidebar-header {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .feed-container {
+                padding: 1rem;
+            }
+
+            .feed-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .feed-card {
+                padding: 1rem;
+            }
+
+            .artwork-image,
+            .studio-image {
+                aspect-ratio: 1 / 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <div class="logo">Clay Companion</div>
+        <nav>
+            <a href="#">My Work</a>
+            <a href="#">Settings</a>
+            <a href="#">Sign Out</a>
+        </nav>
+    </header>
+
+    <!-- Feed Container -->
+    <div class="feed-container">
+        <!-- Feed Column -->
+        <div class="feed-column">
+            <div class="feed-header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Toggle sidebar" aria-expanded="false" id="hamburgerBtn">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <h1>Feed</h1>
+                </div>
+                <button class="refresh-btn" aria-label="Refresh feed">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Refresh
+                </button>
+            </div>
+
+            <!-- Feed Items -->
+            <div class="feed-items">
+                <!-- Artwork Card -->
+                <article class="feed-card">
+                    <div class="card-header">
+                        <div class="artist-info">
+                            <div class="artist-avatar">JS</div>
+                            <div class="artist-details">
+                                <a href="#" class="artist-name">Jane Smith</a>
+                                <span class="timestamp">2 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="artwork-image">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect fill='%23A8C4B5' width='800' height='450'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%235C6C62' font-family='sans-serif' font-size='18'%3EArtwork Image%3C/text%3E%3C/svg%3E" alt="Celadon Vessel Series #12">
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="content-meta">
+                            <div class="content-title">Celadon Vessel Series #12</div>
+                            <div class="content-details">2024 • Stoneware • Cone 10</div>
+                            <div class="content-details" style="margin-top: 0.25rem;">Part of "Celadon Series"</div>
+                        </div>
+                        <a href="#" class="view-btn">View Artwork →</a>
+                    </div>
+                </article>
+
+                <!-- Recommended Studio Image Card -->
+                <article class="feed-card">
+                    <div class="card-header">
+                        <div class="artist-info">
+                            <div class="artist-avatar">JD</div>
+                            <div class="artist-details">
+                                <div class="artist-name-row">
+                                    <a href="#" class="artist-name">John Doe</a>
+                                    <span class="recommended-badge">Recommended</span>
+                                </div>
+                                <span class="timestamp">5 hours ago</span>
+                            </div>
+                        </div>
+                        <button class="follow-btn">Follow</button>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="studio-image">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%236E9180' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23FFFFFF' font-family='sans-serif' font-size='18'%3EStudio Process Image%3C/text%3E%3C/svg%3E" alt="Throwing on the wheel">
+                            <span class="category-badge">Process</span>
+                        </div>
+                        <p class="caption">Throwing on the wheel - a meditative process that connects me to the clay and allows each piece to take its own form.</p>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="content-meta">
+                            <div class="content-title">Studio Process</div>
+                        </div>
+                        <a href="#" class="view-btn">View Studio Page →</a>
+                    </div>
+                </article>
+
+                <!-- Exhibition Card -->
+                <article class="feed-card">
+                    <div class="card-header">
+                        <div class="artist-info">
+                            <div class="artist-avatar">SJ</div>
+                            <div class="artist-details">
+                                <a href="#" class="artist-name">Sarah Johnson</a>
+                                <span class="timestamp">1 day ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="exhibition-card">
+                            <div class="exhibition-title">New Exhibition</div>
+                            <div class="exhibition-details">"Earth & Fire"</div>
+                            <div class="exhibition-details">Portland Gallery</div>
+                            <div class="exhibition-date">Jan 15 - Feb 28, 2025</div>
+                            <span class="exhibition-type-badge">Solo</span>
+                            <div class="exhibition-thumbnail">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='150'%3E%3Crect fill='%23A8C4B5' width='400' height='150'/%3E%3C/svg%3E" alt="Exhibition thumbnail">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="content-meta">
+                            <div class="content-title">Exhibition</div>
+                        </div>
+                        <a href="#" class="view-btn">View Exhibition →</a>
+                    </div>
+                </article>
+
+                <!-- Press Mention Card -->
+                <article class="feed-card">
+                    <div class="card-header">
+                        <div class="artist-info">
+                            <div class="artist-avatar">MC</div>
+                            <div class="artist-details">
+                                <a href="#" class="artist-name">Mike Chen</a>
+                                <span class="timestamp">3 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="press-card">
+                            <div class="press-title">"Ceramic Artist Redefines Form"</div>
+                            <div class="press-publication">Ceramics Monthly</div>
+                            <div class="press-date">Published: Dec 1, 2024</div>
+                            <p class="press-excerpt">In this groundbreaking series, the artist explores the relationship between traditional ceramic techniques and contemporary design, creating pieces that challenge our understanding of form and function...</p>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="content-meta">
+                            <div class="content-title">Press Mention</div>
+                        </div>
+                        <a href="#" class="view-btn">Read Article →</a>
+                    </div>
+                </article>
+
+                <!-- Section Divider for Recommendations -->
+                <hr class="section-divider">
+                <div class="section-header">Recommended for You</div>
+
+                <!-- Another Recommended Card -->
+                <article class="feed-card">
+                    <div class="card-header">
+                        <div class="artist-info">
+                            <div class="artist-avatar">NA</div>
+                            <div class="artist-details">
+                                <div class="artist-name-row">
+                                    <a href="#" class="artist-name">New Artist</a>
+                                    <span class="recommended-badge">Recommended</span>
+                                </div>
+                                <span class="timestamp">2 days ago</span>
+                            </div>
+                        </div>
+                        <button class="follow-btn">Follow</button>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="artwork-image">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect fill='%23A8C4B5' width='800' height='450'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%235C6C62' font-family='sans-serif' font-size='18'%3EArtwork Image%3C/text%3E%3C/svg%3E" alt="Porcelain Bowl Set">
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="content-meta">
+                            <div class="content-title">Porcelain Bowl Set</div>
+                            <div class="content-details">2024 • Porcelain • Cone 6</div>
+                        </div>
+                        <a href="#" class="view-btn">View Artwork →</a>
+                    </div>
+                </article>
+
+                <!-- Load More -->
+                <div class="load-more">
+                    <button class="load-more-btn">Load More</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <!-- Sidebar -->
+        <aside class="feed-sidebar" id="feedSidebar">
+            <!-- Mobile Header (only visible on mobile) -->
+            <div class="mobile-sidebar-header">
+                <h2>Menu</h2>
+                <button class="close-sidebar-btn" onclick="toggleSidebar()" aria-label="Close menu">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Suggested Artists -->
+            <div class="sidebar-section">
+                <h2>Suggested Artists</h2>
+                <div class="suggested-artist">
+                    <div class="artist-avatar">A1</div>
+                    <div class="suggested-artist-info">
+                        <a href="#" class="suggested-artist-name">Artist One</a>
+                        <div class="suggested-artist-location">Portland, OR</div>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                </div>
+                <div class="suggested-artist">
+                    <div class="artist-avatar">A2</div>
+                    <div class="suggested-artist-info">
+                        <a href="#" class="suggested-artist-name">Artist Two</a>
+                        <div class="suggested-artist-location">Seattle, WA</div>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                </div>
+                <div class="suggested-artist">
+                    <div class="artist-avatar">A3</div>
+                    <div class="suggested-artist-info">
+                        <a href="#" class="suggested-artist-name">Artist Three</a>
+                        <div class="suggested-artist-location">Brooklyn, NY</div>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                </div>
+            </div>
+
+            <!-- Your Stats -->
+            <div class="sidebar-section">
+                <h2>Your Stats</h2>
+                <ul class="stats-list">
+                    <li><span class="stat-value">12</span> Artworks</li>
+                    <li><span class="stat-value">45</span> Followers</li>
+                    <li><span class="stat-value">8</span> Following</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('feedSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const isOpen = sidebar.classList.contains('active');
+            
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.add('mobile-sidebar');
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+                
+                // Prevent body scroll when sidebar is open
+                if (!isOpen) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+                
+                // Update ARIA attributes
+                if (hamburgerBtn) {
+                    hamburgerBtn.setAttribute('aria-expanded', !isOpen);
+                }
+            }
+        }
+
+        // Close sidebar when clicking overlay
+        document.getElementById('sidebarOverlay').addEventListener('click', function() {
+            toggleSidebar();
+        });
+
+        // Close sidebar on window resize if it becomes desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1024) {
+                const sidebar = document.getElementById('feedSidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+                const hamburgerBtn = document.getElementById('hamburgerBtn');
+                sidebar.classList.remove('mobile-sidebar', 'active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                if (hamburgerBtn) {
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

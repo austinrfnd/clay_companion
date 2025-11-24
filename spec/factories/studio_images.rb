@@ -5,7 +5,8 @@ FactoryBot.define do
     artist
     
     # Active Storage attachment (create test image file if needed)
-    after(:build) do |studio_image|
+    # Use after(:create) for ActiveStorage attachments to ensure the record is persisted
+    after(:create) do |studio_image|
       # Create test image file if it doesn't exist
       FileUtils.mkdir_p('spec/fixtures/files')
       unless File.exist?('spec/fixtures/files/test_image.jpg')
@@ -13,7 +14,7 @@ FactoryBot.define do
         File.binwrite('spec/fixtures/files/test_image.jpg', jpeg_data)
       end
       
-      # Attach test image
+      # Attach test image (must be after create for ActiveStorage)
       studio_image.image.attach(
         io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
         filename: 'test_image.jpg',
@@ -23,6 +24,7 @@ FactoryBot.define do
     
     alt_text { "View of ceramic studio workspace" }
     caption { "Working on a new series of minimalist vessels in my Portland studio." }
+    category { 'studio' }
     width { 1920 }
     height { 1080 }
     file_size { 655_360 } # 640 KB
@@ -35,19 +37,31 @@ FactoryBot.define do
       height { nil }
       file_size { nil }
       # Don't attach image for minimal trait
-      after(:build) do |studio_image|
-        # Skip image attachment for minimal
+      # Use after(:create) to override parent factory's image attachment
+      after(:create) do |studio_image|
+        # Ensure no image is attached (parent factory's after(:create) may have attached one)
+        studio_image.image.purge if studio_image.image.attached?
       end
     end
 
     trait :with_long_caption do
-      caption { "A" * 1000 }
+      caption { "A" * 150 }
     end
 
     trait :high_resolution do
       width { 4000 }
       height { 3000 }
       file_size { 2_621_440 } # 2.5 MB
+    end
+
+    trait :process_category do
+      category { 'process' }
+      caption { "Throwing clay on the wheel - a meditative process." }
+    end
+
+    trait :other_category do
+      category { 'other' }
+      caption { "Miscellaneous studio moment." }
     end
   end
 end
