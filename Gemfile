@@ -74,7 +74,8 @@ group :test do
   gem "shoulda-matchers", "~> 6.0"
   gem "database_cleaner-active_record", "~> 2.1"
   gem "capybara", "~> 3.39"
-  gem "selenium-webdriver"
+  gem "cuprite", "~> 0.15"  # Fast Chrome DevTools Protocol driver (replaces Selenium)
+  gem "selenium-webdriver"  # Kept for reference, but Cuprite is now the default
   gem "webmock", "~> 3.19"
   gem "simplecov", require: false
 end
