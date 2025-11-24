@@ -1,0 +1,62 @@
+<%#
+  Lightbox Modal Partial
+  Full-screen modal for viewing images with navigation.
+  Based on wireframe: requirements/wireframes/process-studio-preview.html
+%>
+
+<div 
+  class="lightbox fixed inset-0 bg-black/90 z-[1000] hidden justify-center items-center"
+  data-lightbox-target="modal"
+  data-action="click->lightbox#closeOnBackdrop"
+>
+  <div class="lightbox-content relative max-w-[90%] max-h-[90%]">
+    <!-- Close Button -->
+    <button 
+      class="lightbox-close absolute -top-12 right-0 bg-transparent border-none text-white text-4xl cursor-pointer px-4 py-2 hover:text-celadon transition-colors"
+      data-action="click->lightbox#close"
+      aria-label="Close lightbox"
+    >
+      ×
+    </button>
+    
+    <!-- Previous Button -->
+    <button 
+      class="lightbox-nav lightbox-prev absolute top-1/2 -translate-y-1/2 left-8 bg-white/10 border-none text-white text-4xl cursor-pointer px-4 py-4 rounded transition-colors hover:bg-white/20"
+      data-action="click->lightbox#previous"
+      aria-label="Previous image"
+    >
+      ‹
+    </button>
+    
+    <!-- Next Button -->
+    <button 
+      class="lightbox-nav lightbox-next absolute top-1/2 -translate-y-1/2 right-8 bg-white/10 border-none text-white text-4xl cursor-pointer px-4 py-4 rounded transition-colors hover:bg-white/20"
+      data-action="click->lightbox#next"
+      aria-label="Next image"
+    >
+      ›
+    </button>
+    
+    <!-- Image Container -->
+    <div class="lightbox-image-container">
+      <img 
+        class="lightbox-image max-w-full max-h-[90vh] rounded-lg"
+        data-lightbox-target="image"
+        alt=""
+      >
+    </div>
+    
+    <!-- Caption -->
+    <p 
+      class="lightbox-caption absolute -bottom-12 left-0 right-0 text-white text-center text-base px-4"
+      data-lightbox-target="caption"
+    ></p>
+    
+    <!-- Image Counter -->
+    <div 
+      class="lightbox-counter absolute top-4 left-4 text-white/80 text-sm"
+      data-lightbox-target="counter"
+    ></div>
+  </div>
+</div>
+

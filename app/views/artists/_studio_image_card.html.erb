@@ -1,0 +1,95 @@
+<%#
+  Studio Image Card Partial
+  Individual image card for the gallery grid with thumbnail, category badge, and caption.
+  Based on wireframe: requirements/wireframes/process-studio-preview.html
+  
+  Parameters:
+  - image: StudioImage instance
+  - index: Integer index for grid positioning (0-based)
+%>
+
+<%
+  # Determine grid column span based on index (desktop: 12-column grid)
+  # First 3 images: 4 columns each (span 4)
+  # 4th image: 6 columns, 2 rows (span 6, row-span 2) - large hero image
+  # 5th and 6th: 6 columns each (span 6) - wrap beside large image
+  # 7th-9th: 4 columns each (span 4)
+  # After that, default to 4 columns
+  
+  # Desktop (12-column)
+  desktop_cols = case index
+  when 0, 1, 2
+    'md:col-span-4'
+  when 3
+    'md:col-span-6 md:row-span-2'
+  when 4, 5
+    'md:col-span-6'
+  else
+    'md:col-span-4'
+  end
+  
+  # Tablet (8-column) - simpler layout
+  tablet_cols = case index
+  when 0, 1, 2
+    'md:col-span-4'
+  when 3
+    'md:col-span-4 md:row-span-2'
+  when 4, 5
+    'md:col-span-4'
+  else
+    'md:col-span-4'
+  end
+  
+  # Mobile: single column
+  mobile_cols = 'col-span-1'
+  
+  grid_cols = "#{mobile_cols} #{tablet_cols} #{desktop_cols}"
+  
+  # Category badge colors
+  badge_class = case image.category
+  when 'studio'
+    'bg-white/95 text-celadon-dark'
+  when 'process'
+    'bg-white/95 text-celadon'
+  else
+    'bg-white/95 text-slate'
+  end
+  
+  category_label = image.category&.capitalize || 'Other'
+%>
+
+<div 
+  class="image-card <%= grid_cols %> cursor-pointer transition-all duration-300 rounded-xl overflow-hidden hover:-translate-y-2 hover:shadow-xl"
+  data-lightbox-target="item"
+  data-image-id="<%= image.id %>"
+  data-image-url="<%= image.image.attached? ? rails_blob_url(image.image) : '' %>"
+  data-image-caption="<%= image.caption || '' %>"
+  data-action="click->lightbox#openImage"
+>
+  <div class="image-wrapper relative w-full pb-[75%] bg-slate-200 rounded-xl overflow-hidden mb-4">
+    <% if image.image.attached? %>
+      <%= image_tag image.image, 
+          alt: image.caption || image.alt_text || "Studio photo", 
+          class: "absolute top-0 left-0 w-full h-full object-cover" %>
+    <% else %>
+      <div class="absolute inset-0 flex items-center justify-center flex-col text-slate-400 text-sm">
+        <svg class="w-12 h-12 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        <span>Studio Photo</span>
+      </div>
+    <% end %>
+    
+    <!-- Category Badge -->
+    <span class="image-badge absolute top-3 right-3 <%= badge_class %> px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wide backdrop-blur-sm">
+      <%= category_label %>
+    </span>
+  </div>
+  
+  <% if image.caption.present? %>
+    <p class="image-caption text-base leading-relaxed text-charcoal font-medium">
+      <%= image.caption %>
+    </p>
+  <% end %>
+</div>
+

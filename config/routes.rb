@@ -98,4 +98,11 @@ Rails.application.routes.draw do
       resource :studio_page, only: [:show, :update], path: 'studio-page', controller: 'studio_page'
     end
   end
+
+  # Public artist portfolio routes
+  # Note: :name parameter currently uses artist ID (UUID)
+  # Future enhancement: add slug field to Artist model and find by slug
+  scope '/artists/:name' do
+    get '/process', to: 'artists/process_studio#show', as: :artist_process_studio
+  end
 end

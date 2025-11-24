@@ -1,0 +1,47 @@
+<%#
+  Studio Hero Section Partial
+  Full-width hero with background image, white overlay, centered title and intro text.
+  Based on wireframe: requirements/wireframes/process-studio-preview.html
+%>
+
+<% 
+  # Determine background image URL
+  background_image_url = nil
+  if hero_image&.image&.attached?
+    background_image_url = rails_blob_url(hero_image.image)
+  end
+  
+  # Hero section styling
+  hero_style = if background_image_url
+    "background-image: url('#{background_image_url}'); background-size: cover; background-position: center; background-attachment: fixed;"
+  else
+    "background: linear-gradient(135deg, #F8FAF9 0%, #E8F1ED 100%);"
+  end
+%>
+
+<section 
+  class="hero relative min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col justify-center items-center text-center px-6 py-12 md:px-8 md:py-20 lg:py-24 overflow-hidden"
+  style="<%= hero_style %>"
+>
+  <!-- White overlay -->
+  <div class="absolute inset-0 bg-white/85 z-0"></div>
+  
+  <!-- Decorative pattern overlay (optional) -->
+  <div class="absolute inset-0 opacity-50 z-0" style="background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 600\"><defs><linearGradient id=\"grad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\"><stop offset=\"0%\" style=\"stop-color:%23A8C4B5;stop-opacity:0.08\"/><stop offset=\"100%\" style=\"stop-color:%236E9180;stop-opacity:0.04\"/></linearGradient></defs><circle cx=\"200\" cy=\"150\" r=\"250\" fill=\"url(%23grad)\"/><circle cx=\"1000\" cy=\"450\" r=\"300\" fill=\"url(%23grad)\"/></svg>'); background-size: cover;"></div>
+  
+  <!-- Hero Content -->
+  <div class="hero-content relative z-10 max-w-[900px] mx-auto">
+    <h1 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-charcoal mb-4 md:mb-6 tracking-tight leading-tight">
+      Studio & Process
+    </h1>
+    
+    <div class="hero-divider w-10 md:w-12 lg:w-16 h-0.5 md:h-1 bg-celadon mx-auto my-4 md:my-6 rounded"></div>
+    
+    <% if artist.studio_intro_text.present? %>
+      <p class="intro-text text-base md:text-lg lg:text-xl leading-relaxed text-slate max-w-[800px] mx-auto px-4">
+        <%= artist.studio_intro_text %>
+      </p>
+    <% end %>
+  </div>
+</section>
+
