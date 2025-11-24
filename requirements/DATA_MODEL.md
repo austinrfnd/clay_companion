@@ -1,7 +1,43 @@
 # Clay Companion - Data Model
 
-**Last Updated**: 2025-11-05
+**Last Updated**: 2025-11-24
 **Document Type**: Tech-Agnostic Data Requirements
+**Schema Version**: 2025_11_22_000002 (PostgreSQL)
+**Status**: Mostly aligned with current implementation - see notes below
+
+---
+
+## ⚠️ Schema Alignment Notes
+
+This document describes the conceptual data model. The actual Rails implementation uses PostgreSQL with Active Record migrations. Current status:
+
+- ✅ Core entities implemented (Artists, Artworks, Series, Exhibitions, Press, Studio Images)
+- ✅ All major relationships and foreign keys in place
+- ✅ Image tables and associations working
+- ⚠️ Some field names differ from original spec (see Migration Notes below)
+- ❌ Techniques table not yet implemented (Post-MVP)
+- ⚠️ Visibility logic simplified in implementation (see details)
+
+**Last Schema Update**: 2025-11-22 (Migration 20251122000002)
+
+---
+
+## Migration Notes (Implementation vs. Spec)
+
+The following differences exist between this spec and the actual database schema:
+
+| Spec Field Name | Actual Schema Field | Notes |
+|-----------------|-------------------|-------|
+| `year_created` (Artworks) | `year` | Simplified for implementation |
+| `year_start` (Series) | `year_started` | Naming convention change |
+| `year_end` (Series) | `year_ended` | Naming convention change |
+| `group_id` (Artworks) | `artwork_group_id` | More descriptive naming |
+| `availability_status` (Artworks) | `is_for_sale`, `is_sold` | Booleans instead of enum |
+| `is_upcoming` (Exhibitions) | `is_ongoing` | Implementation handles differently |
+| N/A (Studio Images) | `image_url` missing in schema | Stored via URL field (see schema details) |
+| N/A (Artists) | `studio_hero_image_id`, `studio_intro_text` | Added for studio settings feature |
+
+**When updating this spec**: Refer to `db/schema.rb` for authoritative field names.
 
 ---
 
