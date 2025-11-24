@@ -7,7 +7,13 @@
 
 ## 📁 What's in This Folder?
 
-This folder contains **all** the product planning and design decisions for Clay Companion, extracted from the original documentation and made **technology-agnostic**. You can use these requirements to implement Clay Companion in **any programming language or framework**.
+This folder contains **all** the product requirements and development documentation for Clay Companion. It's organized to support both product planning and active development phases.
+
+**Structure**:
+- Core requirements documents (root level)
+- Wireframes for UI reference
+- Development guides and standards (in `development/` subfolder)
+- Archived planning documents (in `archive/` subfolder for reference)
 
 ---
 
@@ -115,7 +121,21 @@ This folder contains **all** the product planning and design decisions for Clay 
 
 ---
 
-### 8. [wireframes/](wireframes/)
+### 8. [development/](development/) 📁
+**Development phase documentation**
+
+This subdirectory contains guides for developers actively building the application:
+
+- **[DEVELOPMENT_SETUP.md](development/DEVELOPMENT_SETUP.md)** - Local environment setup, prerequisites, installation steps, database management, debugging
+- **[CODING_STANDARDS.md](development/CODING_STANDARDS.md)** - Code conventions, naming, style guidelines, PR standards for Ruby, JavaScript, HTML, CSS
+- **[TESTING_STRATEGY.md](development/TESTING_STRATEGY.md)** - Testing approach, unit/integration/E2E test patterns, coverage goals, CI/CD integration
+- **[API_DOCUMENTATION.md](development/API_DOCUMENTATION.md)** - REST API endpoints, authentication, request/response formats, error handling
+
+**When to use**: Setting up your development environment, writing code, setting up tests, integrating with APIs
+
+---
+
+### 9. [wireframes/](wireframes/)
 **UI mockups and layouts**
 
 - [artist-profile.md](wireframes/artist-profile.md) - Landing page
@@ -133,27 +153,31 @@ This folder contains **all** the product planning and design decisions for Clay 
 
 ---
 
-### 9. [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
-**Guide for starting fresh with a new tech stack**
+### 10. [archive/](archive/) 📁
+**Archived planning and historical documents**
 
-- Tech stack options (Django, Rails, Laravel, Go, Rust, Phoenix, etc.)
-- Decision framework (language preferences, performance needs, etc.)
-- Step-by-step migration strategy (9-week roadmap)
-- Tips for success
-- How to use the requirements docs
+Contains documents from earlier planning phases that are kept for historical reference:
 
-**When to use**: Choosing new tech stack, planning migration, getting started
+- `MIGRATION_GUIDE.md` - Original tech stack analysis and migration strategy
+- `DEVELOPMENT_PLAN_PROCESS_STUDIO.md` - Studio feature development plan
+- `SESSION_HANDOFF_STUDIO_FEATURE.md` - Session handoff documentation
+- `QUICK_REFERENCE_TOMORROW.md` - Quick reference for continuation
+- `IMPLEMENTATION_SUMMARY_STUDIO_FEATURE.md` - Studio feature implementation summary
+- `SESSION_COMPLETE.txt` - Session completion notes
+- `SIDEBAR_NAVIGATION_IMPROVEMENTS.md` - Original sidebar improvement proposals (merged into PAGE_STRUCTURE.md)
+
+**When to use**: Reference only - these are archived from earlier phases
 
 ---
 
 ## 🚀 Quick Start
 
-### If You're Starting Fresh
+### If You're Setting Up Development Environment
 
-1. **Read** [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) to choose your tech stack
-2. **Review** [PRODUCT_OVERVIEW.md](PRODUCT_OVERVIEW.md) to understand the vision
-3. **Study** [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) to learn the visual design
-4. **Follow** the 9-week migration strategy in [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
+1. **Read** [development/DEVELOPMENT_SETUP.md](development/DEVELOPMENT_SETUP.md) for local setup
+2. **Review** [development/CODING_STANDARDS.md](development/CODING_STANDARDS.md) for code conventions
+3. **Check** [development/TESTING_STRATEGY.md](development/TESTING_STRATEGY.md) for testing approach
+4. **Reference** [development/API_DOCUMENTATION.md](development/API_DOCUMENTATION.md) for API details
 
 ### If You're Implementing a Specific Feature
 
@@ -163,6 +187,12 @@ This folder contains **all** the product planning and design decisions for Clay 
 4. **Look at** the page structure in [PAGE_STRUCTURE.md](PAGE_STRUCTURE.md)
 5. **Reference** the design specs in [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md)
 6. **View** the wireframe in [wireframes/](wireframes/)
+7. **Follow** code standards in [development/CODING_STANDARDS.md](development/CODING_STANDARDS.md)
+8. **Write** tests using [development/TESTING_STRATEGY.md](development/TESTING_STRATEGY.md)
+
+### If You Need to Understand Post-MVP Features
+
+1. **Review** [POST_MVP_FEATURES.md](POST_MVP_FEATURES.md) for future roadmap
 
 ---
 
@@ -197,16 +227,26 @@ You can choose:
 
 All requirements documents are **complete and ready to use**:
 
+### Product Requirements (Root Level)
 - ✅ Product overview and vision
 - ✅ Feature specifications
 - ✅ User flows and journeys
 - ✅ Data model and database schema
 - ✅ Page structure and navigation
 - ✅ Design system (colors, fonts, spacing, components)
-- ✅ Wireframes for all pages
-- ✅ Migration guide with tech stack options
+- ✅ Post-MVP features and roadmap
+- ✅ Wireframes for all pages (10 wireframes)
 
-**Total Pages**: 8 main docs + 10 wireframes + migration guide = **19 documents** (includes POST_MVP_FEATURES.md)
+### Development Documentation (development/)
+- ✅ Development setup guide
+- ✅ Coding standards and conventions
+- ✅ Testing strategy and patterns
+- ✅ API documentation and endpoints
+
+### Archived Documents (archive/)
+- 📋 Planning documents from earlier phases (reference only)
+
+**Total Pages**: 7 core requirement docs + 4 development guides + 10 wireframes = **21 documents**
 
 ---
 
@@ -242,10 +282,18 @@ All requirements documents are **complete and ready to use**:
 
 ## 🎯 Next Steps
 
-1. Choose your tech stack → [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
-2. Read product overview → [PRODUCT_OVERVIEW.md](PRODUCT_OVERVIEW.md)
-3. Review design system → [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md)
-4. Start Phase 1: Setup & Foundation (see [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md))
+### For New Development Setup
+1. Read [development/DEVELOPMENT_SETUP.md](development/DEVELOPMENT_SETUP.md) for environment setup
+2. Review [development/CODING_STANDARDS.md](development/CODING_STANDARDS.md) for code conventions
+3. Start coding, reference [development/TESTING_STRATEGY.md](development/TESTING_STRATEGY.md) for test patterns
+
+### For Product Understanding
+1. Read product overview → [PRODUCT_OVERVIEW.md](PRODUCT_OVERVIEW.md)
+2. Review design system → [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md)
+3. Study core features → [FEATURES.md](FEATURES.md)
+
+### For Future Planning
+1. Review [POST_MVP_FEATURES.md](POST_MVP_FEATURES.md) for roadmap
 
 ---
 
@@ -255,12 +303,12 @@ If you're unsure about something:
 
 1. Check if it's documented in one of the requirements files
 2. Look at the relevant wireframe in [wireframes/](wireframes/)
-3. Review the migration guide for implementation tips
+3. Review the appropriate development guide in [development/](development/)
 
 **Everything you need is in this folder!** 🎨🚀
 
 ---
 
-**Version**: 1.1 (Tech-Agnostic + Post-MVP Roadmap)
-**Last Updated**: 2025-11-22
-**Status**: Complete and ready to use (MVP + Post-MVP planning)
+**Version**: 2.0 (Development Phase Edition)
+**Last Updated**: 2025-11-24
+**Status**: Complete and organized for active development

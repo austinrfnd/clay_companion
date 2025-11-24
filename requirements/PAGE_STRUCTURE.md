@@ -222,20 +222,52 @@ Quick Links (Gallery, About, Contact)
 
 ```
 [Settings Sidebar - 240px width]
-├── 👤 Account
-├── 🔒 Privacy
-├── 📝 Profile
-├── 🏠 My Studio
-└── 🎨 My Work
+├── Account
+├── Privacy
+├── Profile
+├── My Studio
+└── My Work
 ```
+
+**Sidebar Design Specifications**:
+- Width: 240px on desktop
+- Icon system: Use Lucide Icons (not emojis)
+  - Account → User icon
+  - Privacy → Lock icon
+  - Profile → FileText or UserCircle icon
+  - My Studio → Home icon
+  - My Work → Palette or Image icon
+- Item height: 44px (h-11)
+- Vertical spacing between items: 2px margin (my-0.5)
+- Font weight: Medium (500) for inactive, Semibold (600) for active
+- Active state: Misty White background + 4px left border (Celadon Green) + highlighted text
+
+**Hover & Focus States**:
+- Hover: Misty White at 70% opacity with smooth transition
+- Focus: 2px Celadon ring with offset for keyboard navigation
+- Transition: 150ms duration for smooth feedback
+
+**Accessibility**:
+- Keyboard navigation fully supported (Tab, Enter, Arrow keys)
+- Screen reader compatibility with proper ARIA labels
+- Focus ring visible for all interactive elements
+- Touch-friendly with 44px minimum target size
 
 **Behavior**:
 - Main dashboard uses top navigation or sidebar
 - Settings pages have dedicated persistent sidebar (left side, 240px)
-- Active page indicator in settings sidebar (highlighted background, left border)
+- Active page indicator in settings sidebar (highlighted background, 4px left border)
 - Settings sidebar always visible on desktop, collapsible on tablet, hidden on mobile (hamburger toggle)
-- Mobile: Collapsible menu or slide-out drawer
-- Responsive design
+- Mobile: Collapsible menu as slide-out drawer from left
+- Responsive design with proper breakpoints
+
+**Mobile Behavior** (Settings Pages):
+- Sidebar hidden by default on mobile
+- Hamburger menu button in header to toggle sidebar
+- Sidebar opens as slide-out drawer from left
+- All 5 settings sections accessible in drawer
+- Active section highlighted in drawer
+- Close on item selection or outside tap
 
 **Breadcrumbs** (on non-settings dashboard pages):
 ```
