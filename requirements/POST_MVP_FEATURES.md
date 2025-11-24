@@ -248,6 +248,130 @@ This document outlines features and improvements planned for phases after the in
 
 ---
 
+## Feed Features (Post-MVP Phase)
+
+### Phase 0: User Posts - Create & Share
+
+**Description**: Allow users to create and publish posts to the feed, with optional photo attachments. Posts can be separate from their main portfolio work.
+
+**Features**:
+- **Create Posts**: Text-based posts with optional photo attachments
+  - Rich text editor or simple textarea
+  - Drag-and-drop or click-to-upload photos
+  - Multiple photo support per post
+  - Photo ordering/reordering
+  - Optional captions for photos
+
+- **Post Visibility**: Control who can see posts
+  - Public (visible to all on feed)
+  - Followers only
+  - Private/draft (not published)
+
+- **Post Management**:
+  - Edit own posts
+  - Delete own posts
+  - Pin/feature post option (maybe?)
+  - Post preview before publishing
+
+- **Post Display**: Show posts in feed with:
+  - Author info and timestamp
+  - Post content
+  - Photo carousel/gallery
+  - Like/comment count indicators
+
+**User Stories**:
+- As an artist, I want to share behind-the-scenes moments and thoughts outside my main portfolio
+- As a visitor, I want to see what artists are working on and thinking about in real-time
+- As a user, I want to easily add photos to my posts
+- As a user, I want to control who sees my posts
+
+**Implementation Considerations**:
+- Create `posts` table (user_id, content, visibility, created_at, updated_at)
+- Create `post_attachments` table (post_id, image_url, caption, display_order)
+- Image storage (S3/similar) for post photos
+- Feed query to pull posts ordered by created_at
+- Optional: hashtags (#), mentions (@) in posts
+
+**Database Migrations**:
+- Create posts table with visibility enum (public, followers_only, private)
+- Create post_attachments table for photos
+- Index on (user_id, created_at) for efficient feed queries
+- Index on visibility for feed filtering
+
+**Frontend Changes**:
+- Post creation modal/form
+- Photo upload component with preview
+- Post card component showing content + photos
+- Post edit/delete actions
+
+**Effort**: Medium (3-4 hours)
+
+**Priority**: High - This is foundational to a social feed experience
+
+**Dependencies**: User authentication, feed page/API
+
+---
+
+### Phase 1: Feed Engagement - Comments, Likes, Re-posting, Reporting
+
+**Description**: Add social engagement features to the feed to encourage interaction and community building.
+
+**Features**:
+- **Comments**: Allow visitors to leave comments on feed posts
+  - Nested/threaded replies support
+  - Comment moderation (artist can delete/approve)
+  - Edit/delete own comments
+
+- **Likes**: Simple like/heart button on posts
+  - Like count display
+  - Show who liked (expand list)
+  - Unlike functionality
+
+- **Re-posting**: Allow sharing posts to broader audience
+  - Re-post button on feed items
+  - Attribution to original poster
+  - Comments on re-posts
+
+- **Reporting**: Flag inappropriate content
+  - Report modal with reason selection
+  - Admin review of reports
+  - Take down/hide reported content
+  - Reporter confidentiality
+
+**User Stories**:
+- As a visitor, I want to engage with artist work through likes and comments
+- As a visitor, I want to share interesting work with my followers
+- As an artist, I want to moderate comments on my posts
+- As a community member, I want to report inappropriate content
+
+**Implementation Considerations**:
+- Add `likes` table (user_id, post_id, created_at)
+- Add `comments` table (user_id, post_id, parent_comment_id, content, created_at)
+- Add `reposts` table (user_id, original_post_id, created_at)
+- Add `reports` table (user_id, post_id, reason, status, admin_notes, created_at)
+- Notification system for comments/likes on own posts (see Email Notifications phase)
+- Rate limiting to prevent spam/abuse
+
+**Database Migrations**:
+- Create likes table with indexes on (post_id, user_id)
+- Create comments table with foreign keys and nested reply support
+- Create reposts table with attribution
+- Create reports table for moderation
+
+**Frontend Changes**:
+- Add engagement buttons to feed post cards
+- Comment section component (expandable)
+- Report modal with form
+- Like count and "who liked" viewer
+
+**Effort**: Large (6-8 hours for all 4 features)
+
+**Priority**: TBD - Core to feed experience but may impact MVP scope
+
+**Dependencies**: Feed MVP, User authentication
+
+---
+
 ## Social & Community Features (Post-MVP Phase)
 
 ### Phase 1: Social Sharing
